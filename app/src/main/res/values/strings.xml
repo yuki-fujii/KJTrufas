@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">KJ Trufas</string>
+    <string name="Administrador">Administrador</string>
+    <string name="ProdutosDisponiveis">Produtos disponíveis</string>
+    <string name="RealizarVenda">Realizar venda</string>
+    <string name="ConsultarComanda">Consultar comanda</string>
+    <string name="Cadastrar">Cadastrar</string>
+    <string name="Consultar">Consultar</string>
+    <string name="Configurações">Configurações</string>
+</resources>
