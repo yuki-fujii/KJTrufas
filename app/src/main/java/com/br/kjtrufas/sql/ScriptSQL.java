@@ -1,5 +1,7 @@
 package com.br.kjtrufas.sql;
 
+import android.util.Log;
+
 public class ScriptSQL
 {
     public static String getVendedor()
@@ -19,6 +21,7 @@ public class ScriptSQL
 
     public static String getComanda()
     {
+        Log.i("Criou get comanda: ","True");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (        ");
@@ -33,6 +36,7 @@ public class ScriptSQL
 
     public static String getProduto()
     {
+        Log.i("Criou get produto: ","True");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS PRODUTO (        ");
@@ -48,6 +52,7 @@ public class ScriptSQL
 
     public static String getSabor()
     {
+        Log.i("Criou get sabor: ","True");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS SABOR (          ");
@@ -62,6 +67,7 @@ public class ScriptSQL
 
     public static String getProdutoDisponivel()
     {
+        Log.i("Criou get prod dis: ","True");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS PRODUTO_DISPONIVEL (       ");
@@ -77,6 +83,7 @@ public class ScriptSQL
 
     public static String getVendido()
     {
+        Log.i("Criou get vendido: ","True");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDIDO (                      ");
