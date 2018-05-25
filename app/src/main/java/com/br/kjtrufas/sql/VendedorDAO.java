@@ -33,10 +33,10 @@ public class VendedorDAO
 
         int qtdVendedor = cursor.getCount();
 
-        if(qtdVendedor==0)
+        if(qtdVendedor>0)
             conn.insertOrThrow("VENDEDOR", null, preencherContentValues(vendedor));
         else
-            conn.update("PACIENTE",preencherContentValues(vendedor),null,null);
+            conn.update("VENDEDOR",preencherContentValues(vendedor),null,null);
     }
 
 }
