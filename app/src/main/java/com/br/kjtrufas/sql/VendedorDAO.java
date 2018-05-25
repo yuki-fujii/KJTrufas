@@ -29,11 +29,11 @@ public class VendedorDAO
 
     public void insert(Vendedor vendedor)
     {
-        Cursor cursor = conn.query("VENDEDOR",null,null,null,null,null,null);
+        Cursor cursor = conn.query("VENDEDOR",null,"NOME",null,null,null,null);
 
         int qtdVendedor = cursor.getCount();
 
-        if(qtdVendedor>0)
+        if(qtdVendedor==0)
             conn.insertOrThrow("VENDEDOR", null, preencherContentValues(vendedor));
         else
             conn.update("VENDEDOR",preencherContentValues(vendedor),null,null);
