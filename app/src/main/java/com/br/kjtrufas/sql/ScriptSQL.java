@@ -8,7 +8,7 @@ public class ScriptSQL
     {
         StringBuilder sqlBuilder = new StringBuilder();
 
-        sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDIDO (                  ");
+        sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDEDOR (                  ");
         sqlBuilder.append("ID_VENDEDOR                            VARCHAR (10)   ");
         sqlBuilder.append("PRIMARY KEY                                         , ");
         sqlBuilder.append("LOGIN                                  VARCHAR (15) , ");
@@ -21,7 +21,7 @@ public class ScriptSQL
 
     public static String getComanda()
     {
-        Log.i("Criou get comanda: ","True");
+        Log.i("Erro","Criou get comanda");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (        ");
@@ -36,7 +36,7 @@ public class ScriptSQL
 
     public static String getProduto()
     {
-        Log.i("Criou get produto: ","True");
+        Log.i("Erro","Criou get produto");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS PRODUTO (        ");
@@ -52,7 +52,7 @@ public class ScriptSQL
 
     public static String getSabor()
     {
-        Log.i("Criou get sabor: ","True");
+        Log.i("Erro","Criou get sabor");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS SABOR (          ");
@@ -67,7 +67,7 @@ public class ScriptSQL
 
     public static String getProdutoDisponivel()
     {
-        Log.i("Criou get prod dis: ","True");
+        Log.i("Erro","Criou get prod dis");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS PRODUTO_DISPONIVEL (       ");
@@ -83,7 +83,7 @@ public class ScriptSQL
 
     public static String getVendido()
     {
-        Log.i("Criou get vendido: ","True");
+        Log.i("Erro","Criou get vendido");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDIDO (                      ");
@@ -96,7 +96,7 @@ public class ScriptSQL
         sqlBuilder.append("DESCONTO                                  DECIMAL(10,2) , ");
         sqlBuilder.append("DATA_VENDA                                 VARCHAR (10) , ");
         sqlBuilder.append("PAGO                                            INTEGER , ");
-        sqlBuilder.append("PRIMARY KEY           (ID_COMANDA,ID_PRODUTO, DATA_VENDA),");
+        sqlBuilder.append("PRIMARY KEY           (ID_COMANDA,ID_PRODUTO, DATA_VENDA) ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();
