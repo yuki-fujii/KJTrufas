@@ -7,4 +7,8 @@
     <string name="Cadastrar">Cadastrar</string>
     <string name="Consultar">Consultar</string>
     <string name="Configurações">Configurações</string>
+    <string name="Vendedor">Vendedor</string>
+    <string name="Produto">Produto</string>
+    <string name="Sabor">Sabor</string>
+    <string name="SaborProduto">Sabor do produto</string>
 </resources>

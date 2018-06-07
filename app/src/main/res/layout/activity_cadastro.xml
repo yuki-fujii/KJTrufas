@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Administrador">
+    tools:context=".Cadastro">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,12 +20,11 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnCadastrar"
+            android:id="@+id/btnCadVendedor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:onClick="chamarCadastro"
-            android:text="@string/Cadastrar" />
+            android:text="@string/Vendedor" />
 
         <Space
             android:layout_width="match_parent"
@@ -33,11 +32,11 @@
             android:layout_weight="2" />
 
         <Button
-            android:id="@+id/btnRealizarVendas"
+            android:id="@+id/btnCadProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/Consultar" />
+            android:text="@string/Produto" />
 
         <Space
             android:layout_width="match_parent"
@@ -45,21 +44,29 @@
             android:layout_weight="2" />
 
         <Button
-            android:id="@+id/btnConsultarComanda"
+        android:id="@+id/btnCadSabor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="@string/Sabor" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/btnCadSaborProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/Configurações" />
+            android:text="@string/SaborProduto" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
 
     </LinearLayout>
 
