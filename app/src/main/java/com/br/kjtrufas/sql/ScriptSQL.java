@@ -9,11 +9,11 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDEDOR (                  ");
-        sqlBuilder.append("ID_VENDEDOR                            VARCHAR (10)   ");
-        sqlBuilder.append("PRIMARY KEY                                         , ");
-        sqlBuilder.append("LOGIN                                  VARCHAR (15) , ");
-        sqlBuilder.append("SENHA                                  VARCHAR (15) , ");
-        sqlBuilder.append("NOME                                   VARCHAR (30)   ");
+        sqlBuilder.append("ID_VENDEDOR INTEGER PRIMARY KEY AUTOINCREMENT        , ");
+        sqlBuilder.append("LOGIN                           VARCHAR (15) UNIQUE  , ");
+        sqlBuilder.append("SENHA                                   VARCHAR (15) , ");
+        sqlBuilder.append("CONF_SENHA                              VARCHAR (15) , ");
+        sqlBuilder.append("NOME                                    VARCHAR (30)   ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();

@@ -11,4 +11,5 @@
     <string name="Produto">Produto</string>
     <string name="Sabor">Sabor</string>
     <string name="SaborProduto">Sabor do produto</string>
+    <string name="Salvar">Salvar</string>
 </resources>

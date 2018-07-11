@@ -6,13 +6,18 @@ public class Vendedor
     private String nome;
     private String login;
     private String senha;
+    private String confSenha;
 
-    public Vendedor(String id,String nome, String login, String senha)
+    public Vendedor(String nome, String login, String senha, String confSenha)
     {
-        this.setId(id);
         this.setNome(nome);
         this.setLogin(login);
         this.setSenha(senha);
+        this.setConfSenha(confSenha);
+    }
+
+    public Vendedor() {
+
     }
 
     public String getId() {
@@ -45,5 +50,13 @@ public class Vendedor
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getConfSenha() {
+        return confSenha;
+    }
+
+    public void setConfSenha(String confSenha) {
+        this.confSenha = confSenha;
     }
 }

@@ -3,6 +3,8 @@ package com.br.kjtrufas.sql;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.io.Serializable;
 
 public class DataBase extends SQLiteOpenHelper implements Serializable
@@ -15,7 +17,9 @@ public class DataBase extends SQLiteOpenHelper implements Serializable
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+        Log.i("AUX","Criou tabela Vendedor");
         db.execSQL(ScriptSQL.getVendedor());
+        Log.i("AUX","Criou tabela Vendedor");
         db.execSQL(ScriptSQL.getComanda());
         db.execSQL(ScriptSQL.getProduto());
         db.execSQL(ScriptSQL.getSabor());
