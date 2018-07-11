@@ -33,16 +33,49 @@ public class VendedorDAO
     {
         Log.i("AUX","Vendedor: "+vendedor.getLogin());
 
-        Cursor cursor = conn.query("VENDEDOR",null,"LOGIN = ?",new String[]{vendedor.getLogin()},null,null,null);
-
-        Log.i("AUX","QTDE: "+cursor.getCount());
-
-        int qtdVendedor = cursor.getCount();
-
-        if(qtdVendedor==0)
+        if(!hasVendedor(vendedor))
             conn.insertOrThrow("VENDEDOR", null, preencherContentValues(vendedor));
         else
             conn.update("VENDEDOR",preencherContentValues(vendedor),"LOGIN = ?", new String[]{vendedor.getLogin()});
+    }
+
+    public boolean hasVendedor(Vendedor vendedor)
+    {
+        Cursor cursor = conn.query("VENDEDOR",null,"LOGIN = ?",new String[]{vendedor.getLogin()},null,null,null);
+
+        if (cursor.getCount()==0)
+            return false;
+        else
+            return true;
+    }
+
+    public void delete(String login, String senha)
+    {
+        conn.delete("VENDEDOR","LOGIN = ? AND SENHA = ?",new String[]{login,senha});
+    }
+
+    public Vendedor getVendedor(String login, String senha) {
+
+        Vendedor retorno = null;
+
+        Cursor cursor = conn.query("VENDEDOR", null, "LOGIN = ? AND SENHA = ?", new String[]{login, senha}, null, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            retorno = new Vendedor();
+
+            retorno.setId(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
+            retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+            retorno.setLogin(cursor.getString(cursor.getColumnIndex("LOGIN")));
+            retorno.setSenha(cursor.getString(cursor.getColumnIndex("SENHA")));
+            retorno.setConfSenha(cursor.getString(cursor.getColumnIndex("CONF_SENHA")));
+
+            Log.i("retorno", retorno.getNome());
+
+        }
+
+        return retorno;
     }
 
 }
