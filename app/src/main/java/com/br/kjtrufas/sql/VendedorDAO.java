@@ -9,14 +9,7 @@ import entidades.Vendedor;
 
 public class VendedorDAO
 {
-    private SQLiteDatabase conn;
-
-    public VendedorDAO (SQLiteDatabase conn)
-    {
-        this.conn = conn;
-    }
-
-    private ContentValues preencherContentValues(Vendedor vendedor)
+    private static ContentValues preencherContentValues(Vendedor vendedor)
     {
         ContentValues values = new ContentValues();
 
@@ -29,17 +22,17 @@ public class VendedorDAO
         return values;
     }
 
-    public void upsert(Vendedor vendedor)
+    public static void upsert(Vendedor vendedor, SQLiteDatabase conn)
     {
         Log.i("AUX","Vendedor: "+vendedor.getLogin());
 
-        if(!hasVendedor(vendedor))
+        if(!hasVendedor(vendedor,conn))
             conn.insertOrThrow("VENDEDOR", null, preencherContentValues(vendedor));
         else
             conn.update("VENDEDOR",preencherContentValues(vendedor),"LOGIN = ?", new String[]{vendedor.getLogin()});
     }
 
-    public boolean hasVendedor(Vendedor vendedor)
+    public static boolean hasVendedor(Vendedor vendedor, SQLiteDatabase conn)
     {
         Cursor cursor = conn.query("VENDEDOR",null,"LOGIN = ?",new String[]{vendedor.getLogin()},null,null,null);
 
@@ -49,16 +42,16 @@ public class VendedorDAO
             return true;
     }
 
-    public void delete(String login, String senha)
+    public static void delete(String login, String senha, SQLiteDatabase conn)
     {
         conn.delete("VENDEDOR","LOGIN = ? AND SENHA = ?",new String[]{login,senha});
     }
 
-    public Vendedor getVendedor(String login, String senha) {
+    public static Vendedor getVendedor(SQLiteDatabase conn) {
 
         Vendedor retorno = null;
 
-        Cursor cursor = conn.query("VENDEDOR", null, "LOGIN = ? AND SENHA = ?", new String[]{login, senha}, null, null, null);
+        Cursor cursor = conn.query("VENDEDOR", null, null, null, null, null, null);
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -70,9 +63,6 @@ public class VendedorDAO
             retorno.setLogin(cursor.getString(cursor.getColumnIndex("LOGIN")));
             retorno.setSenha(cursor.getString(cursor.getColumnIndex("SENHA")));
             retorno.setConfSenha(cursor.getString(cursor.getColumnIndex("CONF_SENHA")));
-
-            Log.i("retorno", retorno.getNome());
-
         }
 
         return retorno;

@@ -60,8 +60,10 @@ public class CadastroVendedor extends AppCompatActivity {
                 dataBase = new DataBase(this);
                 conn = dataBase.getWritableDatabase();
 
-                vendedorDAO = new VendedorDAO(conn);
-                vendedorDAO.upsert(newVendedor);
+                VendedorDAO.upsert(newVendedor,conn);
+
+                Log.i("ID Vendedor",VendedorDAO.getVendedor(conn).getId());
+
             }
             else
             {

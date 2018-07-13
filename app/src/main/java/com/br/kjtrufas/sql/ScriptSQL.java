@@ -27,8 +27,8 @@ public class ScriptSQL
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (        ");
         sqlBuilder.append("ID_COMANDA                      VARCHAR (10)");
         sqlBuilder.append("PRIMARY KEY                               , ");
-        sqlBuilder.append("NOME                         VARCHAR (30) , ");
-        sqlBuilder.append("COMPLEMENTO                  VARCHAR (30)   ");
+        sqlBuilder.append("ID_VENDEDOR                  VARCHAR (10) , ");
+        sqlBuilder.append("NOME                         VARCHAR (35)   ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();
