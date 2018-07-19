@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
-import entidades.Comanda;
-import entidades.Vendedor;
+import com.br.kjtrufas.entidades.Comanda;
 
 public class ComandaDAO {
 
@@ -24,10 +23,19 @@ public class ComandaDAO {
 
     public static void upsert(Comanda comanda,SQLiteDatabase conn)
     {
+        Log.i("Inserindo",comanda.getNome());
+        Log.i("CONN",String.valueOf(conn));
+
         if(!hasComanda(comanda, conn))
+        {
+            Log.i("OPE","INSERT");
             conn.insertOrThrow("COMANDA", null, preencherContentValues(comanda));
+        }
         else
+        {
+            Log.i("OPE","UPDATE");
             conn.update("COMANDA",preencherContentValues(comanda),"NOME = ? AND ID_VENDEDOR = ?", new String[]{comanda.getNome(),comanda.getIdVendedor()});
+        }
     }
 
     public static boolean hasComanda(Comanda comanda, SQLiteDatabase conn)
@@ -47,16 +55,19 @@ public class ComandaDAO {
 
     public static ArrayAdapter<String> getComanda(Context context,SQLiteDatabase conn) {
 
+        Log.i("ID Vendedor",VendedorDAO.getVendedor(conn).getId());
         ArrayAdapter<String> retorno =  new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
 
         Cursor cursor = conn.query("COMANDA", null, "ID_VENDEDOR = ?", new String[]{VendedorDAO.getVendedor(conn).getId()}, null, null, null);
 
-        if (cursor.getCount() > 0) {
+        if (cursor.getCount() > 0)
+        {
             cursor.moveToFirst();
 
             do {
+                Log.i("Comanda",cursor.getString(cursor.getColumnIndex("NOME")));
                 retorno.add(cursor.getString(cursor.getColumnIndex("NOME")));
-            }while(cursor.isLast());
+            }while(cursor.moveToNext());
         }
 
         return retorno;

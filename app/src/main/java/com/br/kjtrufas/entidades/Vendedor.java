@@ -1,4 +1,4 @@
-package entidades;
+package com.br.kjtrufas.entidades;
 
 public class Vendedor
 {

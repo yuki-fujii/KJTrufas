@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import entidades.Vendedor;
+import com.br.kjtrufas.entidades.Vendedor;
 
 public class VendedorDAO
 {
@@ -24,7 +24,7 @@ public class VendedorDAO
 
     public static void upsert(Vendedor vendedor, SQLiteDatabase conn)
     {
-        Log.i("AUX","Vendedor: "+vendedor.getLogin());
+        Log.i("SQL", String.valueOf(conn));
 
         if(!hasVendedor(vendedor,conn))
             conn.insertOrThrow("VENDEDOR", null, preencherContentValues(vendedor));
@@ -34,6 +34,8 @@ public class VendedorDAO
 
     public static boolean hasVendedor(Vendedor vendedor, SQLiteDatabase conn)
     {
+        Log.i("SQL", String.valueOf(conn));
+
         Cursor cursor = conn.query("VENDEDOR",null,"LOGIN = ?",new String[]{vendedor.getLogin()},null,null,null);
 
         if (cursor.getCount()==0)

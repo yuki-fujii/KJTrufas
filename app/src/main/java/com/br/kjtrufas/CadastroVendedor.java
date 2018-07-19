@@ -1,6 +1,5 @@
 package com.br.kjtrufas;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.VendedorDAO;
 
-import entidades.Vendedor;
+import com.br.kjtrufas.entidades.Vendedor;
 
 public class CadastroVendedor extends AppCompatActivity {
 

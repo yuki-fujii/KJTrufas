@@ -1,17 +1,17 @@
 package com.br.kjtrufas;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.VendedorDAO;
 
-import entidades.Vendedor;
+import com.br.kjtrufas.entidades.Vendedor;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
         novo.setSenha("Hiroyuk1");
         novo.setConfSenha("Hiroyuk1");
 
-        VendedorDAO.upsert(novo,conn);
+        if(conexaoBD())
+        {
+            VendedorDAO.upsert(novo,conn);
+        }
     }
 
     public void chamarAdministrador (View view)
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void chamarRealizarVendas (View view)
     {
+        Log.i("Chamou","RealizarVendas");
         Intent it = new Intent(this, Vendas.class);
         startActivityForResult(it, 0);
     }

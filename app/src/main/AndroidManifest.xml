@@ -19,7 +19,8 @@
         <activity android:name=".Administrador" />
         <activity android:name=".Cadastro" />
         <activity android:name=".CadastroVendedor" />
-        <activity android:name=".Vendas"></activity>
+        <activity android:name=".Vendas" />
+        <activity android:name=".CadastroProduto"></activity>
     </application>
 
 </manifest>
