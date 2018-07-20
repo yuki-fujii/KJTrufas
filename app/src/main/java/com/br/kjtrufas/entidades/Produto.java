@@ -5,9 +5,9 @@ public class Produto {
     private String id;
     private String nome;
     private Double preco;
-    private boolean ativo;
+    private int ativo;
 
-    public Produto(String nome, Double preco, boolean ativo)
+    public Produto(String nome, Double preco, int ativo)
     {
         this.setNome(nome);
         this.setPreco(preco);
@@ -40,11 +40,16 @@ public class Produto {
         this.preco = preco;
     }
 
-    public boolean isAtivo() {
+    public int getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(boolean ativo) {
+    public void setAtivo(int ativo) {
         this.ativo = ativo;
+    }
+
+    public String toString()
+    {
+        return getNome();
     }
 }

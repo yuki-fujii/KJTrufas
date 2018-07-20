@@ -17,7 +17,7 @@ public class ProdutoDAO {
 
         values.put("NOME",produto.getNome());
         values.put("PRECO",produto.getPreco());
-        values.put("ATIVO",produto.isAtivo());
+        values.put("ATIVO",produto.getAtivo());
 
         return values;
     }
@@ -54,19 +54,25 @@ public class ProdutoDAO {
         conn.delete("PRODUTO","NOME = ?",new String[]{nome});
     }
 
-    public static ArrayAdapter<String> getProduto(Context context, SQLiteDatabase conn) {
+    public static ArrayAdapter<Produto> getProduto(Context context, SQLiteDatabase conn) {
 
-        ArrayAdapter<String> retorno =  new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
+        ArrayAdapter<Produto> retorno =  new ArrayAdapter<Produto>(context,android.R.layout.simple_list_item_1);
 
         Cursor cursor = conn.query("PRODUTO", null, null, null, null, null, null);
 
         if (cursor.getCount() > 0)
         {
+            retorno.add(new Produto("--Nenhum--",null,0));
             cursor.moveToFirst();
 
             do {
                 Log.i("Produto",cursor.getString(cursor.getColumnIndex("NOME")));
-                retorno.add(cursor.getString(cursor.getColumnIndex("NOME")));
+                Produto aux = new Produto();
+                aux.setId(cursor.getString(cursor.getColumnIndex("ID_PRODUTO")));
+                aux.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+                aux.setPreco(cursor.getDouble(cursor.getColumnIndex("PRECO")));
+                aux.setAtivo(cursor.getInt(cursor.getColumnIndex("ATIVO")));
+                retorno.add(aux);
             }while(cursor.moveToNext());
         }
 

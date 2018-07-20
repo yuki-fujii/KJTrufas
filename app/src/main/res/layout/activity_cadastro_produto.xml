@@ -40,7 +40,7 @@
                 android:id="@+id/lblSelecionarProduto"/>
 
             <Spinner
-                android:id="@+id/lstProdutos"
+                android:id="@+id/spnProdutos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -62,13 +62,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="center"
-                android:text="@string/Produto"
+                android:text="Produto:"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editName"
+                android:id="@+id/editNomeProduto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -95,7 +95,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/editPreco"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -123,7 +123,7 @@
                 android:textStyle="bold" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/cbxProdutoAtivo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -144,19 +144,19 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnSalvar"
+            android:id="@+id/btnSalvarProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:onClick="salvarVendedor"
+            android:onClick="salvarProduto"
             android:text="@string/Salvar" />
 
         <Button
-            android:id="@+id/btnExcluir"
+            android:id="@+id/btnExcluirProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:onClick="excluirProduto"
+            android:onClick="exluirProduto"
             android:text="@string/Excluir" />
 
     </LinearLayout>
