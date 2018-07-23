@@ -10,9 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.br.kjtrufas.entidades.Produto;
 import com.br.kjtrufas.sql.ComandaDAO;
 import com.br.kjtrufas.sql.DataBase;
+import com.br.kjtrufas.sql.ProdutoDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
 
 import com.br.kjtrufas.entidades.Comanda;
@@ -24,8 +28,11 @@ public class Vendas extends AppCompatActivity {
 
     private AutoCompleteTextView autoNome;
     private ArrayAdapter<String> adpTodasComandas;
+    private ArrayAdapter<Produto> adpTodosProdutos;
 
     private String nomeComanda;
+    private Spinner spnProdutos;
+    private TextView txtValorTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,8 @@ public class Vendas extends AppCompatActivity {
         setContentView(R.layout.activity_vendas);
 
         autoNome = (AutoCompleteTextView) findViewById(R.id.autoNome);
+        spnProdutos = (Spinner) findViewById(R.id.spnProdutos);
+        txtValorTotal = (TextView) findViewById(R.id.txtValorTotal);
 
         if(this.conexaoBD())
         {
@@ -41,9 +50,12 @@ public class Vendas extends AppCompatActivity {
             if ((bundle != null) && (bundle.containsKey("NOME")))
                 autoNome.setText((String) bundle.getSerializable("NOME"));
 
-            Log.i("Total coman",String.valueOf(ComandaDAO.getComanda(this,conn).getCount()));
             this.adpTodasComandas = ComandaDAO.getComanda(this,conn);
             autoNome.setAdapter(adpTodasComandas);
+
+            adpTodosProdutos = ProdutoDAO.getProduto(this,conn,1);
+            spnProdutos.setAdapter(adpTodosProdutos);
+
 
         }
 

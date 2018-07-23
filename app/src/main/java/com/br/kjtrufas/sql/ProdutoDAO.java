@@ -54,7 +54,7 @@ public class ProdutoDAO {
         conn.delete("PRODUTO","NOME = ?",new String[]{nome});
     }
 
-    public static ArrayAdapter<Produto> getProduto(Context context, SQLiteDatabase conn) {
+    public static ArrayAdapter<Produto> getProduto(Context context, SQLiteDatabase conn,int apenasAtivos) {
 
         ArrayAdapter<Produto> retorno =  new ArrayAdapter<Produto>(context,android.R.layout.simple_list_item_1);
 
@@ -72,7 +72,12 @@ public class ProdutoDAO {
                 aux.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 aux.setPreco(cursor.getDouble(cursor.getColumnIndex("PRECO")));
                 aux.setAtivo(cursor.getInt(cursor.getColumnIndex("ATIVO")));
-                retorno.add(aux);
+
+                if(apenasAtivos == 1 && aux.getAtivo()==1)
+                    retorno.add(aux);
+                if(apenasAtivos == 0)
+                    retorno.add(aux);
+
             }while(cursor.moveToNext());
         }
 

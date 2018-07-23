@@ -75,7 +75,7 @@
                         android:textStyle="normal" />
 
                     <Spinner
-                        android:id="@+id/lstProdutos"
+                        android:id="@+id/spnProdutos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

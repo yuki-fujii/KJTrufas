@@ -47,7 +47,7 @@ public class CadastroProduto extends AppCompatActivity {
 
         if(conexaoBD())
         {
-            adpTodosProdutos = ProdutoDAO.getProduto(this, conn);
+            adpTodosProdutos = ProdutoDAO.getProduto(this, conn,0);
             spnProduto.setAdapter(adpTodosProdutos);
 
             spnProduto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
