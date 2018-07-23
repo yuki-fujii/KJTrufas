@@ -101,7 +101,7 @@
                         android:textStyle="normal" />
 
                     <EditText
-                        android:id="@+id/editName"
+                        android:id="@+id/editQtde"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -171,7 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0"
+                android:text=""
                 android:ems="10"
                 android:inputType="numberDecimal" />
 
@@ -191,7 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0"
+                android:text=""
                 android:ems="10"
                 android:inputType="numberDecimal" />
 

@@ -6,10 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -20,6 +24,8 @@ import com.br.kjtrufas.sql.ProdutoDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
 
 import com.br.kjtrufas.entidades.Comanda;
+
+import java.text.NumberFormat;
 
 public class Vendas extends AppCompatActivity {
 
@@ -32,7 +38,11 @@ public class Vendas extends AppCompatActivity {
 
     private String nomeComanda;
     private Spinner spnProdutos;
+    private EditText editQtde;
+    private EditText editDesconto;
+    private EditText editAcrescimo;
     private TextView txtValorTotal;
+    private Produto aux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,9 @@ public class Vendas extends AppCompatActivity {
         autoNome = (AutoCompleteTextView) findViewById(R.id.autoNome);
         spnProdutos = (Spinner) findViewById(R.id.spnProdutos);
         txtValorTotal = (TextView) findViewById(R.id.txtValorTotal);
+        editQtde = (EditText) findViewById(R.id.editQtde);
+        editDesconto = (EditText) findViewById(R.id.editDesconto);
+        editAcrescimo = (EditText) findViewById(R.id.editAcrescimo);
 
         if(this.conexaoBD())
         {
@@ -56,6 +69,157 @@ public class Vendas extends AppCompatActivity {
             adpTodosProdutos = ProdutoDAO.getProduto(this,conn,1);
             spnProdutos.setAdapter(adpTodosProdutos);
 
+            spnProdutos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    if(position>0) {
+                        aux = adpTodosProdutos.getItem(position);
+
+                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        {
+                            Double desconto;
+                            Double acrescimo;
+                            Double valorTotal;
+
+                            int quantidade = Integer.valueOf(editQtde.getText().toString());
+
+                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                                desconto = Double.valueOf(editDesconto.getText().toString());
+                            else
+                                desconto = (double) 0;
+
+                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
+                            else
+                                acrescimo = (double) 0;
+
+                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+
+                            txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
+                        }
+                    }
+                    else
+                        txtValorTotal.setText("");
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+
+            editQtde.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {}
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // TODO Auto-generated method stub
+                    if(aux!=null)
+                    {
+                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        {
+                            Double desconto;
+                            Double acrescimo;
+                            Double valorTotal;
+
+                            int quantidade = Integer.valueOf(editQtde.getText().toString());
+
+                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                                desconto = Double.valueOf(editDesconto.getText().toString());
+                            else
+                                desconto = (double) 0;
+
+                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
+                            else
+                                acrescimo = (double) 0;
+
+                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+
+                            txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
+                        }
+                        else
+                            txtValorTotal.setText("");
+                    }
+                    else
+                        txtValorTotal.setText("");
+                }
+            });
+
+            editDesconto.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {}
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // TODO Auto-generated method stub
+                    if(aux!=null)
+                    {
+                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        {
+                            Double desconto;
+                            Double acrescimo;
+                            Double valorTotal;
+
+                            int quantidade = Integer.valueOf(editQtde.getText().toString());
+
+                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                                desconto = Double.valueOf(editDesconto.getText().toString());
+                            else
+                                desconto = (double) 0;
+
+                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
+                            else
+                                acrescimo = (double) 0;
+
+                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+
+                            txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
+                        }
+                        else
+                            txtValorTotal.setText("");
+                    }
+                    else
+                        txtValorTotal.setText("");
+                }
+            });
+
+            editAcrescimo.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {}
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // TODO Auto-generated method stub
+                    if(aux!=null)
+                    {
+                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        {
+                            Double desconto;
+                            Double acrescimo;
+                            Double valorTotal;
+
+                            int quantidade = Integer.valueOf(editQtde.getText().toString());
+
+                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                                desconto = Double.valueOf(editDesconto.getText().toString());
+                            else
+                                desconto = (double) 0;
+
+                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
+                            else
+                                acrescimo = (double) 0;
+
+                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+
+                            txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
+                        }
+                        else
+                            txtValorTotal.setText("");
+                    }
+                    else
+                        txtValorTotal.setText("");
+                }
+            });
 
         }
 
