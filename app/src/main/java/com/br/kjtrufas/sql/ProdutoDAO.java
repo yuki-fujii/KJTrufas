@@ -58,7 +58,7 @@ public class ProdutoDAO {
 
         ArrayAdapter<Produto> retorno =  new ArrayAdapter<Produto>(context,android.R.layout.simple_list_item_1);
 
-        Cursor cursor = conn.query("PRODUTO", null, null, null, null, null, null);
+        Cursor cursor = conn.query("PRODUTO", null, null, null, null, null, "NOME");
 
         if (cursor.getCount() > 0)
         {

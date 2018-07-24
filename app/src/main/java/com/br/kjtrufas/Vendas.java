@@ -18,9 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.br.kjtrufas.entidades.Produto;
+import com.br.kjtrufas.entidades.Sabor;
 import com.br.kjtrufas.sql.ComandaDAO;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.ProdutoDAO;
+import com.br.kjtrufas.sql.SaborDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
 
 import com.br.kjtrufas.entidades.Comanda;
@@ -35,26 +37,29 @@ public class Vendas extends AppCompatActivity {
     private AutoCompleteTextView autoNome;
     private ArrayAdapter<String> adpTodasComandas;
     private ArrayAdapter<Produto> adpTodosProdutos;
+    private ArrayAdapter<Sabor> adpTodosSabores;
 
-    private String nomeComanda;
     private Spinner spnProdutos;
+    private Spinner spnSabores;
     private EditText editQtde;
     private EditText editDesconto;
     private EditText editAcrescimo;
     private TextView txtValorTotal;
-    private Produto aux;
+    private Produto auxProduto;
+    private Sabor auxSabor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendas);
 
-        autoNome = (AutoCompleteTextView) findViewById(R.id.autoNome);
-        spnProdutos = (Spinner) findViewById(R.id.spnProdutos);
-        txtValorTotal = (TextView) findViewById(R.id.txtValorTotal);
-        editQtde = (EditText) findViewById(R.id.editQtde);
-        editDesconto = (EditText) findViewById(R.id.editDesconto);
-        editAcrescimo = (EditText) findViewById(R.id.editAcrescimo);
+        autoNome = findViewById(R.id.autoNome);
+        spnProdutos = findViewById(R.id.spnProdutos);
+        spnSabores = findViewById(R.id.spnSabores);
+        txtValorTotal = findViewById(R.id.txtValorTotal);
+        editQtde = findViewById(R.id.editQtde);
+        editDesconto = findViewById(R.id.editDesconto);
+        editAcrescimo = findViewById(R.id.editAcrescimo);
 
         if(this.conexaoBD())
         {
@@ -69,14 +74,18 @@ public class Vendas extends AppCompatActivity {
             adpTodosProdutos = ProdutoDAO.getProduto(this,conn,1);
             spnProdutos.setAdapter(adpTodosProdutos);
 
+            adpTodosSabores = SaborDAO.getSabor(this,conn,1);
+            Log.i("adpTodosSabores",adpTodosSabores.getItem(1).getNome());
+            spnSabores.setAdapter(adpTodosSabores);
+
             spnProdutos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                     if(position>0) {
-                        aux = adpTodosProdutos.getItem(position);
+                        auxProduto = adpTodosProdutos.getItem(position);
 
-                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        if (editQtde.getText() != null && (!editQtde.getText().toString().equals("")))
                         {
                             Double desconto;
                             Double acrescimo;
@@ -84,17 +93,17 @@ public class Vendas extends AppCompatActivity {
 
                             int quantidade = Integer.valueOf(editQtde.getText().toString());
 
-                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
                                 desconto = Double.valueOf(editDesconto.getText().toString());
                             else
                                 desconto = (double) 0;
 
-                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                            if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
                                 acrescimo = Double.valueOf(editAcrescimo.getText().toString());
                             else
                                 acrescimo = (double) 0;
 
-                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+                            valorTotal = quantidade*auxProduto.getPreco()-desconto+acrescimo;
 
                             txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
                         }
@@ -107,15 +116,27 @@ public class Vendas extends AppCompatActivity {
                 }
             });
 
+            spnSabores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    if(position>0)
+                        auxSabor = adpTodosSabores.getItem(position);
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+
             editQtde.addTextChangedListener(new TextWatcher() {
                 public void afterTextChanged(Editable s) {}
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    // TODO Auto-generated method stub
-                    if(aux!=null)
+
+                    if(auxProduto!=null)
                     {
-                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        if (editQtde.getText() != null && (!editQtde.getText().toString().equals("")))
                         {
                             Double desconto;
                             Double acrescimo;
@@ -123,17 +144,17 @@ public class Vendas extends AppCompatActivity {
 
                             int quantidade = Integer.valueOf(editQtde.getText().toString());
 
-                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
                                 desconto = Double.valueOf(editDesconto.getText().toString());
                             else
                                 desconto = (double) 0;
 
-                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                            if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
                                 acrescimo = Double.valueOf(editAcrescimo.getText().toString());
                             else
                                 acrescimo = (double) 0;
 
-                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+                            valorTotal = quantidade*auxProduto.getPreco()-desconto+acrescimo;
 
                             txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
                         }
@@ -150,10 +171,10 @@ public class Vendas extends AppCompatActivity {
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    // TODO Auto-generated method stub
-                    if(aux!=null)
+
+                    if(auxProduto!=null)
                     {
-                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        if (editQtde.getText() != null && (!editQtde.getText().toString().equals("")))
                         {
                             Double desconto;
                             Double acrescimo;
@@ -161,17 +182,17 @@ public class Vendas extends AppCompatActivity {
 
                             int quantidade = Integer.valueOf(editQtde.getText().toString());
 
-                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
                                 desconto = Double.valueOf(editDesconto.getText().toString());
                             else
                                 desconto = (double) 0;
 
-                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                            if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
                                 acrescimo = Double.valueOf(editAcrescimo.getText().toString());
                             else
                                 acrescimo = (double) 0;
 
-                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+                            valorTotal = quantidade*auxProduto.getPreco()-desconto+acrescimo;
 
                             txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
                         }
@@ -188,10 +209,10 @@ public class Vendas extends AppCompatActivity {
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    // TODO Auto-generated method stub
-                    if(aux!=null)
+
+                    if(auxProduto!=null)
                     {
-                        if (editQtde.getText().toString() != null && (!editQtde.getText().toString().equals("")))
+                        if (editQtde.getText() != null && (!editQtde.getText().toString().equals("")))
                         {
                             Double desconto;
                             Double acrescimo;
@@ -199,17 +220,17 @@ public class Vendas extends AppCompatActivity {
 
                             int quantidade = Integer.valueOf(editQtde.getText().toString());
 
-                            if (editDesconto.getText().toString() != null && (!editDesconto.getText().toString().equals("")))
+                            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
                                 desconto = Double.valueOf(editDesconto.getText().toString());
                             else
                                 desconto = (double) 0;
 
-                            if (editAcrescimo.getText().toString() != null && (!editAcrescimo.getText().toString().equals("")))
+                            if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
                                 acrescimo = Double.valueOf(editAcrescimo.getText().toString());
                             else
                                 acrescimo = (double) 0;
 
-                            valorTotal = quantidade*aux.getPreco()-desconto+acrescimo;
+                            valorTotal = quantidade*auxProduto.getPreco()-desconto+acrescimo;
 
                             txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
                         }

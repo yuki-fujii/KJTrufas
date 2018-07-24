@@ -13,63 +13,59 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.br.kjtrufas.entidades.Produto;
+import com.br.kjtrufas.entidades.Sabor;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.ProdutoDAO;
+import com.br.kjtrufas.sql.SaborDAO;
 
-public class CadastroProduto extends AppCompatActivity {
+public class CadastroSabor extends AppCompatActivity {
 
     private DataBase dataBase;
     private SQLiteDatabase conn;
 
-    private Spinner spnProduto;
-    private ArrayAdapter<Produto> adpTodosProdutos;
-    private EditText nomeProduto;
-    private EditText preco;
+    private Spinner spnSabor;
+    private ArrayAdapter<Sabor> adpTodosSabores;
+    private EditText nomeSabor;
     private CheckBox ativo;
     private String msgError;
-    private Produto produto;
+    private Sabor sabor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_produto);
+        setContentView(R.layout.activity_cadastro_sabor);
 
-        spnProduto = findViewById(R.id.spnProdutos);
-        nomeProduto = findViewById(R.id.editNomeProduto);
-        preco = findViewById(R.id.editPreco);
-        ativo = findViewById(R.id.cbxProdutoAtivo);
+        spnSabor = findViewById(R.id.spnSabores);
+        nomeSabor = findViewById(R.id.editNomeSabor);
+        ativo = findViewById(R.id.cbxSaborAtivo);
 
         if(conexaoBD())
         {
-            adpTodosProdutos = ProdutoDAO.getProduto(this, conn,0);
-            spnProduto.setAdapter(adpTodosProdutos);
+            adpTodosSabores = SaborDAO.getSabor(this, conn,0);
+            spnSabor.setAdapter(adpTodosSabores);
 
-            spnProduto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            spnSabor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                     if(position>0)
                     {
-                        produto = adpTodosProdutos.getItem(position);
-                        nomeProduto.setText(produto.getNome());
-                        preco.setText(String.valueOf(produto.getPreco()));
-                        if(produto.getAtivo()==1)
+                        sabor = adpTodosSabores.getItem(position);
+                        nomeSabor.setText(sabor.getNome());
+                        if(sabor.getAtivo()==1)
                             ativo.setChecked(true);
                         else
                             ativo.setChecked(false);
                     }
                     else
                     {
-                        nomeProduto.setText("");
-                        preco.setText("");
+                        nomeSabor.setText("");
                         ativo.setChecked(false);
                     }
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                 }
-
             });
         }
     }
@@ -90,11 +86,11 @@ public class CadastroProduto extends AppCompatActivity {
 
     }
 
-    public void salvarProduto(View view) {
+    public void salvarSabor(View view) {
 
         if (validarCampos())
         {
-            ProdutoDAO.upsert(produto, conn);
+            SaborDAO.upsert(sabor, conn);
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -111,7 +107,7 @@ public class CadastroProduto extends AppCompatActivity {
             };
 
             AlertDialog.Builder dlg = new AlertDialog.Builder(this);
-            dlg.setMessage("Adicionar outro produto?").setPositiveButton("Sim", dialogClickListener).setNegativeButton("Não", dialogClickListener);
+            dlg.setMessage("Adicionar outro sabor?").setPositiveButton("Sim", dialogClickListener).setNegativeButton("Não", dialogClickListener);
             dlg.show();
         }
         else
@@ -124,40 +120,36 @@ public class CadastroProduto extends AppCompatActivity {
 
     }
 
-    public void exluirProduto(View view)
+    public void exluirSabor(View view)
     {
         if(validarCampos())
         {
-            ProdutoDAO.delete(produto.getNome(),conn);
+            ProdutoDAO.delete(sabor.getNome(),conn);
         }
     }
 
     private boolean validarCampos()
     {
-        if(nomeProduto.getText()==null || nomeProduto.getText().toString().equals(""))
+        if(nomeSabor.getText()==null || nomeSabor.getText().toString().equals(""))
         {
-            msgError = "Preencha o campo Produto";
+            msgError = "Preencha o campo Sabor";
             return false;
         }
 
-        if(preco.getText()==null || preco.getText().toString().equals(""))
-        {
-            msgError = "Preencha o campo Preço";
-            return false;
-        }
-
-        produto = new Produto(nomeProduto.getText().toString(),Double.valueOf(preco.getText().toString()),0);
+        sabor = new Sabor(nomeSabor.getText().toString(),0);
 
         if(ativo.isChecked())
-            produto.setAtivo(1);
+            sabor.setAtivo(1);
 
         return true;
     }
 
     public void atualizarTela()
     {
-        Intent it = new Intent(this, CadastroProduto.class);
+        Intent it = new Intent(this, CadastroSabor.class);
         startActivityForResult(it, 0);
         finish();
     }
+
+
 }
