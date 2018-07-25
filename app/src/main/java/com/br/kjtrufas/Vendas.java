@@ -283,14 +283,9 @@ public class Vendas extends AppCompatActivity {
         }
         else {
             if(cbxPago.isChecked())
-            {
-                Log.i("Saldo","0.0");
                 comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(),0.0);
-            }
-            else {
-                Log.i("Saldo","valorTotal");
+            else
                 comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), calcularTotal());
-            }
         }
 
         Log.i("Comanda saldo",""+comanda.getSaldo());
