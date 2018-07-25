@@ -40,6 +40,7 @@ public class Vendas extends AppCompatActivity {
     private ArrayAdapter<Produto> adpTodosProdutos;
     private ArrayAdapter<Sabor> adpTodosSabores;
     private Double valorTotal;
+    private Comanda comanda;
 
     private Spinner spnProdutos;
     private Spinner spnSabores;
@@ -50,6 +51,9 @@ public class Vendas extends AppCompatActivity {
     private TextView txtValorTotal;
     private Produto auxProduto;
     private Sabor auxSabor;
+
+    private boolean possuiCreditos;
+    private boolean desconto100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,21 @@ public class Vendas extends AppCompatActivity {
             adpTodosSabores = SaborDAO.getSabor(this,conn,1);
             spnSabores.setAdapter(adpTodosSabores);
 
+            autoNome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    comanda = ComandaDAO.getComanda(adpTodasComandas.getItem(position),conn);
+                    Log.i("A Receber",comanda.getAReceber()+"");
+
+                    if(comanda.getAReceber()<0) {
+                        Log.i("Entrou",String.valueOf(comanda.getAReceber()*(-1)));
+                        editDesconto.setText(String.valueOf(comanda.getAReceber()*(-1)));
+                        possuiCreditos = true;
+                        editDesconto.setFocusable(false);
+                    }
+                }
+            });
+
             spnProdutos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,7 +108,21 @@ public class Vendas extends AppCompatActivity {
                         auxProduto = adpTodosProdutos.getItem(position);
 
                         if(calcularTotal()!=null)
-                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
+                        {
+                            if(possuiCreditos)
+                            {
+                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal() + comanda.getAReceber())));
+                                if((calcularTotal() + comanda.getAReceber())<=0)
+                                {
+                                    cbxPago.setChecked(true);
+                                    desconto100 = true;
+                                }
+                                else
+                                    desconto100= false;
+                            }
+                            else
+                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
+                        }
                         else
                             txtValorTotal.setText("");
                     }
@@ -121,27 +154,20 @@ public class Vendas extends AppCompatActivity {
 
                     if(auxProduto!=null)
                     {
-                        if (editQtde.getText() != null && (!editQtde.getText().toString().equals("")))
-                        {
-                            Double desconto;
-                            Double acrescimo;
-                            Double valorTotal;
-
-                            int quantidade = Integer.valueOf(editQtde.getText().toString());
-
-                            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
-                                desconto = Double.valueOf(editDesconto.getText().toString());
+                        if(calcularTotal()!=null) {
+                            if(possuiCreditos)
+                            {
+                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal() + comanda.getAReceber())));
+                                if((calcularTotal() + comanda.getAReceber())<=0)
+                                {
+                                    cbxPago.setChecked(true);
+                                    desconto100 = true;
+                                }
+                                else
+                                    desconto100= false;
+                            }
                             else
-                                desconto = (double) 0;
-
-                            if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
-                                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
-                            else
-                                acrescimo = (double) 0;
-
-                            valorTotal = quantidade*auxProduto.getPreco()-desconto+acrescimo;
-
-                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
+                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
                         }
                         else
                             txtValorTotal.setText("");
@@ -159,28 +185,8 @@ public class Vendas extends AppCompatActivity {
 
                     if(auxProduto!=null)
                     {
-                        if (editQtde.getText() != null && (!editQtde.getText().toString().equals("")))
-                        {
-                            Double desconto;
-                            Double acrescimo;
-                            Double valorTotal;
-
-                            int quantidade = Integer.valueOf(editQtde.getText().toString());
-
-                            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
-                                desconto = Double.valueOf(editDesconto.getText().toString());
-                            else
-                                desconto = (double) 0;
-
-                            if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
-                                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
-                            else
-                                acrescimo = (double) 0;
-
-                            valorTotal = quantidade*auxProduto.getPreco()-desconto+acrescimo;
-
-                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
-                        }
+                        if(calcularTotal()!=null)
+                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
                         else
                             txtValorTotal.setText("");
                     }
@@ -197,28 +203,8 @@ public class Vendas extends AppCompatActivity {
 
                     if(auxProduto!=null)
                     {
-                        if (editQtde.getText() != null && (!editQtde.getText().toString().equals("")))
-                        {
-                            Double desconto;
-                            Double acrescimo;
-                            Double valorTotal;
-
-                            int quantidade = Integer.valueOf(editQtde.getText().toString());
-
-                            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
-                                desconto = Double.valueOf(editDesconto.getText().toString());
-                            else
-                                desconto = (double) 0;
-
-                            if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
-                                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
-                            else
-                                acrescimo = (double) 0;
-
-                            valorTotal = quantidade*auxProduto.getPreco()-desconto+acrescimo;
-
-                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(valorTotal)));
-                        }
+                        if(calcularTotal()!=null)
+                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
                         else
                             txtValorTotal.setText("");
                     }
@@ -257,7 +243,7 @@ public class Vendas extends AppCompatActivity {
 
             int quantidade = Integer.valueOf(editQtde.getText().toString());
 
-            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")))
+            if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")) && (!possuiCreditos))
                 desconto = Double.valueOf(editDesconto.getText().toString());
             else
                 desconto = (double) 0;
@@ -278,8 +264,11 @@ public class Vendas extends AppCompatActivity {
         Comanda comanda = ComandaDAO.getComanda(autoNome.getText().toString(),conn);
 
         if(comanda!=null) {
-            if(!cbxPago.isChecked())
-                comanda.setSaldo(comanda.getSaldo() + valorTotal);
+            if(!cbxPago.isChecked() || desconto100)
+                comanda.setAReceber(comanda.getAReceber() + calcularTotal());
+
+            if(cbxPago.isChecked() && (!desconto100))
+                comanda.setAReceber(0.0);
         }
         else {
             if(cbxPago.isChecked())
@@ -288,7 +277,9 @@ public class Vendas extends AppCompatActivity {
                 comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), calcularTotal());
         }
 
-        Log.i("Comanda saldo",""+comanda.getSaldo());
+
+
+        Log.i("Comanda saldo",""+comanda.getAReceber());
         ComandaDAO.upsert(comanda, conn);
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {

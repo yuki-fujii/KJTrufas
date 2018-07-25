@@ -2,25 +2,25 @@ package com.br.kjtrufas.entidades;
 
 public class Comanda {
 
-    private String id;
+    private int id;
     private String idVendedor;
     private String nome;
-    private Double saldo;
+    private Double aReceber;
 
     public Comanda() {}
 
-    public Comanda(String n, String idVend, Double saldo)
+    public Comanda(String n, String idVend, Double aReceber)
     {
         this.setNome(n);
         this.setIdVendedor(idVend);
-        this.setSaldo(saldo);
+        this.setAReceber(aReceber);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,11 +40,11 @@ public class Comanda {
         this.nome = nome;
     }
 
-    public Double getSaldo() {
-        return saldo;
+    public Double getAReceber() {
+        return aReceber;
     }
 
-    public void setSaldo(Double saldo) {
-        this.saldo = saldo;
+    public void setAReceber(Double aReceber) {
+        this.aReceber = aReceber;
     }
 }

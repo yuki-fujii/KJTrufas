@@ -17,14 +17,12 @@ public class DataBase extends SQLiteOpenHelper implements Serializable
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        Log.i("AUX","Criou tabela Vendedor");
         db.execSQL(ScriptSQL.getVendedor());
-        Log.i("AUX","Criou tabela Vendedor");
         db.execSQL(ScriptSQL.getComanda());
         db.execSQL(ScriptSQL.getProduto());
         db.execSQL(ScriptSQL.getSabor());
         db.execSQL(ScriptSQL.getProdutoDisponivel());
-        db.execSQL(ScriptSQL.getVendido());
+        db.execSQL(ScriptSQL.getVendas());
     }
 
     @Override

@@ -21,7 +21,8 @@
         <activity android:name=".CadastroVendedor" />
         <activity android:name=".Vendas" />
         <activity android:name=".CadastroProduto" />
-        <activity android:name=".CadastroSabor"></activity>
+        <activity android:name=".CadastroSabor" />
+        <activity android:name=".ConsultarComanda"></activity>
     </application>
 
 </manifest>

@@ -17,7 +17,7 @@ public class ComandaDAO {
 
         values.put("ID_VENDEDOR",comanda.getIdVendedor());
         values.put("NOME",comanda.getNome());
-        values.put("SALDO",comanda.getSaldo());
+        values.put("A_RECEBER",comanda.getAReceber());
 
         return values;
     }
@@ -82,10 +82,10 @@ public class ComandaDAO {
             cursor.moveToFirst();
 
                 retorno = new Comanda();
-                retorno.setId(cursor.getString(cursor.getColumnIndex("ID_COMANDA")));
+                retorno.setId(cursor.getInt(cursor.getColumnIndex("ID_COMANDA")));
                 retorno.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
-                retorno.setSaldo(cursor.getDouble(cursor.getColumnIndex("SALDO")));
+                retorno.setAReceber(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")));
         }
 
         return retorno;
