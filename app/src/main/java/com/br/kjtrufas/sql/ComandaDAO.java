@@ -17,15 +17,13 @@ public class ComandaDAO {
 
         values.put("ID_VENDEDOR",comanda.getIdVendedor());
         values.put("NOME",comanda.getNome());
+        values.put("SALDO",comanda.getSaldo());
 
         return values;
     }
 
     public static void upsert(Comanda comanda,SQLiteDatabase conn)
     {
-        Log.i("Inserindo",comanda.getNome());
-        Log.i("CONN",String.valueOf(conn));
-
         if(!hasComanda(comanda, conn))
         {
             Log.i("OPE","INSERT");
@@ -53,7 +51,7 @@ public class ComandaDAO {
         conn.delete("COMANDA","NOME = ? AND ID_VENDEDOR = ?",new String[]{nome,idVendedor});
     }
 
-    public static ArrayAdapter<String> getComanda(Context context,SQLiteDatabase conn) {
+    public static ArrayAdapter<String> getTodasComandas(Context context,SQLiteDatabase conn) {
 
         Log.i("ID Vendedor",VendedorDAO.getVendedor(conn).getId());
         ArrayAdapter<String> retorno =  new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
@@ -68,6 +66,26 @@ public class ComandaDAO {
                 Log.i("Comanda",cursor.getString(cursor.getColumnIndex("NOME")));
                 retorno.add(cursor.getString(cursor.getColumnIndex("NOME")));
             }while(cursor.moveToNext());
+        }
+
+        return retorno;
+    }
+
+    public static Comanda getComanda(String nome, SQLiteDatabase conn)
+    {
+        Comanda retorno = null;
+
+        Cursor cursor = conn.query("COMANDA",null,"NOME = ? AND ID_VENDEDOR = ?",new String[]{nome,VendedorDAO.getVendedor(conn).getId()},null,null,null);
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+
+                retorno = new Comanda();
+                retorno.setId(cursor.getString(cursor.getColumnIndex("ID_COMANDA")));
+                retorno.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
+                retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+                retorno.setSaldo(cursor.getDouble(cursor.getColumnIndex("SALDO")));
         }
 
         return retorno;

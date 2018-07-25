@@ -5,11 +5,15 @@ public class Comanda {
     private String id;
     private String idVendedor;
     private String nome;
+    private Double saldo;
 
-    public Comanda(String n, String idVend)
+    public Comanda() {}
+
+    public Comanda(String n, String idVend, Double saldo)
     {
         this.setNome(n);
         this.setIdVendedor(idVend);
+        this.setSaldo(saldo);
     }
 
     public String getId() {
@@ -34,5 +38,13 @@ public class Comanda {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
     }
 }

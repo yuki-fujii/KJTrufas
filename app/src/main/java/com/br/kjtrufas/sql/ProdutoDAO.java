@@ -66,7 +66,6 @@ public class ProdutoDAO {
             cursor.moveToFirst();
 
             do {
-                Log.i("Produto",cursor.getString(cursor.getColumnIndex("NOME")));
                 Produto aux = new Produto();
                 aux.setId(cursor.getString(cursor.getColumnIndex("ID_PRODUTO")));
                 aux.setNome(cursor.getString(cursor.getColumnIndex("NOME")));

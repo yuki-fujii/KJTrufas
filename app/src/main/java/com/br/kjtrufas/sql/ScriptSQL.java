@@ -28,7 +28,8 @@ public class ScriptSQL
         sqlBuilder.append("ID_COMANDA                      VARCHAR (10)");
         sqlBuilder.append("PRIMARY KEY                               , ");
         sqlBuilder.append("ID_VENDEDOR                  VARCHAR (10) , ");
-        sqlBuilder.append("NOME                         VARCHAR (35)   ");
+        sqlBuilder.append("NOME                         VARCHAR (35) , ");
+        sqlBuilder.append("SALDO                         DECIMAL(10,2) ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();

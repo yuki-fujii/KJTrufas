@@ -17,6 +17,8 @@ import com.br.kjtrufas.entidades.Produto;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.ProdutoDAO;
 
+import java.text.NumberFormat;
+
 public class CadastroProduto extends AppCompatActivity {
 
     private DataBase dataBase;
@@ -53,7 +55,7 @@ public class CadastroProduto extends AppCompatActivity {
                     {
                         produto = adpTodosProdutos.getItem(position);
                         nomeProduto.setText(produto.getNome());
-                        preco.setText(String.valueOf(produto.getPreco()));
+                        preco.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(produto.getPreco())));
                         if(produto.getAtivo()==1)
                             ativo.setChecked(true);
                         else
