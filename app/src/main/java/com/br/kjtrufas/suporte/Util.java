@@ -1,4 +1,4 @@
-package com.br.kjtrufas;
+package com.br.kjtrufas.suporte;
 
 import android.util.Log;
 

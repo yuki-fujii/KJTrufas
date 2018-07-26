@@ -4,10 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import com.br.kjtrufas.entidades.Venda;
+import com.br.kjtrufas.suporte.DadosComanda;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class VendaDAO {
 
@@ -56,10 +58,13 @@ public class VendaDAO {
         conn.delete("VENDA","ID_VENDA = ?",new String[]{id});
     }
 
-    public static ArrayAdapter<Venda> getVendas(Context context, String idComanda, SQLiteDatabase conn) {
+    public static DadosComanda getVendas(Context context, String idComanda, SQLiteDatabase conn) {
 
         Cursor cursor;
-        ArrayAdapter<Venda> retorno =  new ArrayAdapter<Venda>(context,android.R.layout.simple_list_item_1);
+
+        ArrayList<String> data = new ArrayList<String>();
+        ArrayList<String> descricao = new ArrayList<String>();
+        ArrayList<String> valor = new ArrayList<String>();
 
         if(idComanda!=null && !(idComanda.equals("")))
             cursor = conn.query("VENDA", null, "ID_COMANDA = ? AND ID_VENDEDOR = ? AND PAGO = ?", new String[]{idComanda, VendedorDAO.getVendedor(conn).getId(), "0"}, null, null, "DATA_VENDA  DESC");
@@ -72,23 +77,28 @@ public class VendaDAO {
 
             do {
                 Venda aux = new Venda();
-                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
-                aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
-                aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
-                aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
-                aux.setIdVendedor(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDEDOR"))));
-                aux.setQuantidade(cursor.getInt(cursor.getColumnIndex("QUANTIDADE")));
-                aux.setAcrescimo(cursor.getDouble(cursor.getColumnIndex("ACRESCIMO")));
-                aux.setDesconto(cursor.getDouble(cursor.getColumnIndex("DESCONTO")));
-                aux.setValorTotal(cursor.getDouble(cursor.getColumnIndex("VALOR_TOTAL")));
-                aux.setDataVenda(cursor.getString(cursor.getColumnIndex("DATA_VENDA")));
-                aux.setDescricao(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
-                aux.setPago(cursor.getInt(cursor.getColumnIndex("PAGO")));
+                //aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
+                //aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                //aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
+                //aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
+                //aux.setIdVendedor(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDEDOR"))));
+                //aux.setQuantidade(cursor.getInt(cursor.getColumnIndex("QUANTIDADE")));
+                //aux.setAcrescimo(cursor.getDouble(cursor.getColumnIndex("ACRESCIMO")));
+                //aux.setDesconto(cursor.getDouble(cursor.getColumnIndex("DESCONTO")));
+                valor.add(String.valueOf(NumberFormat.getCurrencyInstance().format(cursor.getDouble(cursor.getColumnIndex("VALOR_TOTAL")))));
+                data.add(cursor.getString(cursor.getColumnIndex("DATA_VENDA")));
+                descricao.add(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
+                //aux.setPago(cursor.getInt(cursor.getColumnIndex("PAGO")));
 
-                retorno.add(aux);
+                //retorno.add(aux);
 
             }while(cursor.moveToNext());
         }
+
+        DadosComanda retorno =  new DadosComanda(data.size());
+        retorno.setData(data.toArray(retorno.getData()));
+        retorno.setDescricao(descricao.toArray(retorno.getDescricao()));
+        retorno.setValor(valor.toArray(retorno.getValor()));
 
         return retorno;
     }

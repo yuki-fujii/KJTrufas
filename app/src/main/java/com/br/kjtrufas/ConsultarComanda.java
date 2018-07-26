@@ -17,6 +17,8 @@ import com.br.kjtrufas.entidades.Venda;
 import com.br.kjtrufas.sql.ComandaDAO;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.VendaDAO;
+import com.br.kjtrufas.suporte.CustomAdapterVendas;
+import com.br.kjtrufas.suporte.DadosComanda;
 
 import java.text.NumberFormat;
 
@@ -29,7 +31,7 @@ public class ConsultarComanda extends AppCompatActivity {
     private TextView txtConsultaAReceber;
     private ListView lstConsulta;
 
-    private ArrayAdapter<Venda> adpVendas;
+    private DadosComanda dadosComanda;
     private ArrayAdapter<String> adpTodasComandas;
     private Comanda comanda;
     private Context context;
@@ -55,8 +57,9 @@ public class ConsultarComanda extends AppCompatActivity {
                     comanda = ComandaDAO.getComanda(adpTodasComandas.getItem(position),conn);
                     txtConsultaAReceber.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(comanda.getAReceber())));
 
-                    adpVendas = VendaDAO.getVendas(context, comanda.getId(), conn);
-                    lstConsulta.setAdapter(adpVendas);
+                    dadosComanda = VendaDAO.getVendas(context, comanda.getId(), conn);
+                    CustomAdapterVendas customAdapterVendas = new CustomAdapterVendas(getApplicationContext(),dadosComanda);
+                    lstConsulta.setAdapter(customAdapterVendas);
                 }
             });
         }

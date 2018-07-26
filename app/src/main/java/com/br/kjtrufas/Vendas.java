@@ -29,6 +29,7 @@ import com.br.kjtrufas.sql.VendaDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
 
 import com.br.kjtrufas.entidades.Comanda;
+import com.br.kjtrufas.suporte.Util;
 
 import java.text.NumberFormat;
 
