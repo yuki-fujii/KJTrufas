@@ -2,7 +2,7 @@ package com.br.kjtrufas.entidades;
 
 public class Comanda {
 
-    private int id;
+    private String id;
     private String idVendedor;
     private String nome;
     private Double aReceber;
@@ -16,11 +16,11 @@ public class Comanda {
         this.setAReceber(aReceber);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

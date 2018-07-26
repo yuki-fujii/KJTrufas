@@ -20,10 +20,12 @@ import android.widget.TextView;
 
 import com.br.kjtrufas.entidades.Produto;
 import com.br.kjtrufas.entidades.Sabor;
+import com.br.kjtrufas.entidades.Venda;
 import com.br.kjtrufas.sql.ComandaDAO;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.ProdutoDAO;
 import com.br.kjtrufas.sql.SaborDAO;
+import com.br.kjtrufas.sql.VendaDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
 
 import com.br.kjtrufas.entidades.Comanda;
@@ -39,7 +41,6 @@ public class Vendas extends AppCompatActivity {
     private ArrayAdapter<String> adpTodasComandas;
     private ArrayAdapter<Produto> adpTodosProdutos;
     private ArrayAdapter<Sabor> adpTodosSabores;
-    private Double valorTotal;
     private Comanda comanda;
 
     private Spinner spnProdutos;
@@ -92,7 +93,6 @@ public class Vendas extends AppCompatActivity {
                     Log.i("A Receber",comanda.getAReceber()+"");
 
                     if(comanda.getAReceber()<0) {
-                        Log.i("Entrou",String.valueOf(comanda.getAReceber()*(-1)));
                         editDesconto.setText(String.valueOf(comanda.getAReceber()*(-1)));
                         possuiCreditos = true;
                         editDesconto.setFocusable(false);
@@ -111,7 +111,7 @@ public class Vendas extends AppCompatActivity {
                         {
                             if(possuiCreditos)
                             {
-                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal() + comanda.getAReceber())));
+                                txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal() + comanda.getAReceber())));
                                 if((calcularTotal() + comanda.getAReceber())<=0)
                                 {
                                     cbxPago.setChecked(true);
@@ -121,7 +121,7 @@ public class Vendas extends AppCompatActivity {
                                     desconto100= false;
                             }
                             else
-                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
+                                txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
                         }
                         else
                             txtValorTotal.setText("");
@@ -157,7 +157,7 @@ public class Vendas extends AppCompatActivity {
                         if(calcularTotal()!=null) {
                             if(possuiCreditos)
                             {
-                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal() + comanda.getAReceber())));
+                                txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal() + comanda.getAReceber())));
                                 if((calcularTotal() + comanda.getAReceber())<=0)
                                 {
                                     cbxPago.setChecked(true);
@@ -167,7 +167,7 @@ public class Vendas extends AppCompatActivity {
                                     desconto100= false;
                             }
                             else
-                                txtValorTotal.setText("R" + String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
+                                txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
                         }
                         else
                             txtValorTotal.setText("");
@@ -186,7 +186,7 @@ public class Vendas extends AppCompatActivity {
                     if(auxProduto!=null)
                     {
                         if(calcularTotal()!=null)
-                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
+                            txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
                         else
                             txtValorTotal.setText("");
                     }
@@ -204,7 +204,7 @@ public class Vendas extends AppCompatActivity {
                     if(auxProduto!=null)
                     {
                         if(calcularTotal()!=null)
-                            txtValorTotal.setText("R"+String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
+                            txtValorTotal.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(calcularTotal())));
                         else
                             txtValorTotal.setText("");
                     }
@@ -264,23 +264,43 @@ public class Vendas extends AppCompatActivity {
         Comanda comanda = ComandaDAO.getComanda(autoNome.getText().toString(),conn);
 
         if(comanda!=null) {
-            if(!cbxPago.isChecked() || desconto100)
+            if(!cbxPago.isChecked() || desconto100 || (cbxPago.isChecked() && calcularTotal()<0))
                 comanda.setAReceber(comanda.getAReceber() + calcularTotal());
 
-            if(cbxPago.isChecked() && (!desconto100))
+            if(cbxPago.isChecked() && (!desconto100) && possuiCreditos)
                 comanda.setAReceber(0.0);
         }
         else {
-            if(cbxPago.isChecked())
-                comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(),0.0);
+            if(cbxPago.isChecked() && calcularTotal()>=0)
+                comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), 0.0);
             else
                 comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), calcularTotal());
         }
 
-
-
         Log.i("Comanda saldo",""+comanda.getAReceber());
+
         ComandaDAO.upsert(comanda, conn);
+        comanda = ComandaDAO.getComanda(comanda.getNome(),conn);
+
+        Double desconto;
+        Double acrescimo;
+
+        if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")) && (!possuiCreditos))
+            desconto = Double.valueOf(editDesconto.getText().toString());
+        else
+            desconto = (double) 0;
+
+        if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
+            acrescimo = Double.valueOf(editAcrescimo.getText().toString());
+        else
+            acrescimo = (double) 0;
+
+        Venda novaVenda = new Venda(comanda.getId(), auxProduto.getNome(), auxSabor.getNome(),comanda.getIdVendedor(), Integer.valueOf(editQtde.getText().toString()),
+                                    acrescimo, desconto, calcularTotal(),
+                editQtde.getText().toString()+"x "+auxProduto.getNome(), Util.getDataAtual(), Util.converterBoolean(cbxPago.isChecked()));
+
+
+        VendaDAO.upsert(novaVenda, conn);
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

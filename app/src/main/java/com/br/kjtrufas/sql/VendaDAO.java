@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.br.kjtrufas.entidades.Venda;
 
@@ -39,6 +40,9 @@ public class VendaDAO {
 
     public static boolean hasVenda(Venda venda, SQLiteDatabase conn)
     {
+        if(venda.getId()==null)
+            return false;
+
         Cursor cursor = conn.query("VENDA",null,"ID_VENDA = ?",new String[]{venda.getId()},null,null,null);
 
         if (cursor.getCount()==0)

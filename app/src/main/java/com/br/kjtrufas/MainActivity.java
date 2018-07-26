@@ -48,8 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void chamarRealizarVendas (View view)
     {
-        Log.i("Chamou","RealizarVendas");
         Intent it = new Intent(this, Vendas.class);
+        startActivityForResult(it, 0);
+    }
+
+    public void chamarConsultarComanda (View view)
+    {
+        Intent it = new Intent(this, ConsultarComanda.class);
         startActivityForResult(it, 0);
     }
 

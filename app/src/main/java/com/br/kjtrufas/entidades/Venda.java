@@ -1,5 +1,7 @@
 package com.br.kjtrufas.entidades;
 
+import java.text.NumberFormat;
+
 public class Venda {
 
     private String id;
@@ -127,5 +129,10 @@ public class Venda {
 
     public void setPago(int pago) {
         this.pago = pago;
+    }
+
+    public String toString()
+    {
+        return getDataVenda()+" - "+getDescricao()+" - "+String.valueOf(NumberFormat.getCurrencyInstance().format(getValorTotal()));
     }
 }

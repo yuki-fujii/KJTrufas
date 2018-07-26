@@ -82,7 +82,7 @@ public class ComandaDAO {
             cursor.moveToFirst();
 
                 retorno = new Comanda();
-                retorno.setId(cursor.getInt(cursor.getColumnIndex("ID_COMANDA")));
+                retorno.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
                 retorno.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 retorno.setAReceber(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")));
