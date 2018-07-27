@@ -44,6 +44,15 @@
                 android:layout_weight="1"
                 android:completionThreshold="1" />
 
+            <Button
+                android:id="@+id/btnLimparConsulta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:layout_gravity="center_vertical"
+                android:onClick="limparConsulta"
+                android:text="Limpar" />
+
         </LinearLayout>
 
 

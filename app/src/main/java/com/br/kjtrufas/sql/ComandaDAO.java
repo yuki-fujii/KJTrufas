@@ -8,6 +8,12 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.br.kjtrufas.entidades.Comanda;
+import com.br.kjtrufas.entidades.Venda;
+import com.br.kjtrufas.suporte.DadosComandas;
+import com.br.kjtrufas.suporte.DadosVendas;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class ComandaDAO {
 
@@ -39,6 +45,16 @@ public class ComandaDAO {
     public static boolean hasComanda(Comanda comanda, SQLiteDatabase conn)
     {
         Cursor cursor = conn.query("COMANDA",null,"NOME = ? AND ID_VENDEDOR = ?",new String[]{comanda.getNome(),comanda.getIdVendedor()},null,null,null);
+
+        if (cursor.getCount()==0)
+            return false;
+        else
+            return true;
+    }
+
+    public static boolean hasComanda(String nome, SQLiteDatabase conn)
+    {
+        Cursor cursor = conn.query("COMANDA",null,"NOME = ? AND ID_VENDEDOR = ?",new String[]{nome,VendedorDAO.getVendedor(conn).getId()},null,null,null);
 
         if (cursor.getCount()==0)
             return false;
@@ -87,6 +103,31 @@ public class ComandaDAO {
                 retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 retorno.setAReceber(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")));
         }
+
+        return retorno;
+    }
+
+    public static DadosComandas getComandasAReceber(SQLiteDatabase conn)
+    {
+        ArrayList<String> nome = new ArrayList<String>();
+        ArrayList<String> valor = new ArrayList<String>();
+
+        Cursor cursor = conn.query("COMANDA", null, "A_RECEBER != ? AND ID_VENDEDOR = ?", new String[]{"0", VendedorDAO.getVendedor(conn).getId()}, null, null, "NOME");
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+
+            do {
+                valor.add(String.valueOf(NumberFormat.getCurrencyInstance().format(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")))));
+                nome.add(cursor.getString(cursor.getColumnIndex("NOME")));
+
+            }while(cursor.moveToNext());
+        }
+
+        DadosComandas retorno =  new DadosComandas(nome.size());
+        retorno.setNome(nome.toArray(retorno.getNome()));
+        retorno.setValor(valor.toArray(retorno.getValor()));
 
         return retorno;
     }

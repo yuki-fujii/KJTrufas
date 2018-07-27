@@ -5,8 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.Venda;
-import com.br.kjtrufas.suporte.DadosComanda;
+import com.br.kjtrufas.suporte.DadosVendas;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -58,18 +59,11 @@ public class VendaDAO {
         conn.delete("VENDA","ID_VENDA = ?",new String[]{id});
     }
 
-    public static DadosComanda getVendas(Context context, String idComanda, SQLiteDatabase conn) {
+    public static ArrayList<Venda> getVendasNaoPagas(Comanda comanda, SQLiteDatabase conn)
+    {
+        Cursor cursor = conn.query("VENDA", null, "ID_COMANDA = ? AND ID_VENDEDOR = ? AND PAGO = ?", new String[]{comanda.getId(), comanda.getIdVendedor(), "0"}, null, null, null);
 
-        Cursor cursor;
-
-        ArrayList<String> data = new ArrayList<String>();
-        ArrayList<String> descricao = new ArrayList<String>();
-        ArrayList<String> valor = new ArrayList<String>();
-
-        if(idComanda!=null && !(idComanda.equals("")))
-            cursor = conn.query("VENDA", null, "ID_COMANDA = ? AND ID_VENDEDOR = ? AND PAGO = ?", new String[]{idComanda, VendedorDAO.getVendedor(conn).getId(), "0"}, null, null, "DATA_VENDA  DESC");
-        else
-            cursor = conn.query("VENDA", null, "ID_VENDEDOR = ? AND PAGO = ?", new String[]{VendedorDAO.getVendedor(conn).getId(), "0"}, null, null, "DATA_VENDA  DESC");
+        ArrayList<Venda> retorno = new ArrayList<Venda>();
 
         if (cursor.getCount() > 0)
         {
@@ -77,25 +71,50 @@ public class VendaDAO {
 
             do {
                 Venda aux = new Venda();
-                //aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
-                //aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
-                //aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
-                //aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
-                //aux.setIdVendedor(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDEDOR"))));
-                //aux.setQuantidade(cursor.getInt(cursor.getColumnIndex("QUANTIDADE")));
-                //aux.setAcrescimo(cursor.getDouble(cursor.getColumnIndex("ACRESCIMO")));
-                //aux.setDesconto(cursor.getDouble(cursor.getColumnIndex("DESCONTO")));
-                valor.add(String.valueOf(NumberFormat.getCurrencyInstance().format(cursor.getDouble(cursor.getColumnIndex("VALOR_TOTAL")))));
-                data.add(cursor.getString(cursor.getColumnIndex("DATA_VENDA")));
-                descricao.add(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
-                //aux.setPago(cursor.getInt(cursor.getColumnIndex("PAGO")));
+                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
+                aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
+                aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
+                aux.setIdVendedor(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDEDOR"))));
+                aux.setQuantidade(cursor.getInt(cursor.getColumnIndex("QUANTIDADE")));
+                aux.setAcrescimo(cursor.getDouble(cursor.getColumnIndex("ACRESCIMO")));
+                aux.setDesconto(cursor.getDouble(cursor.getColumnIndex("DESCONTO")));
+                aux.setValorTotal(cursor.getDouble(cursor.getColumnIndex("VALOR_TOTAL")));
+                aux.setDataVenda(cursor.getString(cursor.getColumnIndex("DATA_VENDA")));
+                aux.setDescricao(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
+                aux.setPago(cursor.getInt(cursor.getColumnIndex("PAGO")));
 
-                //retorno.add(aux);
+                retorno.add(aux);
 
             }while(cursor.moveToNext());
         }
 
-        DadosComanda retorno =  new DadosComanda(data.size());
+        return retorno;
+    }
+
+    public static DadosVendas getVendasNaoPagas(Context context, String idComanda, SQLiteDatabase conn) {
+
+        Cursor cursor;
+
+        ArrayList<String> data = new ArrayList<String>();
+        ArrayList<String> descricao = new ArrayList<String>();
+        ArrayList<String> valor = new ArrayList<String>();
+
+        cursor = conn.query("VENDA", null, "ID_COMANDA = ? AND ID_VENDEDOR = ? AND PAGO = ?", new String[]{idComanda, VendedorDAO.getVendedor(conn).getId(), "0"}, null, null, "DATA_VENDA  DESC");
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+
+            do {
+                valor.add(String.valueOf(NumberFormat.getCurrencyInstance().format(cursor.getDouble(cursor.getColumnIndex("VALOR_TOTAL")))));
+                data.add(cursor.getString(cursor.getColumnIndex("DATA_VENDA")));
+                descricao.add(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
+
+            }while(cursor.moveToNext());
+        }
+
+        DadosVendas retorno =  new DadosVendas(data.size());
         retorno.setData(data.toArray(retorno.getData()));
         retorno.setDescricao(descricao.toArray(retorno.getDescricao()));
         retorno.setValor(valor.toArray(retorno.getValor()));

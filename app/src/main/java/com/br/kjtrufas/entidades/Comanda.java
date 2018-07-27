@@ -1,6 +1,8 @@
 package com.br.kjtrufas.entidades;
 
-public class Comanda {
+import java.io.Serializable;
+
+public class Comanda implements Serializable {
 
     private String id;
     private String idVendedor;

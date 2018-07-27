@@ -1,17 +1,12 @@
 package com.br.kjtrufas.suporte;
 
-import java.util.ArrayList;
-
-public class DadosComanda {
+public class DadosVendas {
 
     private String[] data;
     private String[] descricao;
     private String[] valor;
 
-    //String[] myArray = new String[a.size()];
-    //a.toArray(myArray);
-
-    public DadosComanda(int size)
+    public DadosVendas(int size)
     {
         data = new String[size];
         descricao = new String[size];

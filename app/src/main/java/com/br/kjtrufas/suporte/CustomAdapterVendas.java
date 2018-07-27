@@ -16,11 +16,11 @@ public class CustomAdapterVendas extends BaseAdapter {
     private String[] valor;
     LayoutInflater inflter;
 
-    public CustomAdapterVendas(Context applicationContext, DadosComanda dadosComanda) {
+    public CustomAdapterVendas(Context applicationContext, DadosVendas dadosVendas) {
         this.context = applicationContext;
-        this.data = dadosComanda.getData();
-        this.descricao = dadosComanda.getDescricao();
-        this.valor = dadosComanda.getValor();
+        this.data = dadosVendas.getData();
+        this.descricao = dadosVendas.getDescricao();
+        this.valor = dadosVendas.getValor();
         inflter = (LayoutInflater.from(applicationContext));
     }
 
