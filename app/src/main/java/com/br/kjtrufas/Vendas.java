@@ -32,6 +32,7 @@ import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.suporte.Util;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class Vendas extends AppCompatActivity {
 
@@ -300,8 +301,18 @@ public class Vendas extends AppCompatActivity {
                                     acrescimo, desconto, calcularTotal(),
                 editQtde.getText().toString()+"x "+auxProduto.getNome(), Util.getDataAtual(), Util.converterBoolean(cbxPago.isChecked()));
 
-
         VendaDAO.upsert(novaVenda, conn);
+
+        if(comanda.getAReceber()==0)
+        {
+            ArrayList<Venda> vendas = VendaDAO.getVendasNaoPagas(comanda,conn);
+
+            for(Venda v : vendas)
+            {
+                v.setPago(1);
+                VendaDAO.upsert(v,conn);
+            }
+        }
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

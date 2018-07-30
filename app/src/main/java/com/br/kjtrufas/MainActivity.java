@@ -2,6 +2,7 @@ package com.br.kjtrufas;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
         {
             return false;
         }
+
+    }
+
+    public void mostrarMeuNome (View view)
+    {
+        AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+        dlg.setMessage("Keila Maravilhosa!");
+        dlg.setNeutralButton("OK",null);
+        dlg.show();
 
     }
 }
