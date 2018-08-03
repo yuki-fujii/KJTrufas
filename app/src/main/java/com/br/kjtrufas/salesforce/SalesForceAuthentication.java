@@ -51,7 +51,6 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
 
             PostMethod post = new PostMethod(this.url);
             post.addParameters(this.params);
-            Log.i("Post", post.getName());
 
             httpclient.executeMethod(post);
 
@@ -59,9 +58,12 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
             InputStreamReader r = new InputStreamReader(inputStream);
             BufferedReader br = new BufferedReader(r);
 
-            String line = br.readLine();
+            String resposta = br.readLine();
 
-            Log.i("BUFFER",line);
+            Gson gson = new Gson();
+            Token token = gson.fromJson(resposta, Token.class);
+
+            Log.i("Access Token",token.getAccess_token());
 
             retorno = "true";
 
