@@ -2,20 +2,15 @@ package com.br.kjtrufas.salesforce;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.br.kjtrufas.entidades.Vendedor;
 import com.google.gson.Gson;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -27,8 +22,7 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
     private NameValuePair[] params;
     private String token;
 
-    // Construtor
-    public SalesForceAuthentication() {
+    public void SalesForceAuthentication() {
         List<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new NameValuePair("grant_type", "password"));
         list.add(new NameValuePair("client_id", "3MVG9oNqAtcJCF.HqArfHIZsNmM20XtQAU7iwxZDRy8dbsptEVZvLMsHS8iEbcSTW0m08.YMI1LgCmcrMJAUU"));
@@ -45,7 +39,7 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
 
         try {
 
-            SalesForceAuthentication salesForceAuthentication = new SalesForceAuthentication();
+            SalesForceAuthentication();
 
             HttpClient httpclient = new HttpClient();
 
