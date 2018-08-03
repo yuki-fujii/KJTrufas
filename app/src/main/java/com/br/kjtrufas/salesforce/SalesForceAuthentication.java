@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.br.kjtrufas.entidades.Vendedor;
+import com.google.gson.Gson;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -13,6 +14,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
 
-    private final String url = "https://test.salesforce.com/services/oauth2/token";
+    private final String url = "https://login.salesforce.com/services/oauth2/token";
     private NameValuePair[] params;
     private String token;
 
@@ -29,10 +31,10 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
     public SalesForceAuthentication() {
         List<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new NameValuePair("grant_type", "password"));
-        list.add(new NameValuePair("client_id", "3MVG9Vik22TUgUpjNpPYPiWTt9zk8DGzmpD4kjcaJxk.EEP2QfaRS15Sx8c797HvFJHWGWZIbfszYarumH0NK"));
-        list.add(new NameValuePair("client_secret", "3977891924462011028"));
-        list.add(new NameValuePair("username", "alcino.fujii@sotreq.com.homolog"));
-        list.add(new NameValuePair("password", "2sotreq123"));
+        list.add(new NameValuePair("client_id", "3MVG9oNqAtcJCF.HqArfHIZsNmM20XtQAU7iwxZDRy8dbsptEVZvLMsHS8iEbcSTW0m08.YMI1LgCmcrMJAUU"));
+        list.add(new NameValuePair("client_secret", "1898644700404922238"));
+        list.add(new NameValuePair("username", "kj.trufas.v2@force.com"));
+        list.add(new NameValuePair("password", "Hiroyuk1"));
 
         this.params = list.toArray(new NameValuePair[list.size()]);
     }
@@ -54,15 +56,13 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
             httpclient.executeMethod(post);
 
             InputStream inputStream = post.getResponseBodyAsStream();
+            InputStreamReader r = new InputStreamReader(inputStream);
+            BufferedReader br = new BufferedReader(r);
 
-            byte[] buffer = new byte[1024 * 1024 * 5];
-            String path = null;
-            int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                path = new String(buffer);
-            }
+            String line = br.readLine();
 
-            Log.i("JSON", path);
+            Log.i("BUFFER",line);
+
             retorno = "true";
 
         } catch (Exception e) {

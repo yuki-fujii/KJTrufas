@@ -27,4 +27,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'org.kie.modules:org-apache-commons-httpclient:6.2.0.CR2'
+    implementation files('src/lib/gson-2.2.jar')
 }
