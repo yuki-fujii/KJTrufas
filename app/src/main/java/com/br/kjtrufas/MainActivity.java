@@ -83,6 +83,6 @@ public class MainActivity extends AppCompatActivity {
         dlg.setNeutralButton("OK",null);
         dlg.show();
 
-        new SalesForceAuthentication().execute(VendedorDAO.getVendedor(conn));
+        new SalesForceAuthentication().execute(conn);
     }
 }

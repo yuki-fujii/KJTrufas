@@ -23,6 +23,7 @@ public class DataBase extends SQLiteOpenHelper implements Serializable
         db.execSQL(ScriptSQL.getSabor());
         db.execSQL(ScriptSQL.getProdutoDisponivel());
         db.execSQL(ScriptSQL.getVendas());
+        db.execSQL(ScriptSQL.getTokenSF());
     }
 
     @Override

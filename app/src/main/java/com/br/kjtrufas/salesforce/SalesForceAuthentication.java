@@ -1,9 +1,12 @@
 package com.br.kjtrufas.salesforce;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.br.kjtrufas.entidades.Token;
 import com.br.kjtrufas.entidades.Vendedor;
+import com.br.kjtrufas.sql.TokenDAO;
 import com.google.gson.Gson;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -16,11 +19,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
+public class SalesForceAuthentication extends AsyncTask<SQLiteDatabase,Void,String> {
 
     private final String url = "https://login.salesforce.com/services/oauth2/token";
     private NameValuePair[] params;
-    private String token;
+    private Token token;
+    private SQLiteDatabase conn;
 
     public void SalesForceAuthentication() {
         List<NameValuePair> list = new ArrayList<NameValuePair>();
@@ -33,11 +37,13 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
         this.params = list.toArray(new NameValuePair[list.size()]);
     }
 
-    protected String doInBackground(Vendedor... arg0) {
+    protected String doInBackground(SQLiteDatabase... arg0) {
 
         String retorno = "false";
 
         try {
+
+            conn = arg0[0];
 
             SalesForceAuthentication();
 
@@ -55,9 +61,7 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
             String resposta = br.readLine();
 
             Gson gson = new Gson();
-            Token token = gson.fromJson(resposta, Token.class);
-
-            Log.i("Access Token",token.getAccess_token());
+            token = gson.fromJson(resposta, Token.class);
 
             retorno = "true";
 
@@ -74,7 +78,13 @@ public class SalesForceAuthentication extends AsyncTask<Vendedor,Void,String> {
         Log.i("Result",result);
 
         if(result.equals("true"))
+        {
             Log.i("Resultado", "Login efetuado com sucesso!");
+            TokenDAO.upsert(token,conn);
+            Log.i("GET TOKEN",TokenDAO.getToken(conn).getAccess_token());
+
+            new SalesforceGet().execute(conn);
+        }
         else
             Log.i("Resultado", "Não foi possível conectar-se ao servidor! Por favor, tente mais tarde.");
     }

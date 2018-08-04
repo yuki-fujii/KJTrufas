@@ -1,4 +1,4 @@
-package com.br.kjtrufas.salesforce;
+package com.br.kjtrufas.entidades;
 
 public class Token
 {

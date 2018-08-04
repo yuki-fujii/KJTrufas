@@ -102,4 +102,20 @@ public class ScriptSQL
         return sqlBuilder.toString();
     }
 
+    public static String getTokenSF()
+    {
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append("CREATE TABLE IF NOT EXISTS TOKEN_SF (                        ");
+        sqlBuilder.append("ID                                            VARCHAR (300), ");
+        sqlBuilder.append("ACCESS_TOKEN                                  VARCHAR (300), ");
+        sqlBuilder.append("INTANCE_URL                                   VARCHAR (300), ");
+        sqlBuilder.append("TOKEN_TYPE                                    VARCHAR (300), ");
+        sqlBuilder.append("ISSUED_AT                                     VARCHAR (300), ");
+        sqlBuilder.append("SIGNATURE                                     VARCHAR (300)  ");
+        sqlBuilder.append(");");
+
+        return sqlBuilder.toString();
+    }
+
 }
