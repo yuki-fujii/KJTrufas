@@ -4,14 +4,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.br.kjtrufas.entidades.Token;
 import com.br.kjtrufas.sql.TokenDAO;
-import com.google.gson.Gson;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
