@@ -5,13 +5,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.br.kjtrufas.sql.TokenDAO;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class SalesforceGet extends AsyncTask<SQLiteDatabase,Void,String> {
 
@@ -26,19 +24,25 @@ public class SalesforceGet extends AsyncTask<SQLiteDatabase,Void,String> {
 
             conn = arg0[0];
 
-            HttpClient httpclient = new HttpClient();
+            URL url = new URL(TokenDAO.getToken(conn).getInstance_url()+this.url+"teste");
 
-            GetMethod get = new GetMethod(TokenDAO.getToken(conn).getInstance_url()+this.url+"teste");
-            get.addRequestHeader("Authorization","OAuth "+TokenDAO.getToken(conn).getAccess_token());
-            get.addRequestHeader("Content-Type","application/json");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Authorization","OAuth "+TokenDAO.getToken(conn).getAccess_token());
+            urlConnection.setRequestProperty("Content-Type", "application/json");
 
-            httpclient.executeMethod(get);
-
-            InputStream inputStream = get.getResponseBodyAsStream();
-            InputStreamReader r = new InputStreamReader(inputStream);
-            BufferedReader br = new BufferedReader(r);
-
-            String resposta = br.readLine();
+            InputStream inputStream;
+            // get stream
+            if (urlConnection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
+                inputStream = urlConnection.getInputStream();
+            } else {
+                inputStream = urlConnection.getErrorStream();
+            }
+            // parse stream
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String temp, resposta = "";
+            while ((temp = bufferedReader.readLine()) != null) {
+                resposta += temp;
+            }
 
             Log.i("GET TESTE", resposta);
 
