@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.br.kjtrufas.salesforce.SalesForceAuthentication;
+import com.br.kjtrufas.salesforce.SalesforcePost;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.VendedorDAO;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         if(conexaoBD())
         {
             VendedorDAO.upsert(novo,conn);
+            new SalesForceAuthentication().execute(conn);
         }
     }
 
@@ -83,6 +85,6 @@ public class MainActivity extends AppCompatActivity {
         dlg.setNeutralButton("OK",null);
         dlg.show();
 
-        new SalesForceAuthentication().execute(conn);
+        new SalesforcePost().execute(conn);
     }
 }
