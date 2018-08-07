@@ -13,7 +13,7 @@ public class VendedorDAO
     {
         ContentValues values = new ContentValues();
 
-        //values.put("ID_VENDEDOR",vendedor.getId());
+        values.put("ID_VENDEDOR",vendedor.getId());
         values.put("NOME",vendedor.getNome());
         values.put("LOGIN",vendedor.getLogin());
         values.put("SENHA",vendedor.getSenha());

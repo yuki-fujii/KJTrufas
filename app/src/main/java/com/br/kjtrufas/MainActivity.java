@@ -16,6 +16,7 @@ import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.VendedorDAO;
 
 import com.br.kjtrufas.entidades.Vendedor;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,10 +34,17 @@ public class MainActivity extends AppCompatActivity {
         btnRealizarVendas = (Button) findViewById(R.id.btnRealizarVendas);
 
         Vendedor novo = new Vendedor();
+        novo.setId("123456789012345678");
         novo.setNome("Alcino Fujii");
         novo.setLogin("yuki.fujii@hotmail.com");
         novo.setSenha("Hiroyuk1");
         novo.setConfSenha("Hiroyuk1");
+
+        Gson gson = new Gson();
+        String s = gson.toJson(novo);
+
+        Log.i("Vendedor",s);
+        //{"vendedor" : {"login":"yuki.fujii@hotmail.com","senha":"Hiroyuki"}}
 
         if(conexaoBD())
         {
