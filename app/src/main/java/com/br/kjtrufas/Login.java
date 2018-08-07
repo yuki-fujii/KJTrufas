@@ -1,5 +1,6 @@
 package com.br.kjtrufas;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,6 +34,7 @@ public class Login extends AppCompatActivity {
     private Boolean autenticacao = false;
     private Boolean hasConnection;
     private String msgError;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,11 @@ public class Login extends AppCompatActivity {
 
     private boolean validar()
     {
+        dialog = new ProgressDialog(context);
+        dialog.setTitle("Realizando o carregamento dos dados");
+        dialog.setMessage("Aguarde o fim da requisição...");
+        dialog.show();
+
         if(!this.autenticacao)
         {
             msgError = "Aguarde por alguns segundos e tente novamente.";
