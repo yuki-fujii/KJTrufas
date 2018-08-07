@@ -94,7 +94,5 @@ public class MainActivity extends AppCompatActivity {
         dlg.setNeutralButton("OK",null);
         dlg.show();
 
-        new SalesforcePost().execute(conn);
-        new SalesforceGet().execute(conn);
     }
 }

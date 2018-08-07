@@ -1,13 +1,12 @@
 package com.br.kjtrufas.salesforce;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.br.kjtrufas.entidades.EntidadePost;
 import com.br.kjtrufas.entidades.EnviarRegistro;
 import com.br.kjtrufas.sql.EnviarRegistroDAO;
 import com.br.kjtrufas.sql.TokenDAO;
-import com.google.gson.Gson;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -20,37 +19,32 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class SalesforcePost  extends AsyncTask<SQLiteDatabase,Void,String>
+public class SalesforcePost  extends AsyncTask<EntidadePost,Void,String>
 {
-    private SQLiteDatabase conn;
+    private EntidadePost entidadePost;
     private final String url = "/services/apexrest/";
 
-    protected String doInBackground(SQLiteDatabase... arg0) {
+    protected String doInBackground(EntidadePost... arg0) {
 
         String retorno = "false";
 
         try {
 
-            conn = arg0[0];
-            EnviarRegistro enviarRegistro = new EnviarRegistro();
-            enviarRegistro.setVendas(EnviarRegistroDAO.getVendas(conn));
+            entidadePost = arg0[0];
 
-            Gson gson = new Gson();
-            String jsonEnviar = gson.toJson(enviarRegistro);
-            jsonEnviar = "{\"jsonRecebido\" :"+jsonEnviar+"}";
+            //"{\"jsonRecebido\" :"
+            Log.i("JSON", entidadePost.getJson());
 
-            Log.i("JSON",jsonEnviar);
-
-            URL url = new URL(TokenDAO.getToken(conn).getInstance_url()+this.url+"teste");
+            URL url = new URL(TokenDAO.getToken(entidadePost.getConn()).getInstance_url()+this.url+entidadePost.getService());
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(true);
-            urlConnection.setRequestProperty("Authorization","OAuth "+TokenDAO.getToken(conn).getAccess_token());
+            urlConnection.setRequestProperty("Authorization","OAuth "+TokenDAO.getToken(entidadePost.getConn()).getAccess_token());
             urlConnection.setRequestProperty("Content-Type", "application/json");
 
             OutputStream outputStream = new BufferedOutputStream(urlConnection.getOutputStream());
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "utf-8"));
-            writer.write(jsonEnviar);
+            writer.write(entidadePost.getJson());
             writer.flush();
             writer.close();
             outputStream.close();
