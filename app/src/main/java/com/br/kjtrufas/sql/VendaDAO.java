@@ -21,7 +21,7 @@ public class VendaDAO {
         values.put("ID_COMANDA",Integer.valueOf(venda.getIdComanda()));
         values.put("PRODUTO",venda.getProduto());
         values.put("SABOR",venda.getSabor());
-        values.put("ID_VENDEDOR",Integer.valueOf(venda.getIdVendedor()));
+        values.put("ID_VENDEDOR",venda.getIdVendedor());
         values.put("QUANTIDADE",venda.getQuantidade());
         values.put("ACRESCIMO",venda.getAcrescimo());
         values.put("DESCONTO",venda.getDesconto());
