@@ -46,6 +46,13 @@ public class Login extends AppCompatActivity {
 
         conexaoBD();
 
+        if(VendedorDAO.getVendedor(conn)!=null)
+        {
+            Intent i = new Intent(Login.this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+
         if(hasConnection)
         {
             new SalesForceAuthentication().execute(conn);
@@ -77,6 +84,11 @@ public class Login extends AppCompatActivity {
     {
         if(validar())
         {
+            dialog = new ProgressDialog(context);
+            dialog.setTitle("Efetuando o login");
+            dialog.setMessage("Aguarde...");
+            dialog.show();
+
             Vendedor aux = new Vendedor();
             aux.setLogin(editEmailLogin.getText().toString());
             aux.setSenha(editSenhaLogin.getText().toString());
@@ -96,6 +108,8 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void run() {
 
+                    dialog.dismiss();
+
                     if(VendedorDAO.getVendedor(conn)==null || VendedorDAO.getVendedor(conn).getId().equals(""))
                     {
                         android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(context);
@@ -110,6 +124,7 @@ public class Login extends AppCompatActivity {
                         startActivity(i);
                         finish();
                     }
+
                 }
             }, SPLASH_TIME_OUT);
 
@@ -126,10 +141,6 @@ public class Login extends AppCompatActivity {
 
     private boolean validar()
     {
-        dialog = new ProgressDialog(context);
-        dialog.setTitle("Realizando o carregamento dos dados");
-        dialog.setMessage("Aguarde o fim da requisição...");
-        dialog.show();
 
         if(!this.autenticacao)
         {
@@ -140,6 +151,10 @@ public class Login extends AppCompatActivity {
         if(editEmailLogin.getText()==null || editEmailLogin.getText().toString().equals("")) {
             msgError = "Preencha o campo Email.";
             return false;
+        }
+        else
+        {
+            editEmailLogin.setText(editEmailLogin.getText().toString().toLowerCase());
         }
 
         if(editSenhaLogin.getText()==null || editSenhaLogin.getText().toString().equals("")) {

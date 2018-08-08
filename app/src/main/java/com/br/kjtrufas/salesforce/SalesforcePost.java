@@ -23,6 +23,7 @@ public class SalesforcePost  extends AsyncTask<EntidadePost,Void,String>
 {
     private EntidadePost entidadePost;
     private final String url = "/services/apexrest/";
+    private String resposta = "";
 
     protected String doInBackground(EntidadePost... arg0) {
 
@@ -58,7 +59,7 @@ public class SalesforcePost  extends AsyncTask<EntidadePost,Void,String>
             }
             // parse stream
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String temp, resposta = "";
+            String temp;
             while ((temp = bufferedReader.readLine()) != null) {
                 resposta += temp;
             }
@@ -81,7 +82,10 @@ public class SalesforcePost  extends AsyncTask<EntidadePost,Void,String>
         Log.i("Result",result);
 
         if(result.equals("true"))
+        {
             Log.i("Resultado", "Post realizado");
+            TratamentoRespostaPost.tratarResposta(entidadePost,resposta);
+        }
         else
             Log.i("Resultado", "Não foi possível conectar-se ao servidor! Por favor, tente mais tarde.");
     }
