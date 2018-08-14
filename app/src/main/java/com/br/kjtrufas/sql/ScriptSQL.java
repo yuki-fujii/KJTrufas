@@ -68,11 +68,11 @@ public class ScriptSQL
         Log.i("Erro","Criou get prod dis");
         StringBuilder sqlBuilder = new StringBuilder();
 
-        sqlBuilder.append("CREATE TABLE IF NOT EXISTS PRODUTO_DISPONIVEL (       ");
-        sqlBuilder.append("ID_PRODUTO_DISPONIVEL INTEGER PRIMARY KEY AUTOINCREMENT, ");
-        sqlBuilder.append("ID_SABOR                                  VARCHAR (10) , ");
-        sqlBuilder.append("ID_PRODUTO                                VARCHAR (10) , ");
-        sqlBuilder.append("ID_VENDEDOR                               VARCHAR (10) , ");
+        sqlBuilder.append("CREATE TABLE IF NOT EXISTS PRODUTO_DISPONIVEL (          ");
+        sqlBuilder.append("ID_PRODUTO_DISPONIVEL                     VARCHAR (18) , ");
+        sqlBuilder.append("SABOR                                     VARCHAR (30) , ");
+        sqlBuilder.append("PRODUTO                                   VARCHAR (30) , ");
+        sqlBuilder.append("ID_VENDEDOR                               VARCHAR (18) , ");
         sqlBuilder.append("QUANTIDADE                                      INTEGER  ");
         sqlBuilder.append(");");
 
