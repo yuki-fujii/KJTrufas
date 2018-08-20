@@ -4,10 +4,17 @@ import java.util.ArrayList;
 
 public class EntidadesEncapsuladas
 {
-    private ArrayList<Produto> produtos = new ArrayList<Produto>();
-    private ArrayList<Sabor> sabores = new ArrayList<Sabor>();
-    private ArrayList<ProdutoDisponivel> produtosDisponiveis = new ArrayList<ProdutoDisponivel>();
+    private ArrayList<Produto> produtos;
+    private ArrayList<Sabor> sabores;
+    private ArrayList<ProdutoDisponivel> produtosDisponiveis;
     private Vendedor vendedor;
+
+    public EntidadesEncapsuladas ()
+    {
+        produtos = new ArrayList<Produto>();
+        sabores = new ArrayList<Sabor>();
+        produtosDisponiveis = new ArrayList<ProdutoDisponivel>();
+    }
 
     public ArrayList<Produto> getProdutos() {
         return produtos;

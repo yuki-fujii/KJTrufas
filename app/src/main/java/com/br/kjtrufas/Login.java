@@ -12,6 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.br.kjtrufas.entidades.EntidadePost;
+import com.br.kjtrufas.entidades.EntidadesEncapsuladas;
+import com.br.kjtrufas.entidades.Produto;
+import com.br.kjtrufas.entidades.ProdutoDisponivel;
+import com.br.kjtrufas.entidades.Sabor;
 import com.br.kjtrufas.entidades.Vendedor;
 import com.br.kjtrufas.salesforce.SalesForceAuthentication;
 import com.br.kjtrufas.salesforce.SalesforcePost;
@@ -40,6 +44,63 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Vendedor v = new Vendedor();
+        v.setNome("teste");
+        v.setLogin("teste@teste.com");
+        v.setSenha("Senha");
+        v.setConfSenha("Senha");
+        v.setId("ID");
+
+        Produto p = new Produto();
+        p.setId("id");
+        p.setNome("nome");
+        p.setPreco(1.0);
+        p.setAtivo(1);
+
+        Produto p2 = new Produto();
+        p2.setId("id2");
+        p2.setNome("nome2");
+        p2.setPreco(1.0);
+        p2.setAtivo(1);
+
+        Sabor s = new Sabor();
+        s.setId("id");
+        s.setNome("nome");
+        s.setAtivo(1);
+
+        Sabor s2 = new Sabor();
+        s2.setId("id2");
+        s2.setNome("nome2");
+        s2.setAtivo(2);
+
+        ProdutoDisponivel produtoDisponivel = new ProdutoDisponivel();
+        produtoDisponivel.setId("id");
+        produtoDisponivel.setIdVendedor("idVend");
+        produtoDisponivel.setProduto("prod");
+        produtoDisponivel.setSabor("sabor");
+        produtoDisponivel.setQuantidade(1);
+
+        ProdutoDisponivel produtoDisponivel2 = new ProdutoDisponivel();
+        produtoDisponivel2.setId("id2");
+        produtoDisponivel2.setIdVendedor("idVend2");
+        produtoDisponivel2.setProduto("prod2");
+        produtoDisponivel2.setSabor("sabor2");
+        produtoDisponivel2.setQuantidade(1);
+
+        EntidadesEncapsuladas entidadesEncapsuladas = new EntidadesEncapsuladas();
+        entidadesEncapsuladas.setVendedor(v);
+        entidadesEncapsuladas.getProdutos().add(p);
+        entidadesEncapsuladas.getProdutos().add(p2);
+        entidadesEncapsuladas.getSabores().add(s);
+        entidadesEncapsuladas.getSabores().add(s2);
+        entidadesEncapsuladas.getProdutosDisponiveis().add(produtoDisponivel);
+        entidadesEncapsuladas.getProdutosDisponiveis().add(produtoDisponivel2);
+
+        Gson g = new Gson();
+        String json = g.toJson(entidadesEncapsuladas);
+
+        Log.i("JSON",json);
 
         editEmailLogin = findViewById(R.id.editEmailLogin);
         editSenhaLogin = findViewById(R.id.editSenhaLogin);
