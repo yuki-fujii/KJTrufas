@@ -1,6 +1,7 @@
 package com.br.kjtrufas.suporte;
 
 import android.util.Log;
+import android.view.View;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,5 +25,10 @@ public class Util {
             return 1;
         else
             return 0;
+    }
+
+    public void integrarVendas (View view)
+    {
+
     }
 }

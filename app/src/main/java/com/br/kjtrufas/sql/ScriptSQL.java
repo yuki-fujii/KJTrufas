@@ -24,11 +24,12 @@ public class ScriptSQL
         Log.i("Erro","Criou get comanda");
         StringBuilder sqlBuilder = new StringBuilder();
 
-        sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (         ");
+        sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (          ");
         sqlBuilder.append("ID_COMANDA INTEGER PRIMARY KEY AUTOINCREMENT, ");
-        sqlBuilder.append("ID_VENDEDOR                         INTEGER , ");
+        sqlBuilder.append("ID_VENDEDOR                    VARCHAR (18) , ");
         sqlBuilder.append("NOME                           VARCHAR (35) , ");
-        sqlBuilder.append("A_RECEBER                       DECIMAL(10,2) ");
+        sqlBuilder.append("A_RECEBER                     DECIMAL(10,2) , ");
+        sqlBuilder.append("INTEGRAR                             INTEGER  ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();

@@ -24,6 +24,7 @@ public class ComandaDAO {
         values.put("ID_VENDEDOR",comanda.getIdVendedor());
         values.put("NOME",comanda.getNome());
         values.put("A_RECEBER",comanda.getAReceber());
+        values.put("A_RECEBER",comanda.getAReceber());
 
         return values;
     }

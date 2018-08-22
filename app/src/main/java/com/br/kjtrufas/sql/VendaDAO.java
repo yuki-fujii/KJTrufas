@@ -124,4 +124,38 @@ public class VendaDAO {
         return retorno;
     }
 
+    public static ArrayList<Venda> getVendasParaIntegrar(SQLiteDatabase conn)
+    {
+        Cursor cursor = conn.query("VENDA", null, "INTEGRAR = ? AND ID_VENDEDOR = ?", new String[]{"1", VendedorDAO.getVendedor(conn).getId()}, null, null, null);
+
+        ArrayList<Venda> retorno = new ArrayList<Venda>();
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+
+            do {
+                Venda aux = new Venda();
+                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
+                aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
+                aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
+                aux.setIdVendedor(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDEDOR"))));
+                aux.setQuantidade(cursor.getInt(cursor.getColumnIndex("QUANTIDADE")));
+                aux.setAcrescimo(cursor.getDouble(cursor.getColumnIndex("ACRESCIMO")));
+                aux.setDesconto(cursor.getDouble(cursor.getColumnIndex("DESCONTO")));
+                aux.setValorTotal(cursor.getDouble(cursor.getColumnIndex("VALOR_TOTAL")));
+                aux.setDataVenda(cursor.getString(cursor.getColumnIndex("DATA_VENDA")));
+                aux.setDescricao(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
+                aux.setPago(cursor.getInt(cursor.getColumnIndex("PAGO")));
+                aux.setIntegrar(cursor.getInt(cursor.getColumnIndex("INTEGRAR")));
+
+                retorno.add(aux);
+
+            }while(cursor.moveToNext());
+        }
+
+        return retorno;
+    }
+
 }

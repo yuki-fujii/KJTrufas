@@ -8,6 +8,7 @@ public class Comanda implements Serializable {
     private String idVendedor;
     private String nome;
     private Double aReceber;
+    private Integer integrar;
 
     public Comanda() {}
 
@@ -48,5 +49,13 @@ public class Comanda implements Serializable {
 
     public void setAReceber(Double aReceber) {
         this.aReceber = aReceber;
+    }
+
+    public Integer getIntegrar() {
+        return integrar;
+    }
+
+    public void setIntegrar(Integer integrar) {
+        this.integrar = integrar;
     }
 }

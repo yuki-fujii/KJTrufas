@@ -147,6 +147,7 @@ public class ConsultarComanda extends AppCompatActivity {
                     for(Venda v : vendas)
                     {
                         v.setPago(1);
+                        v.setIntegrar(1);
                         VendaDAO.upsert(v,conn);
                     }
                 }

@@ -299,7 +299,7 @@ public class Vendas extends AppCompatActivity {
 
         Venda novaVenda = new Venda(comanda.getId(), auxProduto.getNome(), auxSabor.getNome(),comanda.getIdVendedor(), Integer.valueOf(editQtde.getText().toString()),
                                     acrescimo, desconto, calcularTotal(),
-                editQtde.getText().toString()+"x "+auxProduto.getNome(), Util.getDataAtual(), Util.converterBoolean(cbxPago.isChecked()));
+                editQtde.getText().toString()+"x "+auxProduto.getNome(), Util.getDataAtual(), Util.converterBoolean(cbxPago.isChecked()),1);
 
         VendaDAO.upsert(novaVenda, conn);
 
