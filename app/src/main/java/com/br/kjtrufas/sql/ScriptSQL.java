@@ -96,7 +96,8 @@ public class ScriptSQL
         sqlBuilder.append("VALOR_TOTAL                               DECIMAL(10,2) , ");
         sqlBuilder.append("DATA_VENDA                                 VARCHAR (10) , ");
         sqlBuilder.append("DESCRICAO                                  VARCHAR (15) , ");
-        sqlBuilder.append("PAGO                                            INTEGER   ");
+        sqlBuilder.append("PAGO                                            INTEGER , ");
+        sqlBuilder.append("INTEGRAR                                        INTEGER   ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();

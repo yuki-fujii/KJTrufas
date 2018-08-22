@@ -29,6 +29,7 @@ public class VendaDAO {
         values.put("DATA_VENDA",venda.getDataVenda());
         values.put("DESCRICAO",venda.getDescricao());
         values.put("PAGO",venda.getPago());
+        values.put("INTEGRAR",venda.getIntegrar());
 
         return values;
     }
@@ -83,6 +84,7 @@ public class VendaDAO {
                 aux.setDataVenda(cursor.getString(cursor.getColumnIndex("DATA_VENDA")));
                 aux.setDescricao(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
                 aux.setPago(cursor.getInt(cursor.getColumnIndex("PAGO")));
+                aux.setIntegrar(cursor.getInt(cursor.getColumnIndex("INTEGRAR")));
 
                 retorno.add(aux);
 

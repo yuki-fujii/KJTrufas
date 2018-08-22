@@ -16,11 +16,12 @@ public class Venda {
     private String descricao;
     private String dataVenda;
     private int pago;
+    private int integrar;
 
     public Venda(){}
 
     public Venda(String idComanda, String produto, String sabor,String idVendedor, int quantidade, Double acrescimo, Double desconto, Double valorTotal,
-                 String descricao, String dataVenda, int pago)
+                 String descricao, String dataVenda, int pago, int integrar)
     {
         this.setIdComanda(idComanda);
         this.setProduto(produto);
@@ -33,6 +34,7 @@ public class Venda {
         this.setDescricao(descricao);
         this.setDataVenda(dataVenda);
         this.setPago(pago);
+        this.setIntegrar(integrar);
     }
 
     public String getId() {
@@ -134,5 +136,13 @@ public class Venda {
     public String toString()
     {
         return getDataVenda()+" - "+getDescricao()+" - "+String.valueOf(NumberFormat.getCurrencyInstance().format(getValorTotal()));
+    }
+
+    public int getIntegrar() {
+        return integrar;
+    }
+
+    public void setIntegrar(int integrar) {
+        this.integrar = integrar;
     }
 }
