@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 public class EnviarRegistro
 {
-    private ArrayList<Venda> vendas = new ArrayList<Venda>();
-    private ArrayList<Comanda> comandas = new ArrayList<Comanda>();
+    private ArrayList<Venda> vendas;
+    private ArrayList<Comanda> comandas;
 
-    public EnviarRegistro(){};
+    public EnviarRegistro()
+    {
+        vendas = new ArrayList<Venda>();
+        comandas = new ArrayList<Comanda>();
+    }
 
     public ArrayList<Venda> getVendas() {
         return vendas;
@@ -24,4 +28,5 @@ public class EnviarRegistro
     public void setComandas(ArrayList<Comanda> comandas) {
         this.comandas = comandas;
     }
+
 }
