@@ -25,6 +25,7 @@ public class ComandaDAO {
         values.put("NOME",comanda.getNome());
         values.put("A_RECEBER",comanda.getAReceber());
         values.put("A_RECEBER",comanda.getAReceber());
+        values.put("INTEGRAR",comanda.getIntegrar());
 
         return values;
     }
@@ -33,12 +34,12 @@ public class ComandaDAO {
     {
         if(!hasComanda(comanda, conn))
         {
-            Log.i("OPE","INSERT");
+            Log.i("Inserindo",comanda.toString());
             conn.insertOrThrow("COMANDA", null, preencherContentValues(comanda));
         }
         else
         {
-            Log.i("OPE","UPDATE");
+            Log.i("Atualizando",comanda.toString());
             conn.update("COMANDA",preencherContentValues(comanda),"NOME = ? AND ID_VENDEDOR = ?", new String[]{comanda.getNome(),comanda.getIdVendedor()});
         }
     }
@@ -129,6 +130,32 @@ public class ComandaDAO {
         DadosComandas retorno =  new DadosComandas(nome.size());
         retorno.setNome(nome.toArray(retorno.getNome()));
         retorno.setValor(valor.toArray(retorno.getValor()));
+
+        return retorno;
+    }
+
+    public static ArrayList<Comanda> getComandasParaIntegrar(SQLiteDatabase conn)
+    {
+        Cursor cursor = conn.query("COMANDA", null, "INTEGRAR = ? AND ID_VENDEDOR = ?", new String[]{"1", VendedorDAO.getVendedor(conn).getId()}, null, null, null);
+        ArrayList<Comanda> retorno = new ArrayList<Comanda>();
+
+        Log.i("Comandas",cursor.getCount()+"");
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+
+            do {
+                Comanda aux = new Comanda();
+                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
+                aux.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+                aux.setAReceber(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")));
+
+                retorno.add(aux);
+
+            }while(cursor.moveToNext());
+        }
 
         return retorno;
     }

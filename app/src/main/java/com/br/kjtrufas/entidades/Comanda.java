@@ -12,11 +12,12 @@ public class Comanda implements Serializable {
 
     public Comanda() {}
 
-    public Comanda(String n, String idVend, Double aReceber)
+    public Comanda(String n, String idVend, Double aReceber, Integer integrar)
     {
         this.setNome(n);
         this.setIdVendedor(idVend);
         this.setAReceber(aReceber);
+        this.setIntegrar(integrar);
     }
 
     public String getId() {
@@ -57,5 +58,11 @@ public class Comanda implements Serializable {
 
     public void setIntegrar(Integer integrar) {
         this.integrar = integrar;
+    }
+
+    public String toString()
+    {
+        String s = this.getNome()+ " - Integrar: "+getIntegrar();
+        return s;
     }
 }

@@ -266,6 +266,9 @@ public class Vendas extends AppCompatActivity {
         Comanda comanda = ComandaDAO.getComanda(autoNome.getText().toString(),conn);
 
         if(comanda!=null) {
+
+            comanda.setIntegrar(1);
+
             if(!cbxPago.isChecked() || desconto100 || (cbxPago.isChecked() && calcularTotal()<0))
                 comanda.setAReceber(comanda.getAReceber() + calcularTotal());
 
@@ -274,9 +277,9 @@ public class Vendas extends AppCompatActivity {
         }
         else {
             if(cbxPago.isChecked() && calcularTotal()>=0)
-                comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), 0.0);
+                comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), 0.0,1);
             else
-                comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), calcularTotal());
+                comanda = new Comanda(autoNome.getText().toString(), VendedorDAO.getVendedor(conn).getId(), calcularTotal(),1);
         }
 
         Log.i("Comanda saldo",""+comanda.getAReceber());

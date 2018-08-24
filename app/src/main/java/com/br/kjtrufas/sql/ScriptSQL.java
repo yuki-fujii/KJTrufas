@@ -25,7 +25,7 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (          ");
-        sqlBuilder.append("ID_COMANDA INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("ID_COMANDA                     VARCHAR (18) , ");
         sqlBuilder.append("ID_VENDEDOR                    VARCHAR (18) , ");
         sqlBuilder.append("NOME                           VARCHAR (35) , ");
         sqlBuilder.append("A_RECEBER                     DECIMAL(10,2) , ");
@@ -41,7 +41,7 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS PRODUTO (          ");
-        sqlBuilder.append("ID_PRODUTO INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("ID_PRODUTO                     VARCHAR (18) , ");
         sqlBuilder.append("NOME                           VARCHAR (30) , ");
         sqlBuilder.append("PRECO                         DECIMAL(10,2) , ");
         sqlBuilder.append("ATIVO                         INTEGER         ");
@@ -56,7 +56,7 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS SABOR (          ");
-        sqlBuilder.append("ID_SABOR INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("ID_SABOR                     VARCHAR (18) , ");
         sqlBuilder.append("NOME                         VARCHAR (30) , ");
         sqlBuilder.append("ATIVO                         INTEGER       ");
         sqlBuilder.append(");");
@@ -86,7 +86,7 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDA (                        ");
-        sqlBuilder.append("ID_VENDA               INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append("ID_VENDA                                   VARCHAR (18) , ");
         sqlBuilder.append("ID_COMANDA                                      INTEGER , ");
         sqlBuilder.append("PRODUTO                                    VARCHAR (30) , ");
         sqlBuilder.append("SABOR                                      VARCHAR (30) , ");
