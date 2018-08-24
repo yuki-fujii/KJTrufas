@@ -8,6 +8,7 @@ import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.EntidadePost;
 import com.br.kjtrufas.entidades.EnviarRegistro;
 import com.br.kjtrufas.entidades.Venda;
+import com.br.kjtrufas.salesforce.SalesforcePost;
 import com.br.kjtrufas.sql.ComandaDAO;
 import com.br.kjtrufas.sql.VendaDAO;
 import com.google.gson.Gson;
@@ -55,6 +56,8 @@ public class Util {
             entidadePost.setConn(conn);
             entidadePost.setService("registroWS");
             entidadePost.setJson(json);
+
+            new SalesforcePost().execute(entidadePost);
         }
 
     }
