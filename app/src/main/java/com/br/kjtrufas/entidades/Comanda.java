@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class Comanda implements Serializable {
 
-    private String id;
+    private String idMobile;
+    private String idSalesforce;
     private String idVendedor;
     private String nome;
     private Double aReceber;
@@ -21,11 +22,11 @@ public class Comanda implements Serializable {
     }
 
     public String getId() {
-        return id;
+        return idMobile;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.idMobile = id;
     }
 
     public String getIdVendedor() {
@@ -64,5 +65,13 @@ public class Comanda implements Serializable {
     {
         String s = this.getNome()+ " - Integrar: "+getIntegrar();
         return s;
+    }
+
+    public String getIdSalesforce() {
+        return idSalesforce;
+    }
+
+    public void setIdSalesforce(String idSalesforce) {
+        this.idSalesforce = idSalesforce;
     }
 }

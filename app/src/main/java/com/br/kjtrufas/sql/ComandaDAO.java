@@ -21,11 +21,14 @@ public class ComandaDAO {
     {
         ContentValues values = new ContentValues();
 
+        if(comanda.getId()!=null)
+        values.put("ID_COMANDA",comanda.getId());
         values.put("ID_VENDEDOR",comanda.getIdVendedor());
         values.put("NOME",comanda.getNome());
         values.put("A_RECEBER",comanda.getAReceber());
         values.put("A_RECEBER",comanda.getAReceber());
         values.put("INTEGRAR",comanda.getIntegrar());
+        values.put("ID_SALESFORCE",comanda.getIdSalesforce());
 
         return values;
     }
@@ -46,7 +49,10 @@ public class ComandaDAO {
 
     public static boolean hasComanda(Comanda comanda, SQLiteDatabase conn)
     {
-        Cursor cursor = conn.query("COMANDA",null,"NOME = ? AND ID_VENDEDOR = ?",new String[]{comanda.getNome(),comanda.getIdVendedor()},null,null,null);
+        if(comanda.getId()==null)
+            return false;
+
+        Cursor cursor = conn.query("COMANDA",null,"ID_COMANDA = ?",new String[]{comanda.getId()},null,null,null);
 
         if (cursor.getCount()==0)
             return false;
@@ -101,6 +107,7 @@ public class ComandaDAO {
 
                 retorno = new Comanda();
                 retorno.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                retorno.setIdSalesforce(cursor.getString(cursor.getColumnIndex("ID_SALESFORCE")));
                 retorno.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 retorno.setAReceber(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")));
@@ -148,6 +155,7 @@ public class ComandaDAO {
             do {
                 Comanda aux = new Comanda();
                 aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setIdSalesforce(cursor.getString(cursor.getColumnIndex("ID_SALESFORCE")));
                 aux.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 aux.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 aux.setAReceber(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")));

@@ -18,6 +18,7 @@ public class ProdutoDAO {
         values.put("NOME",produto.getNome());
         values.put("PRECO",produto.getPreco());
         values.put("ATIVO",produto.getAtivo());
+        values.put("ID_PRODUTO",produto.getId());
 
         return values;
     }

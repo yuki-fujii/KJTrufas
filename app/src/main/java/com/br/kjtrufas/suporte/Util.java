@@ -59,6 +59,8 @@ public class Util {
 
             new SalesforcePost().execute(entidadePost);
         }
+        else
+            Log.i("Resposta","não existem dados para serem integrados");
 
     }
 }

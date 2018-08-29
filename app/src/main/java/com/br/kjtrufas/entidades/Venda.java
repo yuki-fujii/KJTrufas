@@ -4,10 +4,11 @@ import java.text.NumberFormat;
 
 public class Venda {
 
-    private String id;
+    private String idMobile;
+    private String idSalesforce;
     private String idComanda;
-    private String produto;
-    private String sabor;
+    private String idProduto;
+    private String idSabor;
     private String idVendedor;
     private int quantidade;
     private Double acrescimo;
@@ -38,11 +39,11 @@ public class Venda {
     }
 
     public String getId() {
-        return id;
+        return idMobile;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.idMobile = id;
     }
 
     public String getIdComanda() {
@@ -54,19 +55,19 @@ public class Venda {
     }
 
     public String getProduto() {
-        return produto;
+        return idProduto;
     }
 
     public void setProduto(String produto) {
-        this.produto = produto;
+        this.idProduto = produto;
     }
 
     public String getSabor() {
-        return sabor;
+        return idSabor;
     }
 
     public void setSabor(String sabor) {
-        this.sabor = sabor;
+        this.idSabor = sabor;
     }
 
     public String getIdVendedor() {
@@ -144,5 +145,13 @@ public class Venda {
 
     public void setIntegrar(int integrar) {
         this.integrar = integrar;
+    }
+
+    public String getIdSalesforce() {
+        return idSalesforce;
+    }
+
+    public void setIdSalesforce(String idSalesforce) {
+        this.idSalesforce = idSalesforce;
     }
 }

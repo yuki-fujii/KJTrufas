@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.Venda;
@@ -18,6 +19,8 @@ public class VendaDAO {
     {
         ContentValues values = new ContentValues();
 
+        if(venda.getId()!=null)
+        values.put("ID_VENDA",Integer.valueOf(venda.getId()));
         values.put("ID_COMANDA",Integer.valueOf(venda.getIdComanda()));
         values.put("PRODUTO",venda.getProduto());
         values.put("SABOR",venda.getSabor());
@@ -30,6 +33,7 @@ public class VendaDAO {
         values.put("DESCRICAO",venda.getDescricao());
         values.put("PAGO",venda.getPago());
         values.put("INTEGRAR",venda.getIntegrar());
+        values.put("ID_SALESFORCE",venda.getIdSalesforce());
 
         return values;
     }
@@ -37,9 +41,13 @@ public class VendaDAO {
     public static void upsert(Venda venda,SQLiteDatabase conn)
     {
         if(!hasVenda(venda, conn))
-            conn.insertOrThrow("VENDA", null, preencherContentValues(venda));
-        else
-            conn.update("VENDA",preencherContentValues(venda),"ID_VENDA = ?", new String[]{venda.getId()});
+        {
+            Log.i("Ope","Insert");
+            conn.insertOrThrow("VENDA", null, preencherContentValues(venda));}
+        else {
+            Log.i("Ope","Update");
+            conn.update("VENDA", preencherContentValues(venda), "ID_VENDA = ?", new String[]{venda.getId()});
+        }
     }
 
     public static boolean hasVenda(Venda venda, SQLiteDatabase conn)
@@ -137,10 +145,10 @@ public class VendaDAO {
             do {
                 Venda aux = new Venda();
                 aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
+                aux.setIdVendedor(String.valueOf(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR"))));
                 aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
                 aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
                 aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
-                aux.setIdVendedor(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDEDOR"))));
                 aux.setQuantidade(cursor.getInt(cursor.getColumnIndex("QUANTIDADE")));
                 aux.setAcrescimo(cursor.getDouble(cursor.getColumnIndex("ACRESCIMO")));
                 aux.setDesconto(cursor.getDouble(cursor.getColumnIndex("DESCONTO")));
@@ -149,6 +157,7 @@ public class VendaDAO {
                 aux.setDescricao(cursor.getString(cursor.getColumnIndex("DESCRICAO")));
                 aux.setPago(cursor.getInt(cursor.getColumnIndex("PAGO")));
                 aux.setIntegrar(cursor.getInt(cursor.getColumnIndex("INTEGRAR")));
+                aux.setIdSalesforce(cursor.getString(cursor.getColumnIndex("ID_SALESFORCE")));
 
                 retorno.add(aux);
 

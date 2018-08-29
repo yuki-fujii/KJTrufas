@@ -5,9 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.br.kjtrufas.sql.DataBase;
+import com.br.kjtrufas.sql.VendedorDAO;
 import com.br.kjtrufas.suporte.Util;
 
 

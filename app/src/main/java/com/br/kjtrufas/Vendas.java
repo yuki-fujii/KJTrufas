@@ -300,7 +300,7 @@ public class Vendas extends AppCompatActivity {
         else
             acrescimo = (double) 0;
 
-        Venda novaVenda = new Venda(comanda.getId(), auxProduto.getNome(), auxSabor.getNome(),comanda.getIdVendedor(), Integer.valueOf(editQtde.getText().toString()),
+        Venda novaVenda = new Venda(comanda.getId(), auxProduto.getId(), auxSabor.getId(),VendedorDAO.getVendedor(conn).getId(), Integer.valueOf(editQtde.getText().toString()),
                                     acrescimo, desconto, calcularTotal(),
                 editQtde.getText().toString()+"x "+auxProduto.getNome(), Util.getDataAtual(), Util.converterBoolean(cbxPago.isChecked()),1);
 

@@ -46,7 +46,7 @@ public class CadastroVendedor extends AppCompatActivity {
 
     public void salvarVendedor(View view)
     {
-        newVendedor = new Vendedor(editNome.getText().toString(),
+        newVendedor = new Vendedor("2908",editNome.getText().toString(),
                 editLogin.getText().toString(),
                 editSenha.getText().toString(),
                 editConfSenha.getText().toString());

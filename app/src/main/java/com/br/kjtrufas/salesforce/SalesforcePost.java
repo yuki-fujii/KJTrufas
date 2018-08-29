@@ -79,8 +79,6 @@ public class SalesforcePost  extends AsyncTask<EntidadePost,Void,String>
     @Override
     protected void onPostExecute(String result) {
 
-        Log.i("Result",result);
-
         if(result.equals("true"))
         {
             Log.i("Resultado", "Post realizado");

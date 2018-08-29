@@ -17,6 +17,7 @@ public class SaborDAO {
 
         values.put("NOME",sabor.getNome());
         values.put("ATIVO",sabor.getAtivo());
+        values.put("ID_SABOR",sabor.getId());
 
         return values;
     }

@@ -24,12 +24,13 @@ public class ScriptSQL
         Log.i("Erro","Criou get comanda");
         StringBuilder sqlBuilder = new StringBuilder();
 
-        sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (          ");
-        sqlBuilder.append("ID_COMANDA                     VARCHAR (18) , ");
-        sqlBuilder.append("ID_VENDEDOR                    VARCHAR (18) , ");
-        sqlBuilder.append("NOME                           VARCHAR (35) , ");
-        sqlBuilder.append("A_RECEBER                     DECIMAL(10,2) , ");
-        sqlBuilder.append("INTEGRAR                             INTEGER  ");
+        sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (             ");
+        sqlBuilder.append("ID_COMANDA  INTEGER PRIMARY KEY AUTOINCREMENT , ");
+        sqlBuilder.append("ID_SALESFORCE                     VARCHAR (18) , ");
+        sqlBuilder.append("ID_VENDEDOR                       VARCHAR (18) , ");
+        sqlBuilder.append("NOME                              VARCHAR (35) , ");
+        sqlBuilder.append("A_RECEBER                        DECIMAL(10,2) , ");
+        sqlBuilder.append("INTEGRAR                                INTEGER  ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();
@@ -86,11 +87,12 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDA (                        ");
-        sqlBuilder.append("ID_VENDA                                   VARCHAR (18) , ");
+        sqlBuilder.append("ID_VENDA             INTEGER PRIMARY KEY AUTOINCREMENT , ");
+        sqlBuilder.append("ID_SALESFORCE                              VARCHAR (18) , ");
         sqlBuilder.append("ID_COMANDA                                      INTEGER , ");
         sqlBuilder.append("PRODUTO                                    VARCHAR (30) , ");
         sqlBuilder.append("SABOR                                      VARCHAR (30) , ");
-        sqlBuilder.append("ID_VENDEDOR                                     INTEGER , ");
+        sqlBuilder.append("ID_VENDEDOR                                VARCHAR (18) , ");
         sqlBuilder.append("QUANTIDADE                                      INTEGER , ");
         sqlBuilder.append("ACRESCIMO                                 DECIMAL(10,2) , ");
         sqlBuilder.append("DESCONTO                                  DECIMAL(10,2) , ");

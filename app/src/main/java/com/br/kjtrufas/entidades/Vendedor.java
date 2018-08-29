@@ -8,8 +8,9 @@ public class Vendedor
     private String senha;
     private String confSenha;
 
-    public Vendedor(String nome, String login, String senha, String confSenha)
+    public Vendedor(String id, String nome, String login, String senha, String confSenha)
     {
+        this.setId(id);
         this.setNome(nome);
         this.setLogin(login);
         this.setSenha(senha);
