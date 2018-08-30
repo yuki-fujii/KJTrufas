@@ -29,4 +29,25 @@ public class EnviarRegistro
         this.comandas = comandas;
     }
 
+    public String toString()
+    {
+        String ret = "";
+
+        for (Comanda c : getComandas())
+        {
+            ret = ret+c.toString2();
+            ret = ret+"\n";
+        }
+
+        ret = ret+"\n";
+
+        for (Venda v : getVendas())
+        {
+            ret=ret+v.toString2();
+            ret = ret+"\n";
+        }
+
+        return ret;
+    }
+
 }

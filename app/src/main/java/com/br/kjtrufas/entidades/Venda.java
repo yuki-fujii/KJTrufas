@@ -38,6 +38,14 @@ public class Venda {
         this.setIntegrar(integrar);
     }
 
+    public String toString2()
+    {
+        String ret = "\nProduto: "+getProduto()+"\nQuantidade: "+getQuantidade()+"\nSabor: "+getSabor()+"\nPago: "+getPago()+"\nIntegrar: "+getIntegrar()
+                +"\nID Salesforce: "+getIdSalesforce()+"\nID Vendedor: "+getIdVendedor();
+
+        return ret;
+    }
+
     public String getId() {
         return idMobile;
     }
@@ -154,4 +162,5 @@ public class Venda {
     public void setIdSalesforce(String idSalesforce) {
         this.idSalesforce = idSalesforce;
     }
+
 }

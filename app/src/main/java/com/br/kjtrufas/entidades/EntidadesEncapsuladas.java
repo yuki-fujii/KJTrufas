@@ -7,6 +7,7 @@ public class EntidadesEncapsuladas
     private ArrayList<Produto> produtos;
     private ArrayList<Sabor> sabores;
     private ArrayList<ProdutoDisponivel> produtosDisponiveis;
+    private EnviarRegistro registros;
     private Vendedor vendedor;
 
     public EntidadesEncapsuladas ()
@@ -46,5 +47,13 @@ public class EntidadesEncapsuladas
 
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
+    }
+
+    public EnviarRegistro getEnviarRegistro() {
+        return registros;
+    }
+
+    public void setEnviarRegistro(EnviarRegistro enviarRegistro) {
+        this.registros = enviarRegistro;
     }
 }

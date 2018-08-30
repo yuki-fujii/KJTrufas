@@ -21,6 +21,13 @@ public class Comanda implements Serializable {
         this.setIntegrar(integrar);
     }
 
+    public String toString2()
+    {
+        String ret = "\nNome: "+getNome()+"\nA receber: "+getAReceber()+"\nIntegrar: "+getIntegrar()+"\nId Salesforce: "+getIdSalesforce();
+
+        return ret;
+    }
+
     public String getId() {
         return idMobile;
     }

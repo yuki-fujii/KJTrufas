@@ -18,6 +18,7 @@ import com.br.kjtrufas.sql.ProdutoDisponivelDAO;
 import com.br.kjtrufas.sql.SaborDAO;
 import com.br.kjtrufas.sql.VendaDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
+import com.br.kjtrufas.suporte.Util;
 import com.google.gson.Gson;
 
 public class TratamentoRespostaPost
@@ -38,16 +39,14 @@ public class TratamentoRespostaPost
 
         for (Comanda c : enviarRegistro.getComandas())
         {
-            Log.i("Id",c.getId());
             ComandaDAO.upsert(c,conn);
         }
 
         for (Venda v : enviarRegistro.getVendas())
         {
+            v.setDataVenda(Util.convertDataSF(v.getDataVenda()));
             VendaDAO.upsert(v,conn);
         }
-
-        Log.i("registroResposta","Atualizado");
 
     }
 
@@ -80,6 +79,22 @@ public class TratamentoRespostaPost
             for (ProdutoDisponivel pd : entidadesEncapsuladas.getProdutosDisponiveis())
             {
                 ProdutoDisponivelDAO.upsert(pd,conn);
+            }
+        }
+
+        if(!entidadesEncapsuladas.getEnviarRegistro().getComandas().isEmpty())
+        {
+            for (Comanda c : entidadesEncapsuladas.getEnviarRegistro().getComandas())
+            {
+                ComandaDAO.upsert(c, conn);
+            }
+        }
+
+        if(!entidadesEncapsuladas.getEnviarRegistro().getVendas().isEmpty())
+        {
+            for (Venda v : entidadesEncapsuladas.getEnviarRegistro().getVendas()) {
+                v.setDataVenda(Util.convertDataSF(v.getDataVenda()));
+                VendaDAO.upsert(v, conn);
             }
         }
     }

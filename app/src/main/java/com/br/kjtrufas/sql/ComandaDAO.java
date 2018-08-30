@@ -36,15 +36,10 @@ public class ComandaDAO {
     public static void upsert(Comanda comanda,SQLiteDatabase conn)
     {
         if(!hasComanda(comanda, conn))
-        {
-            Log.i("Inserindo",comanda.toString());
             conn.insertOrThrow("COMANDA", null, preencherContentValues(comanda));
-        }
         else
-        {
-            Log.i("Atualizando",comanda.toString());
             conn.update("COMANDA",preencherContentValues(comanda),"NOME = ? AND ID_VENDEDOR = ?", new String[]{comanda.getNome(),comanda.getIdVendedor()});
-        }
+
     }
 
     public static boolean hasComanda(Comanda comanda, SQLiteDatabase conn)
@@ -77,7 +72,6 @@ public class ComandaDAO {
 
     public static ArrayAdapter<String> getTodasComandas(Context context,SQLiteDatabase conn) {
 
-        Log.i("ID Vendedor",VendedorDAO.getVendedor(conn).getId());
         ArrayAdapter<String> retorno =  new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1);
 
         Cursor cursor = conn.query("COMANDA", null, "ID_VENDEDOR = ?", new String[]{VendedorDAO.getVendedor(conn).getId()}, null, null, null);
@@ -87,7 +81,6 @@ public class ComandaDAO {
             cursor.moveToFirst();
 
             do {
-                Log.i("Comanda",cursor.getString(cursor.getColumnIndex("NOME")));
                 retorno.add(cursor.getString(cursor.getColumnIndex("NOME")));
             }while(cursor.moveToNext());
         }
@@ -146,8 +139,6 @@ public class ComandaDAO {
         Cursor cursor = conn.query("COMANDA", null, "INTEGRAR = ? AND ID_VENDEDOR = ?", new String[]{"1", VendedorDAO.getVendedor(conn).getId()}, null, null, null);
         ArrayList<Comanda> retorno = new ArrayList<Comanda>();
 
-        Log.i("Comandas",cursor.getCount()+"");
-
         if (cursor.getCount() > 0)
         {
             cursor.moveToFirst();
@@ -159,6 +150,7 @@ public class ComandaDAO {
                 aux.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 aux.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
                 aux.setAReceber(cursor.getDouble(cursor.getColumnIndex("A_RECEBER")));
+                aux.setIntegrar(cursor.getInt(cursor.getColumnIndex("INTEGRAR")));
 
                 retorno.add(aux);
 

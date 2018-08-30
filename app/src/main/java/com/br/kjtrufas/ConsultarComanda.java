@@ -122,18 +122,17 @@ public class ConsultarComanda extends AppCompatActivity {
         String msgError = "";
 
         Log.i("Comanda",comanda.getNome());
-        Log.i("consultaAutoNome",consultaAutoNome.getText().toString());
         if(comanda.getNome().equals(consultaAutoNome.getText().toString()))
         {
             Log.i("consultaAutoNome","FILTRO 1");
             if(editValorRecebido.getText() != null && (!editValorRecebido.getText().toString().equals("")))
             {
-                Log.i("consultaAutoNome","FILTRO 2");
                 Venda pagamento = new Venda();
                 pagamento.setDescricao("Pagamento");
                 pagamento.setDataVenda(Util.getDataAtual());
                 pagamento.setValorTotal(-1*Double.valueOf(editValorRecebido.getText().toString()));
                 pagamento.setPago(0);
+                pagamento.setIntegrar(1);
                 pagamento.setIdComanda(comanda.getId());
                 pagamento.setIdVendedor(comanda.getIdVendedor());
                 VendaDAO.upsert(pagamento,conn);
@@ -152,6 +151,7 @@ public class ConsultarComanda extends AppCompatActivity {
                     }
                 }
 
+                comanda.setIntegrar(1);
                 ComandaDAO.upsert(comanda, conn);
             }
             else

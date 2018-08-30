@@ -30,6 +30,16 @@ public class Util {
         return str;
     }
 
+    public static String convertDataSF(String s)
+    {
+        String ret;
+
+        String[] separated = s.split("-");
+        ret = separated[2]+"/"+separated[1]+"/"+separated[0];
+
+        return ret;
+    }
+
     public static int converterBoolean(Boolean b)
     {
         if(b)
@@ -47,6 +57,7 @@ public class Util {
 
         if((!enviarRegistro.getComandas().isEmpty()) || (!enviarRegistro.getVendas().isEmpty()))
         {
+            Log.i("toString",enviarRegistro.toString());
             Gson gson = new Gson();
             String json = "{\"registros\" : "+gson.toJson(enviarRegistro)+"}";
 
