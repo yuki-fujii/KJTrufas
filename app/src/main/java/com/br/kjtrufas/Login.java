@@ -1,5 +1,8 @@
 package com.br.kjtrufas;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +22,13 @@ import com.br.kjtrufas.entidades.Sabor;
 import com.br.kjtrufas.entidades.Vendedor;
 import com.br.kjtrufas.salesforce.SalesForceAuthentication;
 import com.br.kjtrufas.salesforce.SalesforcePost;
+import com.br.kjtrufas.salesforce.SincronizarDados;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.TokenDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
 import com.google.gson.Gson;
+
+import java.util.Calendar;
 
 public class Login extends AppCompatActivity {
 
@@ -32,7 +38,7 @@ public class Login extends AppCompatActivity {
     private EditText editEmailLogin;
     private EditText editSenhaLogin;
 
-    private static int SPLASH_TIME_OUT = 6000;
+    private static int SPLASH_TIME_OUT = 5000;
     private Context context = this;
 
     private Boolean autenticacao = false;
@@ -70,6 +76,42 @@ public class Login extends AppCompatActivity {
         }
 
     }
+
+    private void sincronizar()
+    {
+        Log.i("Sincronizar","true");
+        Calendar calendar = Calendar.getInstance();
+        Log.i("Calendario",""+calendar.getTime());
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 49);
+        calendar.set(Calendar.SECOND, 59);
+        Log.i("Calendario2",""+calendar.getTime());
+
+        //Definir intervalo de 12 horas
+        //long intervalo = 12*60*60*1000; //12 horas em milissegundos
+        long intervalo = 2*60*1000; //2 min;
+        Log.i("Intervalo",""+intervalo);
+
+        Intent tarefaIntent = new Intent(context, SincronizarDados.class);
+        PendingIntent tarefaPendingIntent = PendingIntent.getBroadcast(context,0, tarefaIntent,0);
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        //Definir o alarme para acontecer de 12 em 12 horas a partir das 23:59:59 horas
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                intervalo, tarefaPendingIntent);
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent("DISPARAR_ALARME");
+        PendingIntent p = PendingIntent.getBroadcast(this.context, 0, intent, 0);
+
+        AlarmManager alarme = (AlarmManager) this.context.getSystemService(ALARM_SERVICE);
+        alarme.cancel(p);
+        p.cancel();
+    }
+
 
     private void conexaoBD()
     {
@@ -123,6 +165,7 @@ public class Login extends AppCompatActivity {
                     }
                     else
                     {
+                        sincronizar();
                         Log.i("Chamar","Main");
                         Intent i = new Intent(Login.this, MainActivity.class);
                         startActivity(i);

@@ -3,6 +3,10 @@
     package="com.br.kjtrufas">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +30,19 @@
         <activity android:name=".CadastroSabor" />
         <activity android:name=".ConsultarComanda" />
         <activity android:name=".MainActivity"></activity>
+
+        <receiver
+            android:name=".salesforce.SincronizarDados"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="DISPARAR_ALARME" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

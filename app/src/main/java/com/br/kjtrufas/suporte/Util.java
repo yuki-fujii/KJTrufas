@@ -6,11 +6,13 @@ import android.view.View;
 
 import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.EntidadePost;
+import com.br.kjtrufas.entidades.EntidadesEncapsuladas;
 import com.br.kjtrufas.entidades.EnviarRegistro;
 import com.br.kjtrufas.entidades.Venda;
 import com.br.kjtrufas.salesforce.SalesforcePost;
 import com.br.kjtrufas.sql.ComandaDAO;
 import com.br.kjtrufas.sql.VendaDAO;
+import com.br.kjtrufas.sql.VendedorDAO;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
@@ -50,16 +52,17 @@ public class Util {
 
     public static void integrarVendas (SQLiteDatabase conn)
     {
-        EnviarRegistro enviarRegistro = new EnviarRegistro();
+        EntidadesEncapsuladas entidadesEncapsuladas = new EntidadesEncapsuladas();
 
-        enviarRegistro.setVendas(VendaDAO.getVendasParaIntegrar(conn));
-        enviarRegistro.setComandas(ComandaDAO.getComandasParaIntegrar(conn));
+        entidadesEncapsuladas.getEnviarRegistro().setVendas(VendaDAO.getVendasParaIntegrar(conn));
+        entidadesEncapsuladas.getEnviarRegistro().setComandas(ComandaDAO.getComandasParaIntegrar(conn));
+        entidadesEncapsuladas.setVendedor(VendedorDAO.getVendedor(conn));
 
-        if((!enviarRegistro.getComandas().isEmpty()) || (!enviarRegistro.getVendas().isEmpty()))
+        if((!entidadesEncapsuladas.getEnviarRegistro().getComandas().isEmpty()) || (!entidadesEncapsuladas.getEnviarRegistro().getVendas().isEmpty()))
         {
-            Log.i("toString",enviarRegistro.toString());
+            Log.i("toString",entidadesEncapsuladas.getEnviarRegistro().toString());
             Gson gson = new Gson();
-            String json = "{\"registros\" : "+gson.toJson(enviarRegistro)+"}";
+            String json = "{\"registros\" : "+gson.toJson(entidadesEncapsuladas)+"}";
 
             Log.i("JSON Enviar",json);
 

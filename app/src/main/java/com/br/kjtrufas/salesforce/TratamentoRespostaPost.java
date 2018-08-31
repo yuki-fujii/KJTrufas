@@ -25,77 +25,82 @@ public class TratamentoRespostaPost
 {
     public static void tratarResposta(EntidadePost entidadePost, String resposta)
     {
-        if(entidadePost.getService().equals("login"))
+        resposta(entidadePost.getConn(), resposta);
+        /*if(entidadePost.getService().equals("login"))
             respostaLogin(entidadePost.getConn(), resposta);
 
         else if(entidadePost.getService().equals("registroWS"))
-            respostaRegistroWS(entidadePost.getConn(), resposta);
+            respostaRegistroWS(entidadePost.getConn(), resposta);*/
     }
 
+    /*
     private static void respostaRegistroWS(SQLiteDatabase conn, String resposta)
     {
         Gson gson = new Gson();
-        EnviarRegistro enviarRegistro = gson.fromJson(resposta,EnviarRegistro.class);
+        EntidadesEncapsuladas enviarRegistro = gson.fromJson(resposta,EntidadesEncapsuladas.class);
 
-        for (Comanda c : enviarRegistro.getComandas())
+        try
         {
-            ComandaDAO.upsert(c,conn);
-        }
+            for (Comanda c : enviarRegistro.getEnviarRegistro().getComandas())
+            {
+                ComandaDAO.upsert(c,conn);
+            }
 
-        for (Venda v : enviarRegistro.getVendas())
+            for (Venda v : enviarRegistro.getEnviarRegistro().getVendas())
+            {
+                v.setDataVenda(Util.convertDataSF(v.getDataVenda()));
+                VendaDAO.upsert(v,conn);
+            }
+        }
+        catch (Exception e)
         {
-            v.setDataVenda(Util.convertDataSF(v.getDataVenda()));
-            VendaDAO.upsert(v,conn);
+            Log.i("Erro","Falha na integração.\n"+e.getMessage());
         }
+    }*/
 
-    }
-
-    private static void respostaLogin(SQLiteDatabase conn, String resposta)
+    private static void resposta(SQLiteDatabase conn, String resposta)
     {
         Gson gson = new Gson();
         EntidadesEncapsuladas entidadesEncapsuladas = gson.fromJson(resposta,EntidadesEncapsuladas.class);
 
-        if(entidadesEncapsuladas.getVendedor().getId() != null)
-            VendedorDAO.upsert(entidadesEncapsuladas.getVendedor(),conn);
+        try {
+            if (entidadesEncapsuladas.getVendedor() != null)
+                VendedorDAO.upsert(entidadesEncapsuladas.getVendedor(), conn);
 
-        if(!entidadesEncapsuladas.getProdutos().isEmpty())
-        {
-            for (Produto p: entidadesEncapsuladas.getProdutos())
-            {
-                ProdutoDAO.upsert(p,conn);
+            if (!entidadesEncapsuladas.getProdutos().isEmpty()) {
+                for (Produto p : entidadesEncapsuladas.getProdutos()) {
+                    ProdutoDAO.upsert(p, conn);
+                }
+            }
+
+            if (!entidadesEncapsuladas.getSabores().isEmpty()) {
+                for (Sabor s : entidadesEncapsuladas.getSabores()) {
+                    SaborDAO.upsert(s, conn);
+                }
+            }
+
+            if (!entidadesEncapsuladas.getProdutosDisponiveis().isEmpty()) {
+                for (ProdutoDisponivel pd : entidadesEncapsuladas.getProdutosDisponiveis()) {
+                    ProdutoDisponivelDAO.upsert(pd, conn);
+                }
+            }
+
+            if (!entidadesEncapsuladas.getEnviarRegistro().getComandas().isEmpty()) {
+                for (Comanda c : entidadesEncapsuladas.getEnviarRegistro().getComandas()) {
+                    ComandaDAO.upsert(c, conn);
+                }
+            }
+
+            if (!entidadesEncapsuladas.getEnviarRegistro().getVendas().isEmpty()) {
+                for (Venda v : entidadesEncapsuladas.getEnviarRegistro().getVendas()) {
+                    v.setDataVenda(Util.convertDataSF(v.getDataVenda()));
+                    VendaDAO.upsert(v, conn);
+                }
             }
         }
-
-        if(!entidadesEncapsuladas.getSabores().isEmpty())
+        catch (Exception e)
         {
-            for (Sabor s: entidadesEncapsuladas.getSabores())
-            {
-                SaborDAO.upsert(s,conn);
-            }
-        }
-
-        if(!entidadesEncapsuladas.getProdutosDisponiveis().isEmpty())
-        {
-            for (ProdutoDisponivel pd : entidadesEncapsuladas.getProdutosDisponiveis())
-            {
-                ProdutoDisponivelDAO.upsert(pd,conn);
-            }
-        }
-
-        if(!entidadesEncapsuladas.getEnviarRegistro().getComandas().isEmpty())
-        {
-            for (Comanda c : entidadesEncapsuladas.getEnviarRegistro().getComandas())
-            {
-                ComandaDAO.upsert(c, conn);
-            }
-        }
-
-        if(!entidadesEncapsuladas.getEnviarRegistro().getVendas().isEmpty())
-        {
-            for (Venda v : entidadesEncapsuladas.getEnviarRegistro().getVendas()) {
-                v.setDataVenda(Util.convertDataSF(v.getDataVenda()));
-                VendaDAO.upsert(v, conn);
-            }
+            Log.i("Erro","Login ou senha errado.\n"+e.getMessage());
         }
     }
 }

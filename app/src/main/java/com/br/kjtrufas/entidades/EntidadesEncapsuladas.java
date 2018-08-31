@@ -15,6 +15,7 @@ public class EntidadesEncapsuladas
         produtos = new ArrayList<Produto>();
         sabores = new ArrayList<Sabor>();
         produtosDisponiveis = new ArrayList<ProdutoDisponivel>();
+        registros = new EnviarRegistro();
     }
 
     public ArrayList<Produto> getProdutos() {
