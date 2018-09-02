@@ -82,14 +82,14 @@ public class Login extends AppCompatActivity {
         Log.i("Sincronizar","true");
         Calendar calendar = Calendar.getInstance();
         Log.i("Calendario",""+calendar.getTime());
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 49);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         Log.i("Calendario2",""+calendar.getTime());
 
         //Definir intervalo de 12 horas
-        //long intervalo = 12*60*60*1000; //12 horas em milissegundos
-        long intervalo = 2*60*1000; //2 min;
+        long intervalo = 12*60*60*1000; //12 horas em milissegundos
+        //long intervalo = 2*60*1000; //2 min;
         Log.i("Intervalo",""+intervalo);
 
         Intent tarefaIntent = new Intent(context, SincronizarDados.class);
