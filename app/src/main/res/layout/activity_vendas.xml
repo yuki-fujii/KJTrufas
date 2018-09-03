@@ -15,6 +15,7 @@
 
     <LinearLayout
         android:orientation="vertical"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2.5">
@@ -25,24 +26,25 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2.5">
 
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Nome:"
-                    android:textColor="#000000"
-                    android:textAlignment="center"
-                    android:id="@+id/lblNomeComplemento"
-                    android:textSize="20dp" />
-
-                <AutoCompleteTextView
-
-                    android:id="@+id/autoNome"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/autoNomeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:completionThreshold="1" />
+                    android:theme="@style/HintStyle"
+                    app:errorEnabled="true">
+
+                    <AutoCompleteTextView
+
+                        android:id="@+id/autoNome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:completionThreshold="1"
+                        android:hint="Nome"
+                        android:lines="1"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
@@ -83,34 +85,38 @@
                         android:textSize="20dp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2.9">
-
-                    <TextView
-                        android:id="@+id/txtQuantidade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Quantidade: "
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#000000"
-                        android:textSize="20dp"
-                        android:textStyle="normal" />
-
-                    <EditText
-                        android:id="@+id/editQtde"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number" />
-
-                </LinearLayout>
-
             </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.7" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/editQtdeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:theme="@style/HintStyle"
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/editQtde"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Quantidade"
+                    android:ems="10"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -155,45 +161,42 @@
             android:layout_height="match_parent"
             android:layout_weight="2.5">
 
-            <TextView
-                android:id="@+id/txtDesconto"
-                android:layout_width="wrap_content"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/editDescontoLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Desconto: "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                android:textStyle="normal" />
+                android:layout_weight="1"
+                android:theme="@style/HintStyle"
+                app:errorEnabled="true">
 
             <EditText
                 android:id="@+id/editDesconto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text=""
+                android:hint="Desconto"
                 android:ems="10"
                 android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/txtAcrescimo"
-                android:layout_width="wrap_content"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/editAcrescimoLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Acréscimo: "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                android:textStyle="normal" />
+                android:layout_weight="1"
+                android:theme="@style/HintStyle"
+                app:errorEnabled="true">
 
             <EditText
                 android:id="@+id/editAcrescimo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text=""
+                android:hint="Acréscimo"
                 android:ems="10"
                 android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
+
 
         </LinearLayout>
 
