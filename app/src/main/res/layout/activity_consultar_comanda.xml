@@ -10,12 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="9.5"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_weight="8.8"
+        android:orientation="vertical">
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_weight="2.5">
 
         <LinearLayout
@@ -53,10 +55,6 @@
                 android:text="Limpar" />
 
         </LinearLayout>
-
-
-
-
 
         <LinearLayout
             android:orientation="horizontal"
