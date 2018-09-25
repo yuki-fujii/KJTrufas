@@ -3,6 +3,8 @@ package com.br.kjtrufas;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity
 
     private DataBase dataBase;
     private SQLiteDatabase conn;
+    FragmentManager fm = getSupportFragmentManager();
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,14 +32,24 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if(savedInstanceState==null)
+        {
+            VendasFrag vendasFrag = new VendasFrag();
+
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.frame_container, vendasFrag, "");
+            ft.commit();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     private boolean conexaoBD()
@@ -62,13 +76,13 @@ public class MainActivity extends AppCompatActivity
 
     public void chamarRealizarVendas (View view)
     {
-        Intent it = new Intent(this, Vendas.class);
+        Intent it = new Intent(this, VendasFrag.class);
         startActivityForResult(it, 0);
     }
 
     public void chamarConsultarComanda (View view)
     {
-        Intent it = new Intent(this, ConsultarComanda.class);
+        Intent it = new Intent(this, ConsultarComandaFrag.class);
         startActivityForResult(it, 0);
     }
 
@@ -88,20 +102,42 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
+        FragmentTransaction ft = fm.beginTransaction();
+
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_produto_disponivel) {
 
-        } else if (id == R.id.nav_slideshow) {
+        }
 
-        } else if (id == R.id.nav_manage) {
+        else if (id == R.id.nav_venda)
+        {
+            VendasFrag vendasFrag = new VendasFrag();
+            ft.replace(R.id.frame_container, vendasFrag, "");
+            ft.addToBackStack("pilha");
+            ft.commit();
+        }
+        else if (id == R.id.nav_consulta_pagamento)
+        {
+            ConsultarComandaFrag consultarComandaFrag = new ConsultarComandaFrag();
+            ft.replace(R.id.frame_container, consultarComandaFrag, "");
+            ft.addToBackStack("pilha");
+            ft.commit();
+        }
 
-        } else if (id == R.id.nav_share) {
+        else if (id == R.id.nav_configuracao)
+        {
 
-        } else if (id == R.id.nav_send) {
+        }
+
+        else if (id == R.id.nav_sincronizar)
+        {
+
+        }
+
+        else if (id == R.id.nav_sair)
+        {
 
         }
 

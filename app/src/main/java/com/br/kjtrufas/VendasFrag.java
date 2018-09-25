@@ -1,15 +1,19 @@
-/*package com.br.kjtrufas;
+package com.br.kjtrufas;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -18,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.Produto;
 import com.br.kjtrufas.entidades.Sabor;
 import com.br.kjtrufas.entidades.Venda;
@@ -27,14 +32,13 @@ import com.br.kjtrufas.sql.ProdutoDAO;
 import com.br.kjtrufas.sql.SaborDAO;
 import com.br.kjtrufas.sql.VendaDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
-
-import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.suporte.Util;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class Vendas extends AppCompatActivity {
+
+public class VendasFrag extends Fragment {
 
     private DataBase dataBase;
     private SQLiteDatabase conn;
@@ -57,35 +61,39 @@ public class Vendas extends AppCompatActivity {
 
     private boolean possuiCreditos;
     private boolean desconto100;
+    private Context context;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_vendas_frag, null);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vendas);
 
-        autoNome = findViewById(R.id.autoNome);
-        spnProdutos = findViewById(R.id.spnProdutos);
-        spnSabores = findViewById(R.id.spnSabores);
-        txtValorTotal = findViewById(R.id.txtValorTotal);
-        editQtde = findViewById(R.id.editQtde);
-        editDesconto = findViewById(R.id.editDesconto);
-        editAcrescimo = findViewById(R.id.editAcrescimo);
-        cbxPago = findViewById(R.id.cbxPago);
+        context = container.getContext();
+        autoNome = view.findViewById(R.id.autoNome);
+        spnProdutos = view.findViewById(R.id.spnProdutos);
+        spnSabores = view.findViewById(R.id.spnSabores);
+        txtValorTotal = view.findViewById(R.id.txtValorTotal);
+        editQtde = view.findViewById(R.id.editQtde);
+        editDesconto = view.findViewById(R.id.editDesconto);
+        editAcrescimo = view.findViewById(R.id.editAcrescimo);
+        cbxPago = view.findViewById(R.id.cbxPago);
 
         if(this.conexaoBD())
         {
-            Bundle bundle = getIntent().getExtras();
+            Bundle bundle = getActivity().getIntent().getExtras();
 
             if ((bundle != null) && (bundle.containsKey("NOME")))
                 autoNome.setText((String) bundle.getSerializable("NOME"));
 
-            this.adpTodasComandas = ComandaDAO.getTodasComandas(this,conn);
+            this.adpTodasComandas = ComandaDAO.getTodasComandas(context,conn);
+
             autoNome.setAdapter(adpTodasComandas);
 
-            adpTodosProdutos = ProdutoDAO.getProduto(this,conn,1);
+            adpTodosProdutos = ProdutoDAO.getProduto(context,conn,1);
             spnProdutos.setAdapter(adpTodosProdutos);
 
-            adpTodosSabores = SaborDAO.getSabor(this,conn,1);
+            adpTodosSabores = SaborDAO.getSabor(context,conn,1);
             spnSabores.setAdapter(adpTodosSabores);
 
             autoNome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -217,13 +225,15 @@ public class Vendas extends AppCompatActivity {
 
         }
 
+        return(view);
+
     }
 
     private boolean conexaoBD()
     {
         try {
 
-            dataBase = new DataBase(this);
+            dataBase = new DataBase(context);
             conn = dataBase.getWritableDatabase();
 
             return true;
@@ -301,7 +311,7 @@ public class Vendas extends AppCompatActivity {
             acrescimo = (double) 0;
 
         Venda novaVenda = new Venda(comanda.getId(), auxProduto.getId(), null,VendedorDAO.getVendedor(conn).getId(), Integer.valueOf(editQtde.getText().toString()),
-                                    acrescimo, desconto, calcularTotal(),
+                acrescimo, desconto, calcularTotal(),
                 editQtde.getText().toString()+"x "+auxProduto.getNome(), Util.getDataAtual(), Util.converterBoolean(cbxPago.isChecked()),1);
 
         if(auxSabor!=null)
@@ -328,13 +338,13 @@ public class Vendas extends AppCompatActivity {
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-                        finish();
+                        getActivity().finish();
                         break;
                 }
             }
         };
 
-        AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
         dlg.setMessage("Realizar outra venda para esse cliente?").setPositiveButton("Sim", dialogClickListener).setNegativeButton("Não", dialogClickListener);
         dlg.show();
 
@@ -342,10 +352,10 @@ public class Vendas extends AppCompatActivity {
 
     public void atualizarTela()
     {
-        Intent it = new Intent(this, Vendas.class);
+        Intent it = new Intent(context, VendasFrag.class);
         it.putExtra("NOME",String.valueOf(this.autoNome.getText()));
         startActivityForResult(it, 0);
-        finish();
+        getActivity().finish();
     }
+
 }
-*/

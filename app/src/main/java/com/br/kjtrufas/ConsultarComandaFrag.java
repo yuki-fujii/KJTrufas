@@ -1,15 +1,17 @@
-/*package com.br.kjtrufas;
+package com.br.kjtrufas;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -28,11 +30,11 @@ import com.br.kjtrufas.suporte.DadosComandas;
 import com.br.kjtrufas.suporte.DadosVendas;
 import com.br.kjtrufas.suporte.Util;
 
-import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class ConsultarComanda extends AppCompatActivity {
+
+public class ConsultarComandaFrag extends Fragment {
 
     private DataBase dataBase;
     private SQLiteDatabase conn;
@@ -49,20 +51,23 @@ public class ConsultarComanda extends AppCompatActivity {
     private Context context;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_consultar_comanda, null);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultar_comanda);
 
-        consultaAutoNome = findViewById(R.id.consultaAutoNome);
-        txtConsultaAReceber = findViewById(R.id.txtConsultaAReceber);
-        lstConsulta = findViewById(R.id.lstConsulta);
-        editValorRecebido = findViewById(R.id.editValorRecebido);
+        context = container.getContext();
+        consultaAutoNome = view.findViewById(R.id.consultaAutoNome);
+        txtConsultaAReceber = view.findViewById(R.id.txtConsultaAReceber);
+        lstConsulta = view.findViewById(R.id.lstConsulta);
+        editValorRecebido = view.findViewById(R.id.editValorRecebido);
 
         if(this.conexaoBD())
         {
-            Bundle bundle = getIntent().getExtras();
+            Bundle bundle = getActivity().getIntent().getExtras();
 
-            this.adpTodasComandas = ComandaDAO.getTodasComandas(this,conn);
+            this.adpTodasComandas = ComandaDAO.getTodasComandas(context,conn);
             consultaAutoNome.setAdapter(adpTodasComandas);
 
             if ((bundle != null) && (bundle.containsKey("NOME")))
@@ -74,12 +79,10 @@ public class ConsultarComanda extends AppCompatActivity {
             else
             {
                 dadosComandas = ComandaDAO.getComandasAReceber(conn);
-                CustomAdapterComandas customAdapterComandas = new CustomAdapterComandas(getApplicationContext(), dadosComandas);
+                CustomAdapterComandas customAdapterComandas = new CustomAdapterComandas(getActivity().getApplicationContext(), dadosComandas);
                 lstConsulta.setAdapter(customAdapterComandas);
                 editValorRecebido.setEnabled(false);
             }
-
-            context = this;
 
             consultaAutoNome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -90,13 +93,15 @@ public class ConsultarComanda extends AppCompatActivity {
             });
         }
 
+        return view;
+
     }
 
     private boolean conexaoBD()
     {
         try {
 
-            dataBase = new DataBase(this);
+            dataBase = new DataBase(context);
             conn = dataBase.getWritableDatabase();
 
             return true;
@@ -113,7 +118,7 @@ public class ConsultarComanda extends AppCompatActivity {
         txtConsultaAReceber.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(comanda.getAReceber())));
         editValorRecebido.setEnabled(true);
         dadosVendas = VendaDAO.getVendasNaoPagas(context, comanda.getId(), conn);
-        CustomAdapterVendas customAdapterVendas = new CustomAdapterVendas(getApplicationContext(), dadosVendas);
+        CustomAdapterVendas customAdapterVendas = new CustomAdapterVendas(getActivity().getApplicationContext(), dadosVendas);
         lstConsulta.setAdapter(customAdapterVendas);
     }
 
@@ -163,14 +168,14 @@ public class ConsultarComanda extends AppCompatActivity {
 
         if(msgError.equals(""))
         {
-            Intent it = new Intent(this, ConsultarComanda.class);
+            Intent it = new Intent(context, ConsultarComandaFrag.class);
             it.putExtra("NOME", comanda.getNome());
             startActivityForResult(it, 0);
-            finish();
+            getActivity().finish();
         }
         else
         {
-            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            AlertDialog.Builder dlg = new AlertDialog.Builder(context);
             dlg.setMessage(msgError);
             dlg.setNeutralButton("OK",null);
             dlg.show();
@@ -179,9 +184,7 @@ public class ConsultarComanda extends AppCompatActivity {
 
     public void limparConsulta (View view)
     {
-        Intent it = new Intent(this, ConsultarComanda.class);
-        startActivityForResult(it, 0);
-        finish();
+        ConsultarComandaFrag consultarComandaFrag = new ConsultarComandaFrag();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, consultarComandaFrag).addToBackStack("pilha").commit();
     }
 }
-*/
