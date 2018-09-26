@@ -4,63 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/secondColor"
     android:orientation="vertical"
     tools:context=".ConsultarComandaFrag">
 
     <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="8.8"
         android:orientation="vertical">
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="2.5">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2.5">
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Nome:"
-                android:textColor="#000000"
-                android:textAlignment="center"
-                android:id="@+id/lblNomeComplemento"
-                android:textSize="20dp" />
-
-            <AutoCompleteTextView
-
-                android:id="@+id/consultaAutoNome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:completionThreshold="1" />
-
-            <Button
-                android:id="@+id/btnLimparConsulta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:layout_gravity="center_vertical"
-                android:onClick="limparConsulta"
-                android:text="Limpar" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2.5">
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2.3"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -68,11 +29,48 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2">
 
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/autoNomeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:theme="@style/HintStyle"
+                    app:errorEnabled="true">
+
+                    <AutoCompleteTextView
+
+                        android:id="@+id/consultaAutoNome"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nome"
+                        android:completionThreshold="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnLimparConsulta"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.5"
+                    android:layout_gravity="center_vertical"
+                    android:text="Limpar" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5">
+
                 <TextView
                     android:id="@+id/txtValor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="20dp"
                     android:text="A Receber: "
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
@@ -81,9 +79,9 @@
 
                 <TextView
                     android:id="@+id/txtConsultaAReceber"
+                    android:layout_marginBottom="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
                     android:textSize="20dp"
@@ -92,71 +90,70 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2.7" />
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.8">
+            android:layout_weight="2">
 
-            <ListView
-                android:id="@+id/lstConsulta"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                <ListView
+                    android:id="@+id/lstConsulta"
+                    android:layout_marginBottom="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
 
-            </ListView>
+                </ListView>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LayoutRodape"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:orientation="horizontal">
-
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/LayoutRodape"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2.5">
+            android:layout_weight="3"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtValorRecebido"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:text="Valor recebido: "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                android:textStyle="normal" />
+                android:layout_height="match_parent"
+                android:layout_weight="2.5">
 
-            <EditText
-                android:id="@+id/editValorRecebido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.1"
-                android:layout_gravity="center_vertical"
-                android:text=""
-                android:ems="10"
-                android:inputType="numberDecimal" />
+                <TextView
+                    android:id="@+id/txtValorRecebido"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:layout_gravity="center_vertical"
+                    android:text="Valor recebido: "
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
+                    android:textStyle="normal" />
 
-            <Button
-                android:id="@+id/btnSalvarConsulta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.1"
-                android:layout_gravity="center_vertical"
-                android:onClick="salvarConsultarComanda"
-                android:text="@string/Salvar" />
+                <EditText
+                    android:id="@+id/editValorRecebido"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:text=""
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+
+                <Button
+                    android:id="@+id/btnSalvarConsulta"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.1"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/Salvar" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

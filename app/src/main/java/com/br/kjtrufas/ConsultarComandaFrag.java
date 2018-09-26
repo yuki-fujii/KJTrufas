@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 
-public class ConsultarComandaFrag extends Fragment {
+public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItemClickListener{
 
     private DataBase dataBase;
     private SQLiteDatabase conn;
@@ -43,10 +44,13 @@ public class ConsultarComandaFrag extends Fragment {
     private TextView txtConsultaAReceber;
     private ListView lstConsulta;
     private EditText editValorRecebido;
+    private Button btnLimparConsulta;
+    private Button btnSalvarConsulta;
 
     private DadosVendas dadosVendas;
     private DadosComandas dadosComandas;
     private ArrayAdapter<String> adpTodasComandas;
+    CustomAdapterComandas customAdapterComandas;
     private Comanda comanda;
     private Context context;
 
@@ -62,13 +66,16 @@ public class ConsultarComandaFrag extends Fragment {
         txtConsultaAReceber = view.findViewById(R.id.txtConsultaAReceber);
         lstConsulta = view.findViewById(R.id.lstConsulta);
         editValorRecebido = view.findViewById(R.id.editValorRecebido);
+        btnLimparConsulta = view.findViewById(R.id.btnLimparConsulta);
+        btnSalvarConsulta = view.findViewById(R.id.btnSalvarConsulta);
 
         if(this.conexaoBD())
         {
             Bundle bundle = getActivity().getIntent().getExtras();
 
-            this.adpTodasComandas = ComandaDAO.getTodasComandas(context,conn);
+            adpTodasComandas = ComandaDAO.getTodasComandas(context,conn);
             consultaAutoNome.setAdapter(adpTodasComandas);
+
 
             if ((bundle != null) && (bundle.containsKey("NOME")))
             {
@@ -79,16 +86,36 @@ public class ConsultarComandaFrag extends Fragment {
             else
             {
                 dadosComandas = ComandaDAO.getComandasAReceber(conn);
-                CustomAdapterComandas customAdapterComandas = new CustomAdapterComandas(getActivity().getApplicationContext(), dadosComandas);
+                customAdapterComandas = new CustomAdapterComandas(getActivity().getApplicationContext(), dadosComandas);
                 lstConsulta.setAdapter(customAdapterComandas);
                 editValorRecebido.setEnabled(false);
             }
+
+            lstConsulta.setOnItemClickListener(this);
 
             consultaAutoNome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     comanda = ComandaDAO.getComanda(adpTodasComandas.getItem(position),conn);
                     listarVendasNaoPagasPorComanda();
+                }
+            });
+
+            btnLimparConsulta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ConsultarComandaFrag consultarComandaFrag = new ConsultarComandaFrag();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, consultarComandaFrag).addToBackStack("pilha").commit();
+
+                }
+            });
+
+            btnSalvarConsulta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    salvarConsultarComanda();
                 }
             });
         }
@@ -122,7 +149,7 @@ public class ConsultarComandaFrag extends Fragment {
         lstConsulta.setAdapter(customAdapterVendas);
     }
 
-    public void salvarConsultarComanda (View view)
+    public void salvarConsultarComanda()
     {
         String msgError = "";
 
@@ -168,10 +195,8 @@ public class ConsultarComandaFrag extends Fragment {
 
         if(msgError.equals(""))
         {
-            Intent it = new Intent(context, ConsultarComandaFrag.class);
-            it.putExtra("NOME", comanda.getNome());
-            startActivityForResult(it, 0);
-            getActivity().finish();
+            ConsultarComandaFrag consultarComandaFrag = new ConsultarComandaFrag();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, consultarComandaFrag).addToBackStack("pilha").commit();
         }
         else
         {
@@ -182,9 +207,11 @@ public class ConsultarComandaFrag extends Fragment {
         }
     }
 
-    public void limparConsulta (View view)
-    {
-        ConsultarComandaFrag consultarComandaFrag = new ConsultarComandaFrag();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, consultarComandaFrag).addToBackStack("pilha").commit();
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        comanda = ComandaDAO.getComanda(customAdapterComandas.getItem(position),conn);
+        listarVendasNaoPagasPorComanda();
+        consultaAutoNome.setText(comanda.getNome());
     }
 }

@@ -27,8 +27,8 @@ public class CustomAdapterComandas extends BaseAdapter {
         return nome.length;
     }
 
-    public Object getItem(int i) {
-        return null;
+    public String getItem(int i) {
+        return nome[i];
     }
 
     public long getItemId(int i) {

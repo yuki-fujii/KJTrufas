@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -58,6 +59,7 @@ public class VendasFrag extends Fragment {
     private TextView txtValorTotal;
     private Produto auxProduto;
     private Sabor auxSabor;
+    private Button btnVendido;
 
     private boolean possuiCreditos;
     private boolean desconto100;
@@ -78,13 +80,17 @@ public class VendasFrag extends Fragment {
         editDesconto = view.findViewById(R.id.editDesconto);
         editAcrescimo = view.findViewById(R.id.editAcrescimo);
         cbxPago = view.findViewById(R.id.cbxPago);
+        btnVendido = view.findViewById(R.id.btnVendido);
 
         if(this.conexaoBD())
         {
-            Bundle bundle = getActivity().getIntent().getExtras();
+            String nome=null;
 
-            if ((bundle != null) && (bundle.containsKey("NOME")))
-                autoNome.setText((String) bundle.getSerializable("NOME"));
+            if(getArguments()!=null)
+                nome = getArguments().getString("NOME");
+
+            if (nome != null)
+                autoNome.setText(nome);
 
             this.adpTodasComandas = ComandaDAO.getTodasComandas(context,conn);
 
@@ -223,6 +229,14 @@ public class VendasFrag extends Fragment {
                 }
             });
 
+            btnVendido.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    salvarVendido();
+                }
+            });
+
         }
 
         return(view);
@@ -271,7 +285,7 @@ public class VendasFrag extends Fragment {
         return retorno;
     }
 
-    public void salvarVendido(View view)
+    public void salvarVendido()
     {
         Comanda comanda = ComandaDAO.getComanda(autoNome.getText().toString(),conn);
 
@@ -334,11 +348,11 @@ public class VendasFrag extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        atualizarTela();
+                        atualizarTela(true);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-                        getActivity().finish();
+                        atualizarTela(false);
                         break;
                 }
             }
@@ -350,12 +364,19 @@ public class VendasFrag extends Fragment {
 
     }
 
-    public void atualizarTela()
+    public void atualizarTela(boolean hasBundle)
     {
-        Intent it = new Intent(context, VendasFrag.class);
-        it.putExtra("NOME",String.valueOf(this.autoNome.getText()));
-        startActivityForResult(it, 0);
-        getActivity().finish();
+        VendasFrag vendasFrag = new VendasFrag();
+
+        if(hasBundle)
+        {
+            Bundle bundle = new Bundle();
+            bundle.putString("NOME", String.valueOf(this.autoNome.getText()));
+            vendasFrag.setArguments(bundle);
+        }
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, vendasFrag).addToBackStack("pilha").commit();
+
     }
 
 }
