@@ -1,5 +1,6 @@
 package com.br.kjtrufas.entidades;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 public class EntidadePost {
@@ -7,6 +8,7 @@ public class EntidadePost {
     private String service;
     private String json;
     private SQLiteDatabase conn;
+    private Context context;
 
     public String getJson() {
         return json;
@@ -30,5 +32,13 @@ public class EntidadePost {
 
     public void setService(String service) {
         this.service = service;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

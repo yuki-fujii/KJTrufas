@@ -2,6 +2,7 @@ package com.br.kjtrufas.salesforce;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.EntidadePost;
@@ -25,7 +26,7 @@ public class TratamentoRespostaPost
 {
     public static void tratarResposta(EntidadePost entidadePost, String resposta)
     {
-        resposta(entidadePost.getConn(), resposta);
+        resposta(entidadePost, resposta);
         /*if(entidadePost.getService().equals("login"))
             respostaLogin(entidadePost.getConn(), resposta);
 
@@ -58,45 +59,46 @@ public class TratamentoRespostaPost
         }
     }*/
 
-    private static void resposta(SQLiteDatabase conn, String resposta)
+    private static void resposta(EntidadePost entidadePost, String resposta)
     {
         Gson gson = new Gson();
         EntidadesEncapsuladas entidadesEncapsuladas = gson.fromJson(resposta,EntidadesEncapsuladas.class);
 
         try {
             if (entidadesEncapsuladas.getVendedor() != null)
-                VendedorDAO.upsert(entidadesEncapsuladas.getVendedor(), conn);
+                VendedorDAO.upsert(entidadesEncapsuladas.getVendedor(), entidadePost.getConn());
 
             if (!entidadesEncapsuladas.getProdutos().isEmpty()) {
                 for (Produto p : entidadesEncapsuladas.getProdutos()) {
-                    ProdutoDAO.upsert(p, conn);
+                    ProdutoDAO.upsert(p, entidadePost.getConn());
                 }
             }
 
             if (!entidadesEncapsuladas.getSabores().isEmpty()) {
                 for (Sabor s : entidadesEncapsuladas.getSabores()) {
-                    SaborDAO.upsert(s, conn);
+                    SaborDAO.upsert(s, entidadePost.getConn());
                 }
             }
 
             if (!entidadesEncapsuladas.getProdutosDisponiveis().isEmpty()) {
                 for (ProdutoDisponivel pd : entidadesEncapsuladas.getProdutosDisponiveis()) {
-                    ProdutoDisponivelDAO.upsert(pd, conn);
+                    ProdutoDisponivelDAO.upsert(pd, entidadePost.getConn());
                 }
             }
 
             if (!entidadesEncapsuladas.getEnviarRegistro().getComandas().isEmpty()) {
                 for (Comanda c : entidadesEncapsuladas.getEnviarRegistro().getComandas()) {
-                    ComandaDAO.upsert(c, conn);
+                    ComandaDAO.upsert(c, entidadePost.getConn());
                 }
             }
 
             if (!entidadesEncapsuladas.getEnviarRegistro().getVendas().isEmpty()) {
                 for (Venda v : entidadesEncapsuladas.getEnviarRegistro().getVendas()) {
                     v.setDataVenda(Util.convertDataSF(v.getDataVenda()));
-                    VendaDAO.upsert(v, conn);
+                    VendaDAO.upsert(v, entidadePost.getConn());
                 }
             }
+
         }
         catch (Exception e)
         {

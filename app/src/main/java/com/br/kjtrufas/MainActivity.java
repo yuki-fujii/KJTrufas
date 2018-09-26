@@ -133,7 +133,15 @@ public class MainActivity extends AppCompatActivity
 
         else if (id == R.id.nav_sincronizar)
         {
-
+            if(conexaoBD())
+                Util.integrarVendas(conn);
+            else
+            {
+                android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(this);
+                dlg.setMessage("Erro ao conectar-se com o banco de dados.");
+                dlg.setNeutralButton("OK", null);
+                dlg.show();
+            }
         }
 
         else if (id == R.id.nav_sair)
