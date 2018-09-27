@@ -22,12 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Administrador" />
-        <activity android:name=".Cadastro" />
-        <activity android:name=".CadastroVendedor" />
         <activity android:name=".Vendas" />
-        <activity android:name=".CadastroProduto" />
-        <activity android:name=".CadastroSabor" />
         <activity android:name=".ConsultarComanda" />
         <activity android:name=".MainActivity" />
 

@@ -44,18 +44,20 @@
                         android:layout_marginBottom="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:hint="Nome"
                         android:completionThreshold="1" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
+                    android:layout_marginTop="7dp"
                     android:id="@+id/btnLimparConsulta"
-                    android:layout_marginBottom="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
+                    android:layout_height="35dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="2.5"
                     android:text="Limpar" />
 
             </LinearLayout>
@@ -140,17 +142,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
+                    android:background="@color/white"
                     android:text=""
                     android:ems="10"
                     android:inputType="numberDecimal" />
 
                 <Button
                     android:id="@+id/btnSalvarConsulta"
-                    android:layout_marginBottom="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.1"
+                    android:layout_height="35dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1.1"
                     android:text="@string/Salvar" />
 
             </LinearLayout>

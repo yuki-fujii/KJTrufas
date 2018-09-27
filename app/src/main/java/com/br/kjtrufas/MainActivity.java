@@ -68,37 +68,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void chamarAdministrador (View view)
-    {
-        Intent it = new Intent(this, Administrador.class);
-        startActivityForResult(it, 0);
-    }
-
-    public void chamarRealizarVendas (View view)
-    {
-        Intent it = new Intent(this, VendasFrag.class);
-        startActivityForResult(it, 0);
-    }
-
-    public void chamarConsultarComanda (View view)
-    {
-        Intent it = new Intent(this, ConsultarComandaFrag.class);
-        startActivityForResult(it, 0);
-    }
-
-    public void mostrarMeuNome (View view)
-    {
-        if(conexaoBD())
-            Util.integrarVendas(conn,this);
-        else
-        {
-            android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(this);
-            dlg.setMessage("Erro ao conectar-se com o banco de dados.");
-            dlg.setNeutralButton("OK", null);
-            dlg.show();
-        }
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
