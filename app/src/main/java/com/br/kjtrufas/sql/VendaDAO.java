@@ -40,6 +40,9 @@ public class VendaDAO {
 
     public static void upsert(Venda venda,SQLiteDatabase conn)
     {
+        if(venda.getId()!=null)
+            Log.i("ID_VENDA",venda.getId());
+        Log.i("INTEGRAR",venda.getIntegrar()+"");
         if(!hasVenda(venda, conn))
             conn.insertOrThrow("VENDA", null, preencherContentValues(venda));
         else

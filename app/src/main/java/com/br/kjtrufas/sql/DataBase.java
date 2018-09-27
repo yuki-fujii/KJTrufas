@@ -32,5 +32,16 @@ public class DataBase extends SQLiteOpenHelper implements Serializable
 
     }
 
+    public static void onDeleteSQLite(SQLiteDatabase db)
+    {
+        db.execSQL(ScriptSQL.deleteVendedor());
+        db.execSQL(ScriptSQL.deleteComanda());
+        db.execSQL(ScriptSQL.deleteProduto());
+        db.execSQL(ScriptSQL.deleteSabor());
+        db.execSQL(ScriptSQL.deleteProdutoDisponivel());
+        db.execSQL(ScriptSQL.deleteVendas());
+        db.execSQL(ScriptSQL.deleteTokenSF());
+    }
+
 
 }

@@ -30,7 +30,7 @@ public class SincronizarDados extends BroadcastReceiver
             if (hasConnection)
             {
                 Log.i("Sincronizar", "" + c.getTime());
-                Util.integrarVendas(conn);
+                Util.integrarVendas(conn,null);
             }
         }
         catch (Exception e)

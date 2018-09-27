@@ -2,6 +2,8 @@ package com.br.kjtrufas.sql;
 
 import android.util.Log;
 
+import org.junit.BeforeClass;
+
 public class ScriptSQL
 {
     public static String getVendedor()
@@ -120,6 +122,48 @@ public class ScriptSQL
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();
+    }
+
+    public static String deleteVendedor()
+    {
+        String retorno = "DELETE FROM VENDEDOR";
+        return retorno;
+    }
+
+    public static String deleteComanda()
+    {
+        String retorno = "DELETE FROM COMANDA";
+        return retorno;
+    }
+
+    public static String deleteProduto()
+    {
+        String retorno = "DELETE FROM PRODUTO";
+        return retorno;
+    }
+
+    public static String deleteSabor()
+    {
+        String retorno = "DELETE FROM SABOR";
+        return retorno;
+    }
+
+    public static String deleteProdutoDisponivel()
+    {
+        String retorno = "DELETE FROM PRODUTO_DISPONIVEL";
+        return retorno;
+    }
+
+    public static String deleteVendas()
+    {
+        String retorno = "DELETE FROM VENDA";
+        return retorno;
+    }
+
+    public static String deleteTokenSF()
+    {
+        String retorno = "DELETE FROM TOKEN_SF";
+        return retorno;
     }
 
 }

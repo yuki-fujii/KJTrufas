@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
     public void mostrarMeuNome (View view)
     {
         if(conexaoBD())
-            Util.integrarVendas(conn);
+            Util.integrarVendas(conn,this);
         else
         {
             android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(this);
@@ -134,7 +134,9 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_sincronizar)
         {
             if(conexaoBD())
-                Util.integrarVendas(conn);
+            {
+                Util.integrarVendas(conn,this);
+            }
             else
             {
                 android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(this);
@@ -146,6 +148,20 @@ public class MainActivity extends AppCompatActivity
 
         else if (id == R.id.nav_sair)
         {
+            if(conexaoBD())
+            {
+                DataBase.onDeleteSQLite(conn);
+                Intent it = new Intent(this, Login.class);
+                startActivityForResult(it, 0);
+                finish();
+            }
+            else
+            {
+                android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(this);
+                dlg.setMessage("Erro ao fazer logout.");
+                dlg.setNeutralButton("OK", null);
+                dlg.show();
+            }
 
         }
 

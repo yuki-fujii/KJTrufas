@@ -2,6 +2,7 @@ package com.br.kjtrufas.salesforce;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.br.kjtrufas.entidades.EntidadePost;
 import com.br.kjtrufas.entidades.EnviarRegistro;
@@ -81,11 +82,16 @@ public class SalesforcePost  extends AsyncTask<EntidadePost,Void,String>
 
         if(result.equals("true"))
         {
+            if(entidadePost.getContext()!=null)
+                Toast.makeText(entidadePost.getContext(),"Dados sincroniados com sucesso!", Toast.LENGTH_LONG).show();
             Log.i("Resultado", "Post realizado");
             TratamentoRespostaPost.tratarResposta(entidadePost,resposta);
         }
-        else
+        else {
+            if(entidadePost.getContext()!=null)
+                Toast.makeText(entidadePost.getContext(),"Falha ao sincronizar dados!", Toast.LENGTH_LONG).show();
             Log.i("Resultado", "Não foi possível conectar-se ao servidor! Por favor, tente mais tarde.");
+        }
     }
 
 }

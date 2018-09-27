@@ -1,8 +1,10 @@
 package com.br.kjtrufas.suporte;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.EntidadePost;
@@ -50,7 +52,7 @@ public class Util {
             return 0;
     }
 
-    public static void integrarVendas (SQLiteDatabase conn)
+    public static void integrarVendas (SQLiteDatabase conn, Context context)
     {
         EntidadesEncapsuladas entidadesEncapsuladas = new EntidadesEncapsuladas();
 
@@ -70,11 +72,15 @@ public class Util {
             entidadePost.setConn(conn);
             entidadePost.setService("registroWS");
             entidadePost.setJson(json);
+            entidadePost.setContext(context);
 
             new SalesforcePost().execute(entidadePost);
         }
-        else
-            Log.i("Resposta","não existem dados para serem integrados");
+        else {
+            if(context!=null)
+                Toast.makeText(context,"Todos dados encontram-se sincronizados!", Toast.LENGTH_LONG).show();
+            Log.i("Resposta", "não existem dados para serem integrados");
+        }
 
     }
 }
