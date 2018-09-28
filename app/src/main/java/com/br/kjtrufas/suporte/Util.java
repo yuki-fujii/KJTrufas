@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class Util {
@@ -55,10 +56,11 @@ public class Util {
 
     public static Double duasCasas(Double d)
     {
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = (DecimalFormat) new DecimalFormat("#.00").getInstance(Locale.US);
         String dx = df.format(d);
 
         return Double.parseDouble(dx);
+
     }
 
     public static void integrarVendas (SQLiteDatabase conn, Context context)

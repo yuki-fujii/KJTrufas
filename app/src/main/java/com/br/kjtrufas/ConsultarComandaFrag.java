@@ -171,15 +171,15 @@ public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItem
                 Venda pagamento = new Venda();
                 pagamento.setDescricao("Pagamento");
                 pagamento.setDataVenda(Util.getDataAtual());
-                Log.i("Valor Recebido",Util.duasCasas(-1*Double.valueOf(editValorRecebido.getText().toString()))+"");
-                pagamento.setValorTotal(Util.duasCasas(-1*Double.valueOf(editValorRecebido.getText().toString())));
+                Log.i("Valor Recebido",-1*Util.duasCasas(Double.valueOf(editValorRecebido.getText().toString()))+"");
+                pagamento.setValorTotal(-1*Util.duasCasas(Double.valueOf(editValorRecebido.getText().toString())));
                 pagamento.setPago(0);
                 pagamento.setIntegrar(1);
                 pagamento.setIdComanda(comanda.getId());
                 pagamento.setIdVendedor(comanda.getIdVendedor());
                 VendaDAO.upsert(pagamento,conn);
 
-                Log.i("Novo a receber",Util.duasCasas(comanda.getAReceber()+(-1*Double.valueOf(editValorRecebido.getText().toString())))+"");
+                Log.i("Novo a receber",comanda.getAReceber()+(-1*Util.duasCasas(Double.valueOf(editValorRecebido.getText().toString())))+"");
                 comanda.setAReceber(Util.duasCasas(comanda.getAReceber()+(-1*Double.valueOf(editValorRecebido.getText().toString()))));
 
                 if(comanda.getAReceber()==0)
