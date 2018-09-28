@@ -50,15 +50,16 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <Button
-                    android:layout_marginTop="7dp"
+                <ImageView
                     android:id="@+id/btnLimparConsulta"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="7dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="2.5"
-                    android:text="Limpar" />
+                    android:background="@color/buttonBackground"
+                    android:src="@mipmap/ic_clear" />
 
             </LinearLayout>
 
@@ -147,14 +148,15 @@
                     android:ems="10"
                     android:inputType="numberDecimal" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btnSalvarConsulta"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1.1"
-                    android:text="@string/Salvar" />
+                    android:background="@color/buttonBackground"
+                    android:src="@mipmap/ic_check" />
 
             </LinearLayout>
 

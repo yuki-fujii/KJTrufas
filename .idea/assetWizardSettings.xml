@@ -35,7 +35,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="125" />
+                                                <entry key="scalingPercent" value="74" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -47,11 +47,11 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="C:\Users\alcino.fujii\AndroidStudioProjects\KJTrufas\app\src\main\res\drawable\impressora_comanda.png" />
-                                      <entry key="foregroundLayerName" value="impressora" />
-                                      <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="outputName" value="ic_impressora" />
+                                      <entry key="backgroundColor" value="c9c9c9" />
+                                      <entry key="backgroundLayerName" value="buttonBackground" />
+                                      <entry key="foregroundImage" value="C:\Users\alcino.fujii\AndroidStudioProjects\KJTrufas\app\src\main\res\icones\clear.png" />
+                                      <entry key="foregroundLayerName" value="clear" />
+                                      <entry key="outputName" value="ic_clear" />
                                     </map>
                                   </option>
                                 </PersistentState>
