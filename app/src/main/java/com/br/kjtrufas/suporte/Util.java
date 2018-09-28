@@ -18,6 +18,7 @@ import com.br.kjtrufas.sql.VendedorDAO;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +51,14 @@ public class Util {
             return 1;
         else
             return 0;
+    }
+
+    public static Double duasCasas(Double d)
+    {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String dx = df.format(d);
+
+        return Double.parseDouble(dx);
     }
 
     public static void integrarVendas (SQLiteDatabase conn, Context context)
