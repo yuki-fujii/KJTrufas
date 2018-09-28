@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,10 +43,11 @@ public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItem
 
     private AutoCompleteTextView consultaAutoNome;
     private TextView txtConsultaAReceber;
+    private TextView txtValorRecebido;
     private ListView lstConsulta;
     private EditText editValorRecebido;
-    private Button btnLimparConsulta;
-    private Button btnSalvarConsulta;
+    private ImageView btnLimparConsulta;
+    private ImageView btnSalvarConsulta;
 
     private DadosVendas dadosVendas;
     private DadosComandas dadosComandas;
@@ -64,6 +66,7 @@ public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItem
         context = container.getContext();
         consultaAutoNome = view.findViewById(R.id.consultaAutoNome);
         txtConsultaAReceber = view.findViewById(R.id.txtConsultaAReceber);
+        txtValorRecebido = view.findViewById(R.id.txtValorRecebido);
         lstConsulta = view.findViewById(R.id.lstConsulta);
         editValorRecebido = view.findViewById(R.id.editValorRecebido);
         btnLimparConsulta = view.findViewById(R.id.btnLimparConsulta);
@@ -88,7 +91,10 @@ public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItem
                 dadosComandas = ComandaDAO.getComandasAReceber(conn);
                 customAdapterComandas = new CustomAdapterComandas(getActivity().getApplicationContext(), dadosComandas);
                 lstConsulta.setAdapter(customAdapterComandas);
-                editValorRecebido.setEnabled(false);
+                txtValorRecebido.setVisibility(View.INVISIBLE);
+                editValorRecebido.setVisibility(View.INVISIBLE);
+                btnSalvarConsulta.setVisibility(View.INVISIBLE);
+                //editValorRecebido.setEnabled(false);
             }
 
             lstConsulta.setOnItemClickListener(this);
@@ -143,7 +149,10 @@ public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItem
     public void listarVendasNaoPagasPorComanda()
     {
         txtConsultaAReceber.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(comanda.getAReceber())));
-        editValorRecebido.setEnabled(true);
+        txtValorRecebido.setVisibility(View.VISIBLE);
+        editValorRecebido.setVisibility(View.VISIBLE);
+        btnSalvarConsulta.setVisibility(View.VISIBLE);
+        //editValorRecebido.setEnabled(true);
         dadosVendas = VendaDAO.getVendasNaoPagas(context, comanda.getId(), conn);
         CustomAdapterVendas customAdapterVendas = new CustomAdapterVendas(getActivity().getApplicationContext(), dadosVendas);
         lstConsulta.setAdapter(customAdapterVendas);
@@ -162,14 +171,16 @@ public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItem
                 Venda pagamento = new Venda();
                 pagamento.setDescricao("Pagamento");
                 pagamento.setDataVenda(Util.getDataAtual());
-                pagamento.setValorTotal(-1*Double.valueOf(editValorRecebido.getText().toString()));
+                Log.i("Valor Recebido",Util.duasCasas(-1*Double.valueOf(editValorRecebido.getText().toString()))+"");
+                pagamento.setValorTotal(Util.duasCasas(-1*Double.valueOf(editValorRecebido.getText().toString())));
                 pagamento.setPago(0);
                 pagamento.setIntegrar(1);
                 pagamento.setIdComanda(comanda.getId());
                 pagamento.setIdVendedor(comanda.getIdVendedor());
                 VendaDAO.upsert(pagamento,conn);
 
-                comanda.setAReceber(comanda.getAReceber()+(-1*Double.valueOf(editValorRecebido.getText().toString())));
+                Log.i("Novo a receber",Util.duasCasas(comanda.getAReceber()+(-1*Double.valueOf(editValorRecebido.getText().toString())))+"");
+                comanda.setAReceber(Util.duasCasas(comanda.getAReceber()+(-1*Double.valueOf(editValorRecebido.getText().toString()))));
 
                 if(comanda.getAReceber()==0)
                 {
