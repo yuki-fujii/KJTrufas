@@ -270,16 +270,16 @@ public class VendasFrag extends Fragment {
             int quantidade = Integer.valueOf(editQtde.getText().toString());
 
             if (editDesconto.getText() != null && (!editDesconto.getText().toString().equals("")) && (!possuiCreditos))
-                desconto = Double.valueOf(editDesconto.getText().toString());
+                desconto = Util.duasCasas(Double.valueOf(editDesconto.getText().toString()));
             else
                 desconto = (double) 0;
 
             if (editAcrescimo.getText() != null && (!editAcrescimo.getText().toString().equals("")))
-                acrescimo = Double.valueOf(editAcrescimo.getText().toString());
+                acrescimo = Util.duasCasas(Double.valueOf(editAcrescimo.getText().toString()));
             else
                 acrescimo = (double) 0;
 
-            retorno = quantidade * auxProduto.getPreco() - desconto + acrescimo;
+            retorno = Util.duasCasas(quantidade * auxProduto.getPreco() - desconto + acrescimo);
         }
 
         return retorno;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,22 +18,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="2.3"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/autoNomeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:theme="@style/HintStyle"
                     app:errorEnabled="true">
@@ -54,7 +50,6 @@
                     android:id="@+id/btnLimparConsulta"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="7dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="2.5"
@@ -66,8 +61,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.5">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/txtValor"
@@ -93,22 +87,25 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ListView
                     android:id="@+id/lstConsulta"
-                    android:layout_marginBottom="50dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="250dp"
+                    android:layout_marginBottom="50dp"
                     android:background="@color/white">
 
                 </ListView>
 
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/LayoutRodape"
@@ -120,7 +117,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="2.5">
 
                 <TextView
@@ -129,7 +126,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
-                    android:layout_gravity="center_vertical"
                     android:text="Valor recebido: "
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
@@ -142,7 +138,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
                     android:background="@color/white"
                     android:text=""
                     android:ems="10"
@@ -152,7 +147,6 @@
                     android:id="@+id/btnSalvarConsulta"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1.1"
                     android:background="@color/buttonBackground"
@@ -164,4 +158,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

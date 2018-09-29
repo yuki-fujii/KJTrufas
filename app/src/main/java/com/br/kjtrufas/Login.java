@@ -26,6 +26,7 @@ import com.br.kjtrufas.salesforce.SincronizarDados;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.TokenDAO;
 import com.br.kjtrufas.sql.VendedorDAO;
+import com.br.kjtrufas.suporte.Util;
 import com.google.gson.Gson;
 
 import java.util.Calendar;
@@ -56,15 +57,18 @@ public class Login extends AppCompatActivity {
 
         conexaoBD();
 
-        if(VendedorDAO.getVendedor(conn)!=null)
+        if(VendedorDAO.getVendedor(conn)!=null && VendedorDAO.getVendedor(conn).getId()!=null)
         {
-            Intent i = new Intent(Login.this, MainActivity.class);
+            Log.i("id vendedor",VendedorDAO.getVendedor(conn).getId());
+            Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
         }
 
         if(hasConnection)
         {
+            DataBase.onDeleteSQLite(conn);
+
             new SalesForceAuthentication().execute(conn);
             new Handler().postDelayed(new Runnable() {
 

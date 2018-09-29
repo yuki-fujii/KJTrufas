@@ -67,7 +67,7 @@ public class ComandaDAO {
 
     public static void delete(String nome, String idVendedor, SQLiteDatabase conn)
     {
-        conn.delete("COMANDA","NOME = ? AND ID_VENDEDOR = ?",new String[]{nome,idVendedor});
+        conn.delete("COMANDA","NOME = ?",new String[]{nome});
     }
 
     public static ArrayAdapter<String> getTodasComandas(Context context,SQLiteDatabase conn) {
