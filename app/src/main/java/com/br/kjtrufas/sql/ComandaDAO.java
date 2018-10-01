@@ -35,8 +35,10 @@ public class ComandaDAO {
 
     public static void upsert(Comanda comanda,SQLiteDatabase conn)
     {
-        if(!hasComanda(comanda, conn))
+        if(!hasComanda(comanda, conn)) {
+            comanda.setId(VendedorDAO.getIdComanda(conn));
             conn.insertOrThrow("COMANDA", null, preencherContentValues(comanda));
+        }
         else
             conn.update("COMANDA",preencherContentValues(comanda),"NOME = ? AND ID_VENDEDOR = ?", new String[]{comanda.getNome(),comanda.getIdVendedor()});
 
@@ -47,7 +49,7 @@ public class ComandaDAO {
         if(comanda.getId()==null)
             return false;
 
-        Cursor cursor = conn.query("COMANDA",null,"ID_COMANDA = ?",new String[]{comanda.getId()},null,null,null);
+        Cursor cursor = conn.query("COMANDA",null,"ID_COMANDA = ?",new String[]{comanda.getId()+""},null,null,null);
 
         if (cursor.getCount()==0)
             return false;
@@ -55,7 +57,7 @@ public class ComandaDAO {
             return true;
     }
 
-    public static boolean hasComanda(String nome, SQLiteDatabase conn)
+    /*public static boolean hasComanda(String nome, SQLiteDatabase conn)
     {
         Cursor cursor = conn.query("COMANDA",null,"NOME = ? AND ID_VENDEDOR = ?",new String[]{nome,VendedorDAO.getVendedor(conn).getId()},null,null,null);
 
@@ -63,7 +65,7 @@ public class ComandaDAO {
             return false;
         else
             return true;
-    }
+    }*/
 
     public static void delete(String nome, String idVendedor, SQLiteDatabase conn)
     {
@@ -99,7 +101,7 @@ public class ComandaDAO {
             cursor.moveToFirst();
 
                 retorno = new Comanda();
-                retorno.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                retorno.setId(cursor.getInt(cursor.getColumnIndex("ID_COMANDA")));
                 retorno.setIdSalesforce(cursor.getString(cursor.getColumnIndex("ID_SALESFORCE")));
                 retorno.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
@@ -145,7 +147,7 @@ public class ComandaDAO {
 
             do {
                 Comanda aux = new Comanda();
-                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setId(cursor.getInt(cursor.getColumnIndex("ID_COMANDA")));
                 aux.setIdSalesforce(cursor.getString(cursor.getColumnIndex("ID_SALESFORCE")));
                 aux.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 aux.setNome(cursor.getString(cursor.getColumnIndex("NOME")));

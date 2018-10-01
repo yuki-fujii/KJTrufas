@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 
 public class Venda {
 
-    private String idMobile;
+    private int idMobile;
     private String idSalesforce;
     private String idComanda;
     private String idProduto;
@@ -46,11 +46,11 @@ public class Venda {
         return ret;
     }
 
-    public String getId() {
+    public Integer getId() {
         return idMobile;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.idMobile = id;
     }
 

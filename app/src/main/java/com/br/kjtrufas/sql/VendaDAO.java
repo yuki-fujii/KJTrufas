@@ -40,13 +40,12 @@ public class VendaDAO {
 
     public static void upsert(Venda venda,SQLiteDatabase conn)
     {
-        if(venda.getId()!=null)
-            Log.i("ID_VENDA",venda.getId());
-        Log.i("INTEGRAR",venda.getIntegrar()+"");
-        if(!hasVenda(venda, conn))
+        if(!hasVenda(venda, conn)) {
+            venda.setId(VendedorDAO.getIdVenda(conn));
             conn.insertOrThrow("VENDA", null, preencherContentValues(venda));
+        }
         else
-            conn.update("VENDA", preencherContentValues(venda), "ID_VENDA = ?", new String[]{venda.getId()});
+            conn.update("VENDA", preencherContentValues(venda), "ID_VENDA = ?", new String[]{venda.getId()+""});
     }
 
     public static boolean hasVenda(Venda venda, SQLiteDatabase conn)
@@ -54,7 +53,7 @@ public class VendaDAO {
         if(venda.getId()==null)
             return false;
 
-        Cursor cursor = conn.query("VENDA",null,"ID_VENDA = ?",new String[]{venda.getId()},null,null,null);
+        Cursor cursor = conn.query("VENDA",null,"ID_VENDA = ?",new String[]{venda.getId()+""},null,null,null);
 
         if (cursor.getCount()==0)
             return false;
@@ -69,7 +68,7 @@ public class VendaDAO {
 
     public static ArrayList<Venda> getVendasNaoPagas(Comanda comanda, SQLiteDatabase conn)
     {
-        Cursor cursor = conn.query("VENDA", null, "ID_COMANDA = ? AND ID_VENDEDOR = ? AND PAGO = ?", new String[]{comanda.getId(), comanda.getIdVendedor(), "0"}, null, null, null);
+        Cursor cursor = conn.query("VENDA", null, "ID_COMANDA = ? AND ID_VENDEDOR = ? AND PAGO = ?", new String[]{comanda.getId()+"", comanda.getIdVendedor(), "0"}, null, null, null);
 
         ArrayList<Venda> retorno = new ArrayList<Venda>();
 
@@ -79,7 +78,7 @@ public class VendaDAO {
 
             do {
                 Venda aux = new Venda();
-                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
+                aux.setId(cursor.getInt(cursor.getColumnIndex("ID_VENDA")));
                 aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
                 aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
                 aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
@@ -144,7 +143,7 @@ public class VendaDAO {
 
             do {
                 Venda aux = new Venda();
-                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
+                aux.setId(cursor.getInt(cursor.getColumnIndex("ID_VENDA")));
                 aux.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
                 aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
                 aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
