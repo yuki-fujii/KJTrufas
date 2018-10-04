@@ -18,6 +18,8 @@ public class VendedorDAO
         values.put("LOGIN",vendedor.getLogin());
         values.put("SENHA",vendedor.getSenha());
         values.put("CONF_SENHA",vendedor.getConfSenha());
+        values.put("ID_MOBILE_COMANDA",vendedor.getIdMobileComanda());
+        values.put("ID_MOBILE_VENDA",vendedor.getIdMobileVenda());
 
         return values;
     }
@@ -65,9 +67,63 @@ public class VendedorDAO
             retorno.setLogin(cursor.getString(cursor.getColumnIndex("LOGIN")));
             retorno.setSenha(cursor.getString(cursor.getColumnIndex("SENHA")));
             retorno.setConfSenha(cursor.getString(cursor.getColumnIndex("CONF_SENHA")));
+            retorno.setIdMobileComanda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_COMANDA")));
+            retorno.setIdMobileVenda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_VENDA")));
         }
 
         return retorno;
+    }
+
+    public static int getIdComanda(SQLiteDatabase conn) {
+
+        Vendedor retorno = null;
+
+        Cursor cursor = conn.query("VENDEDOR", null, null, null, null, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            retorno = new Vendedor();
+
+            retorno.setId(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
+            retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+            retorno.setLogin(cursor.getString(cursor.getColumnIndex("LOGIN")));
+            retorno.setSenha(cursor.getString(cursor.getColumnIndex("SENHA")));
+            retorno.setConfSenha(cursor.getString(cursor.getColumnIndex("CONF_SENHA")));
+            retorno.setIdMobileComanda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_COMANDA")));
+            retorno.setIdMobileVenda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_VENDA")));
+        }
+
+        retorno.setIdMobileVenda(retorno.getIdMobileComanda()+1);
+        upsert(retorno,conn);
+
+        return retorno.getIdMobileComanda();
+    }
+
+    public static int getIdVenda(SQLiteDatabase conn) {
+
+        Vendedor retorno = null;
+
+        Cursor cursor = conn.query("VENDEDOR", null, null, null, null, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            retorno = new Vendedor();
+
+            retorno.setId(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
+            retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+            retorno.setLogin(cursor.getString(cursor.getColumnIndex("LOGIN")));
+            retorno.setSenha(cursor.getString(cursor.getColumnIndex("SENHA")));
+            retorno.setConfSenha(cursor.getString(cursor.getColumnIndex("CONF_SENHA")));
+            retorno.setIdMobileComanda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_COMANDA")));
+            retorno.setIdMobileVenda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_VENDA")));
+        }
+
+        retorno.setIdMobileVenda(retorno.getIdMobileVenda()+1);
+        upsert(retorno,conn);
+
+        return retorno.getIdMobileVenda();
     }
 
 }

@@ -7,14 +7,18 @@ public class Vendedor
     private String login;
     private String senha;
     private String confSenha;
+    private int idMobileComanda;
+    private int idMobileVenda;
 
-    public Vendedor(String id, String nome, String login, String senha, String confSenha)
+    public Vendedor(String id, String nome, String login, String senha, String confSenha, Integer idMobileComanda, Integer idMobileVenda)
     {
         this.setId(id);
         this.setNome(nome);
         this.setLogin(login);
         this.setSenha(senha);
         this.setConfSenha(confSenha);
+        this.setIdMobileComanda(idMobileComanda);
+        this.setIdMobileVenda(idMobileVenda);
     }
 
     public Vendedor() {
@@ -59,5 +63,21 @@ public class Vendedor
 
     public void setConfSenha(String confSenha) {
         this.confSenha = confSenha;
+    }
+
+    public int getIdMobileComanda() {
+        return idMobileComanda;
+    }
+
+    public void setIdMobileComanda(int idMobileComanda) {
+        this.idMobileComanda = idMobileComanda;
+    }
+
+    public int getIdMobileVenda() {
+        return idMobileVenda;
+    }
+
+    public void setIdMobileVenda(int idMobileVenda) {
+        this.idMobileVenda = idMobileVenda;
     }
 }

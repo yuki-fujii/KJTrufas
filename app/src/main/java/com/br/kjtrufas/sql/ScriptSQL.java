@@ -15,7 +15,9 @@ public class ScriptSQL
         sqlBuilder.append("LOGIN                            VARCHAR (15) UNIQUE , ");
         sqlBuilder.append("SENHA                                   VARCHAR (15) , ");
         sqlBuilder.append("CONF_SENHA                              VARCHAR (15) , ");
-        sqlBuilder.append("NOME                                    VARCHAR (30)   ");
+        sqlBuilder.append("NOME                                    VARCHAR (30) , ");
+        sqlBuilder.append("ID_MOBILE_COMANDA                            INTEGER , ");
+        sqlBuilder.append("ID_MOBILE_VENDA                              INTEGER   ");
         sqlBuilder.append(");");
 
         return sqlBuilder.toString();
@@ -27,7 +29,7 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS COMANDA (             ");
-        sqlBuilder.append("ID_COMANDA  INTEGER PRIMARY KEY AUTOINCREMENT , ");
+        sqlBuilder.append("ID_COMANDA                             INTEGER , ");
         sqlBuilder.append("ID_SALESFORCE                     VARCHAR (18) , ");
         sqlBuilder.append("ID_VENDEDOR                       VARCHAR (18) , ");
         sqlBuilder.append("NOME                              VARCHAR (35) , ");
@@ -89,7 +91,7 @@ public class ScriptSQL
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDA (                        ");
-        sqlBuilder.append("ID_VENDA             INTEGER PRIMARY KEY AUTOINCREMENT , ");
+        sqlBuilder.append("ID_VENDA                                        INTEGER , ");
         sqlBuilder.append("ID_SALESFORCE                              VARCHAR (18) , ");
         sqlBuilder.append("ID_COMANDA                                      INTEGER , ");
         sqlBuilder.append("PRODUTO                                    VARCHAR (30) , ");
