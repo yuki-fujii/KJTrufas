@@ -6,7 +6,7 @@ public class Venda {
 
     private int idMobile;
     private String idSalesforce;
-    private String idComanda;
+    private int idComanda;
     private String idProduto;
     private String idSabor;
     private String idVendedor;
@@ -21,7 +21,7 @@ public class Venda {
 
     public Venda(){}
 
-    public Venda(String idComanda, String produto, String sabor,String idVendedor, int quantidade, Double acrescimo, Double desconto, Double valorTotal,
+    public Venda(int idComanda, String produto, String sabor,String idVendedor, int quantidade, Double acrescimo, Double desconto, Double valorTotal,
                  String descricao, String dataVenda, int pago, int integrar)
     {
         this.setIdComanda(idComanda);
@@ -54,11 +54,11 @@ public class Venda {
         this.idMobile = id;
     }
 
-    public String getIdComanda() {
+    public int getIdComanda() {
         return idComanda;
     }
 
-    public void setIdComanda(String idComanda) {
+    public void setIdComanda(int idComanda) {
         this.idComanda = idComanda;
     }
 

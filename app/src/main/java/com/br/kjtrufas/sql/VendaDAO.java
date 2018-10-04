@@ -79,7 +79,7 @@ public class VendaDAO {
             do {
                 Venda aux = new Venda();
                 aux.setId(cursor.getInt(cursor.getColumnIndex("ID_VENDA")));
-                aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setIdComanda(cursor.getInt(cursor.getColumnIndex("ID_COMANDA")));
                 aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
                 aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
                 aux.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
@@ -145,7 +145,7 @@ public class VendaDAO {
                 Venda aux = new Venda();
                 aux.setId(cursor.getInt(cursor.getColumnIndex("ID_VENDA")));
                 aux.setIdVendedor(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
-                aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setIdComanda(cursor.getInt(cursor.getColumnIndex("ID_COMANDA")));
                 aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
                 aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
                 aux.setQuantidade(cursor.getInt(cursor.getColumnIndex("QUANTIDADE")));

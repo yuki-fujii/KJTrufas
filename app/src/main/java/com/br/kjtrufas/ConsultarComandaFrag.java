@@ -175,7 +175,7 @@ public class ConsultarComandaFrag extends Fragment implements AdapterView.OnItem
                 pagamento.setValorTotal(-1*Util.duasCasas(Double.valueOf(editValorRecebido.getText().toString())));
                 pagamento.setPago(0);
                 pagamento.setIntegrar(1);
-                pagamento.setIdComanda(comanda.getId()+"");
+                pagamento.setIdComanda(comanda.getId());
                 pagamento.setIdVendedor(comanda.getIdVendedor());
                 VendaDAO.upsert(pagamento,conn);
 

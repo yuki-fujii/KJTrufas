@@ -25,8 +25,8 @@ public class EnviarRegistroDAO
 
             do {
                 Venda aux = new Venda();
-                aux.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDA"))));
-                aux.setIdComanda(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_COMANDA"))));
+                aux.setId(cursor.getInt(cursor.getColumnIndex("ID_VENDA")));
+                aux.setIdComanda(cursor.getInt(cursor.getColumnIndex("ID_COMANDA")));
                 aux.setProduto(cursor.getString(cursor.getColumnIndex("PRODUTO")));
                 aux.setSabor(cursor.getString(cursor.getColumnIndex("SABOR")));
                 aux.setIdVendedor(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_VENDEDOR"))));
