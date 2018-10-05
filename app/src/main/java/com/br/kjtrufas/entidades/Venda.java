@@ -41,7 +41,7 @@ public class Venda {
     public String toString2()
     {
         String ret = "\nProduto: "+getProduto()+"\nQuantidade: "+getQuantidade()+"\nSabor: "+getSabor()+"\nPago: "+getPago()+"\nIntegrar: "+getIntegrar()
-                +"\nID Salesforce: "+getIdSalesforce()+"\nID Vendedor: "+getIdVendedor();
+                +"\nID Salesforce: "+getIdSalesforce()+"\nID Vendedor: "+getIdVendedor()+"\nID Venda: "+getId()+"\nID Comanda: "+getIdComanda();
 
         return ret;
     }

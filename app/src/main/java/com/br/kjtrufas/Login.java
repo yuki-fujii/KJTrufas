@@ -56,17 +56,18 @@ public class Login extends AppCompatActivity {
         editSenhaLogin = findViewById(R.id.editSenhaLogin);
 
         conexaoBD();
+        Log.i("ConexaoBD",hasConnection+"");
 
-        if(VendedorDAO.getVendedor(conn)!=null && VendedorDAO.getVendedor(conn).getId()!=null)
+        if(VendedorDAO.getVendedor(conn)!= null)
         {
             Log.i("id vendedor",VendedorDAO.getVendedor(conn).getId());
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
         }
-
-        if(hasConnection)
+        else if(hasConnection)
         {
+            Log.i("id vendedor","Sem vendedor");
             DataBase.onDeleteSQLite(conn);
 
             new SalesForceAuthentication().execute(conn);
@@ -116,7 +117,6 @@ public class Login extends AppCompatActivity {
         p.cancel();
     }
 
-
     private void conexaoBD()
     {
         try {
@@ -126,6 +126,7 @@ public class Login extends AppCompatActivity {
 
             hasConnection = true;
         } catch (Exception ex) {
+            Log.i("Erro BD",ex.getMessage());
             hasConnection = false;
         }
     }

@@ -65,8 +65,10 @@ public class TratamentoRespostaPost
         EntidadesEncapsuladas entidadesEncapsuladas = gson.fromJson(resposta,EntidadesEncapsuladas.class);
 
         try {
-            if (entidadesEncapsuladas.getVendedor() != null)
+            if (entidadesEncapsuladas.getVendedor() != null) {
+                Log.i("RESP Vend",entidadesEncapsuladas.getVendedor().toString());
                 VendedorDAO.upsert(entidadesEncapsuladas.getVendedor(), entidadePost.getConn());
+            }
 
             if (!entidadesEncapsuladas.getProdutos().isEmpty()) {
                 for (Produto p : entidadesEncapsuladas.getProdutos()) {

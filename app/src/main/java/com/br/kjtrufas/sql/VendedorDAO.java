@@ -26,7 +26,7 @@ public class VendedorDAO
 
     public static void upsert(Vendedor vendedor, SQLiteDatabase conn)
     {
-        Log.i("SQL", String.valueOf(conn));
+        Log.i("vendedor", vendedor.getNome());
 
         if(!hasVendedor(vendedor,conn))
             conn.insertOrThrow("VENDEDOR", null, preencherContentValues(vendedor));
@@ -36,8 +36,6 @@ public class VendedorDAO
 
     public static boolean hasVendedor(Vendedor vendedor, SQLiteDatabase conn)
     {
-        Log.i("SQL", String.valueOf(conn));
-
         Cursor cursor = conn.query("VENDEDOR",null,"LOGIN = ?",new String[]{vendedor.getLogin()},null,null,null);
 
         if (cursor.getCount()==0)
@@ -74,56 +72,45 @@ public class VendedorDAO
         return retorno;
     }
 
+
     public static int getIdComanda(SQLiteDatabase conn) {
 
-        Vendedor retorno = null;
+        Integer retorno = null;
 
         Cursor cursor = conn.query("VENDEDOR", null, null, null, null, null, null);
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-            retorno = new Vendedor();
-
-            retorno.setId(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
-            retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
-            retorno.setLogin(cursor.getString(cursor.getColumnIndex("LOGIN")));
-            retorno.setSenha(cursor.getString(cursor.getColumnIndex("SENHA")));
-            retorno.setConfSenha(cursor.getString(cursor.getColumnIndex("CONF_SENHA")));
-            retorno.setIdMobileComanda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_COMANDA")));
-            retorno.setIdMobileVenda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_VENDA")));
+            retorno = cursor.getInt(cursor.getColumnIndex("ID_MOBILE_COMANDA"));
         }
 
-        retorno.setIdMobileVenda(retorno.getIdMobileComanda()+1);
-        upsert(retorno,conn);
+        retorno++;
 
-        return retorno.getIdMobileComanda();
+        Vendedor v = getVendedor(conn);
+        v.setIdMobileComanda(retorno);
+        VendedorDAO.upsert(v,conn);
+        return retorno;
     }
 
     public static int getIdVenda(SQLiteDatabase conn) {
 
-        Vendedor retorno = null;
+        Integer retorno = null;
 
         Cursor cursor = conn.query("VENDEDOR", null, null, null, null, null, null);
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-            retorno = new Vendedor();
-
-            retorno.setId(cursor.getString(cursor.getColumnIndex("ID_VENDEDOR")));
-            retorno.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
-            retorno.setLogin(cursor.getString(cursor.getColumnIndex("LOGIN")));
-            retorno.setSenha(cursor.getString(cursor.getColumnIndex("SENHA")));
-            retorno.setConfSenha(cursor.getString(cursor.getColumnIndex("CONF_SENHA")));
-            retorno.setIdMobileComanda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_COMANDA")));
-            retorno.setIdMobileVenda(cursor.getInt(cursor.getColumnIndex("ID_MOBILE_VENDA")));
+            retorno = cursor.getInt(cursor.getColumnIndex("ID_MOBILE_VENDA"));
         }
 
-        retorno.setIdMobileVenda(retorno.getIdMobileVenda()+1);
-        upsert(retorno,conn);
+        retorno++;
 
-        return retorno.getIdMobileVenda();
+        Vendedor v = getVendedor(conn);
+        v.setIdMobileVenda(retorno);
+        VendedorDAO.upsert(v,conn);
+        return retorno;
     }
 
 }

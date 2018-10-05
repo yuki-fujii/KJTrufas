@@ -80,4 +80,12 @@ public class Vendedor
     public void setIdMobileVenda(int idMobileVenda) {
         this.idMobileVenda = idMobileVenda;
     }
+
+    public String toString()
+    {
+        String ret = "\nID: "+getId()+"\nNome: "+getNome()+"\nLogin: "+getLogin()+"\nSenha: "+getSenha()+"\nConf senha: "+getConfSenha()
+                +"\nID Venda: "+getIdMobileVenda()+"\nID Comanda: "+getIdMobileComanda();
+
+        return ret;
+    }
 }

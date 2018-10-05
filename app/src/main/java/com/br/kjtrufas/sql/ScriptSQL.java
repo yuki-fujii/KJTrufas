@@ -8,6 +8,7 @@ public class ScriptSQL
 {
     public static String getVendedor()
     {
+        Log.i("Erro","Criou get Vendedor");
         StringBuilder sqlBuilder = new StringBuilder();
 
         sqlBuilder.append("CREATE TABLE IF NOT EXISTS VENDEDOR (                  ");

@@ -20,8 +20,8 @@ public class VendaDAO {
         ContentValues values = new ContentValues();
 
         if(venda.getId()!=null)
-        values.put("ID_VENDA",Integer.valueOf(venda.getId()));
-        values.put("ID_COMANDA",Integer.valueOf(venda.getIdComanda()));
+        values.put("ID_VENDA",venda.getId());
+        values.put("ID_COMANDA",venda.getIdComanda());
         values.put("PRODUTO",venda.getProduto());
         values.put("SABOR",venda.getSabor());
         values.put("ID_VENDEDOR",venda.getIdVendedor());
@@ -41,7 +41,10 @@ public class VendaDAO {
     public static void upsert(Venda venda,SQLiteDatabase conn)
     {
         if(!hasVenda(venda, conn)) {
-            venda.setId(VendedorDAO.getIdVenda(conn));
+
+            if(venda.getId()== 0)
+                venda.setId(VendedorDAO.getIdVenda(conn));
+
             conn.insertOrThrow("VENDA", null, preencherContentValues(venda));
         }
         else

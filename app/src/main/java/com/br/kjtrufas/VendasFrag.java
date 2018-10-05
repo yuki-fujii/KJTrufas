@@ -27,6 +27,7 @@ import com.br.kjtrufas.entidades.Comanda;
 import com.br.kjtrufas.entidades.Produto;
 import com.br.kjtrufas.entidades.Sabor;
 import com.br.kjtrufas.entidades.Venda;
+import com.br.kjtrufas.entidades.Vendedor;
 import com.br.kjtrufas.sql.ComandaDAO;
 import com.br.kjtrufas.sql.DataBase;
 import com.br.kjtrufas.sql.ProdutoDAO;
@@ -324,6 +325,7 @@ public class VendasFrag extends Fragment {
         else
             acrescimo = (double) 0;
 
+        Log.i("Nova VENDA",""+comanda.getId());
         Venda novaVenda = new Venda(comanda.getId(), auxProduto.getId(), null,VendedorDAO.getVendedor(conn).getId(), Integer.valueOf(editQtde.getText().toString()),
                 acrescimo, desconto, calcularTotal(),
                 editQtde.getText().toString()+"x "+auxProduto.getNome(), Util.getDataAtual(), Util.converterBoolean(cbxPago.isChecked()),1);

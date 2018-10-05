@@ -35,8 +35,11 @@ public class ComandaDAO {
 
     public static void upsert(Comanda comanda,SQLiteDatabase conn)
     {
-        if(!hasComanda(comanda, conn)) {
-            comanda.setId(VendedorDAO.getIdComanda(conn));
+        if(!hasComanda(comanda, conn))
+        {
+            if(comanda.getId()== 0)
+                comanda.setId(VendedorDAO.getIdComanda(conn));
+
             conn.insertOrThrow("COMANDA", null, preencherContentValues(comanda));
         }
         else
@@ -56,16 +59,6 @@ public class ComandaDAO {
         else
             return true;
     }
-
-    /*public static boolean hasComanda(String nome, SQLiteDatabase conn)
-    {
-        Cursor cursor = conn.query("COMANDA",null,"NOME = ? AND ID_VENDEDOR = ?",new String[]{nome,VendedorDAO.getVendedor(conn).getId()},null,null,null);
-
-        if (cursor.getCount()==0)
-            return false;
-        else
-            return true;
-    }*/
 
     public static void delete(String nome, String idVendedor, SQLiteDatabase conn)
     {
