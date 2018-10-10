@@ -56,6 +56,7 @@ public class Login extends AppCompatActivity {
         editSenhaLogin = findViewById(R.id.editSenhaLogin);
 
         conexaoBD();
+        new SalesForceAuthentication().execute(conn);
         Log.i("ConexaoBD",hasConnection+"");
 
         if(VendedorDAO.getVendedor(conn)!= null)
@@ -70,7 +71,6 @@ public class Login extends AppCompatActivity {
             Log.i("id vendedor","Sem vendedor");
             DataBase.onDeleteSQLite(conn);
 
-            new SalesForceAuthentication().execute(conn);
             new Handler().postDelayed(new Runnable() {
 
                 @Override
